@@ -49,6 +49,7 @@ public class GamePanel extends JPanel implements Runnable{
     Thread gameThread;
     public UI ui = new UI(this);
     public EventHandler eHandler = new EventHandler(this);
+    public UtilityTool uTool = new UtilityTool();
     
     // EINTITY AND OBJECT
     public Player player = new Player(this, keyH);

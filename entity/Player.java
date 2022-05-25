@@ -22,6 +22,7 @@ public class Player extends Entity{
     private KeyHandler keyH;
     
     private int hasKunai = 10;
+    private int hasKey = 0;
     
     private final int screenX;
     private final int screenY;
@@ -31,6 +32,14 @@ public class Player extends Entity{
     private boolean kunaiAttacking = false;
     
     private OBJ_Kunai[] playerKunai = new OBJ_Kunai[hasKunai];
+
+    public int getHasKey() {
+        return hasKey;
+    }
+
+    public void setHasKey(int hasKey) {
+        this.hasKey = hasKey;
+    }
 
     public boolean isKunaiAttacking() {
         return kunaiAttacking;
@@ -304,38 +313,38 @@ public class Player extends Entity{
         
         if(i != 999){
             
-//            String objectName = gp.obj[i].name;
-//            
-//            switch(objectName){
-//                case "Key":
-//                    gp.playSE(1);
-//                    hasKey++;
-//                    gp.obj[i] = null;
-//                    gp.ui.showMessage("You got a key!");
-//                    break;
-//                case "Door":
-//                    if(hasKey > 0){
-//                        gp.obj[i] = null;
-//                        hasKey--;
-//                        gp.playSE(3);
-//                        gp.ui.showMessage("You opened the door!");
-//                    }
-//                    else {
-//                        gp.ui.showMessage("You need the key!");
-//                    }
-//                    break;
-//                case "Boots":
-//                    gp.ui.showMessage("Speed up!");
-//                    gp.playSE(2);
-//                    speed += 2;
-//                    gp.obj[i] = null;
-//                    break;
-//                case "Chest":
-//                    gp.ui.gameFinished = true;
-//                    gp.stopMusic();
-//                    gp.playSE(4);
-//                    break;
-//          }
+            String objectName = getGp().obj[i].getName();
+            
+            switch(objectName){
+                case "Key":
+                    getGp().playSE(1);
+                    hasKey++;
+                    getGp().obj[i] = null;
+                    getGp().ui.showMessage("You got a key!");
+                    break;
+                case "Door":
+                    if(hasKey > 0){
+                        getGp().obj[i] = null;
+                        hasKey--;
+                        getGp().playSE(3);
+                        getGp().ui.showMessage("You opened the door!");
+                    }
+                    else {
+                        getGp().ui.showMessage("You need the key!");
+                    }
+                    break;
+                case "Boots":
+                    getGp().ui.showMessage("Speed up!");
+                    getGp().playSE(2);
+                    setSpeed(getSpeed()+2);
+                    getGp().obj[i] = null;
+                    break;
+                case "Chest":
+                    getGp().ui.gameFinished = true;
+                    getGp().stopMusic();
+                    getGp().playSE(4);
+                    break;
+          }
         }    
     }
     

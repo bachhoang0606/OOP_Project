@@ -71,8 +71,11 @@ public class UI {
         // PLAY STATE
         if(gp.gameState == gp.playeState){
             
+            drawSubWindow(gp.tileSize/2 - 20, gp.tileSize/2 - 20,  gp.tileSize*5, gp.tileSize*4);
             drawPlayerLife();
             drawPlayerKunai();
+            drawPlayerKey();
+            
             if(gp.player.isKunaiAttacking() == true){
                 drawTimeKunaiAttack();
             }
@@ -81,8 +84,10 @@ public class UI {
         // PAUSTATE
         if(gp.gameState == gp.pauseState){
             
+            drawSubWindow(gp.tileSize/2 - 20, gp.tileSize/2 - 20,  gp.tileSize*5, gp.tileSize*4);
             drawPlayerLife();
             drawPlayerKunai();
+            drawPlayerKey();
             drawPauseScreen();
             if(gp.player.isKunaiAttacking() == true){
                 drawTimeKunaiAttack();
@@ -92,8 +97,10 @@ public class UI {
         // DIALOGSTATE
         if(gp.gameState == gp.dialogueState){
             
+            drawSubWindow(gp.tileSize/2 - 20, gp.tileSize/2 - 20,  gp.tileSize*5, gp.tileSize*4);
             drawPlayerLife();
             drawPlayerKunai();
+            drawPlayerKey();
             drawDialogueScreen();
         }
     }
@@ -129,15 +136,23 @@ public class UI {
         }
     }
     
+    public void drawPlayerKey(){
+        
+        int x = gp.tileSize/2;
+        int y = gp.tileSize*2;
+
+        g2.drawImage(gp.obj[6].getImage(), x+gp.tileSize/4+10, y+gp.tileSize/4+15, null);
+        g2.setFont(g2.getFont().deriveFont(30f));
+        g2.drawString(" X "+gp.player.getHasKunai(), x+gp.tileSize, y+gp.tileSize);
+    }    
     public void drawPlayerKunai(){
         
-        int kunaiImageX = gp.tileSize/2;
-        int y = gp.tileSize*3/2;
+        int x = gp.tileSize/2;
+        int y = gp.tileSize*1;
 
-        drawSubWindow(kunaiImageX-4, y-4,  gp.tileSize*3+8, gp.tileSize*2+8);
-        g2.drawImage(gp.obj[6].getImage(), kunaiImageX+gp.tileSize/4+10, y+gp.tileSize/4+15, null);
+        g2.drawImage(gp.obj[7].getImage(), x+gp.tileSize/4+10, y+gp.tileSize/4+15, null);
         g2.setFont(g2.getFont().deriveFont(30f));
-        g2.drawString(" X "+gp.player.getHasKunai(), kunaiImageX+gp.tileSize, y+gp.tileSize);
+        g2.drawString(" X "+gp.player.getHasKey(), x+gp.tileSize, y+gp.tileSize);
     }
     
     public void drawTimeKunaiAttack(){

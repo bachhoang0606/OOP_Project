@@ -48,6 +48,8 @@ public class AssetSetter {
         gp.obj[5].setWorldY(23 * gp.tileSize);
         
         gp.obj[6] = new OBJ_Kunai(gp);
+        gp.obj[7] = new OBJ_Key(gp);
+        gp.obj[7].setImage(gp.uTool.scaleImage(gp.obj[7].getImage(), gp.tileSize/2, gp.tileSize/2));
         }
     
     public void setNPC(){

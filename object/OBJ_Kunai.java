@@ -5,6 +5,8 @@
 package object;
 
 import gameSetting.GamePanel;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 
 /**
  *
@@ -36,6 +38,7 @@ public class OBJ_Kunai extends StaticObject{
 
         super(gp, "Kunai", false, 1);
         setImage(getuTool().setup("C:/Users/HOANG XUAN BACH/Documents/NetBeansProjects/TutorialGameProject/data/Object/kunai.png", gp.tileSize/2, gp.tileSize/2));
+        
         distance = gp.tileSize*5;
     }
     
