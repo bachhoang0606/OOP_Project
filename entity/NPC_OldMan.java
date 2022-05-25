@@ -41,7 +41,7 @@ public class NPC_OldMan extends Entity{
         
         getDialogues()[0] = "Hello, Bach.";
         getDialogues()[1] = "I used to a happy.";
-        getDialogues()[2] ="But now monster every where.";
+        getDialogues()[2] ="But now monster every\nwhere.";
         getDialogues()[3] = "I am so scare.";
         
     }

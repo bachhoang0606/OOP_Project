@@ -11,6 +11,7 @@ import java.awt.image.BufferedImage;
 import gameSetting.GamePanel;
 import gameSetting.KeyHandler;
 import gameSetting.UtilityTool;
+import object.OBJ_Kunai;
 
 /**
  *
@@ -20,9 +21,32 @@ public class Player extends Entity{
     
     private KeyHandler keyH;
     
+    private int hasKunai = 10;
+    
     private final int screenX;
     private final int screenY;
     private int standCounter = 0;
+    private int kunaiAttackCounter = 0;
+    
+    private boolean kunaiAttacking = false;
+    
+    private OBJ_Kunai[] playerKunai = new OBJ_Kunai[hasKunai];
+
+    public boolean isKunaiAttacking() {
+        return kunaiAttacking;
+    }
+
+    public void setKunaiAttacking(boolean kunaiAttacking) {
+        this.kunaiAttacking = kunaiAttacking;
+    }
+
+    public int getKunaiAttackCounter() {
+        return kunaiAttackCounter;
+    }
+
+    public void setKunaiAttackCounter(int kunaiAttackCounter) {
+        this.kunaiAttackCounter = kunaiAttackCounter;
+    }
 
     public int getScreenX() {
         return screenX;
@@ -32,6 +56,22 @@ public class Player extends Entity{
         return screenY;
     }
 
+    public OBJ_Kunai[] getPlayerKunai() {
+        return playerKunai;
+    }
+
+    public void setPlayerKunai(OBJ_Kunai[] playerKunai) {
+        this.playerKunai = playerKunai;
+    }
+
+    public int getHasKunai() {
+        return hasKunai;
+    }
+
+    public void setHasKunai(int hasKunai) {
+        this.hasKunai = hasKunai;
+    }
+    
     public Player(GamePanel gp, KeyHandler keyH) {
         
         super(gp, "Player", 6, 4, 0);
@@ -95,12 +135,22 @@ public class Player extends Entity{
     }
     
     public void update(){
-        
+
+        // KUNAI ATTACK
+        if(keyH.kPressed == true){
+            System.out.println("Kuai Attacking = true");
+            kunaiAttacking = true;
+        }
+
+        if(kunaiAttacking == true){
+            kunaiAttack();
+        }
         if(isAttacking() == true){
             attacking();
         }
         else if(keyH.upPressed == true || keyH.downPressed == true ||
-            keyH.leftPressed == true || keyH.rightPressed == true || keyH.enterPressed == true){
+            keyH.leftPressed == true || keyH.rightPressed == true || 
+            keyH.enterPressed == true){
 
             if(keyH.upPressed == true){ setDirection("up");
             }else if(keyH.downPressed == true){ setDirection("down");
@@ -128,7 +178,7 @@ public class Player extends Entity{
             // CHECK EVENT
             getGp().eHandler.checkEvent();
 
-
+            
             if(isCollisionOn() == false && keyH.enterPressed == false){
                 switch(getDirection()){
                     case "up": setWorldY(getWorldY()-getSpeed()); break;
@@ -169,6 +219,42 @@ public class Player extends Entity{
         }   
     }
         
+    private void kunaiAttack() {
+        
+        if(kunaiAttackCounter == 0){
+
+            if(hasKunai > 0){
+            
+                System.out.println("Kunai created!");
+                int startAttackX = this.getWorldX() + this.getSolidArea().x;
+                int startAttackY = this.getWorldY() + this.getSolidArea().y;
+
+                playerKunai[hasKunai-1] = new OBJ_Kunai(getGp());
+
+                switch(getDirection()){
+                    case "up": startAttackY -= playerKunai[hasKunai-1].getSolidArea().height; break;
+                    case "down": startAttackY += getSolidArea().height; break;
+                    case "left": startAttackX -= playerKunai[hasKunai-1].getSolidArea().height; break;
+                    case "right": startAttackX += getSolidArea().height; break;
+                }
+
+                playerKunai[hasKunai-1].setDirection(getDirection());
+                playerKunai[hasKunai-1].setWorldX(startAttackX);
+                playerKunai[hasKunai-1].setWorldY(startAttackY);
+                playerKunai[hasKunai-1].setStartAttackX(startAttackX);
+                playerKunai[hasKunai-1].setStartAttackY(startAttackY);
+                playerKunai[hasKunai-1].setSpeed(this.getSpeed()+3);
+                hasKunai--;
+            }
+        }
+        
+        kunaiAttackCounter++;
+        if(kunaiAttackCounter > 120){
+            kunaiAttackCounter = 0;
+            kunaiAttacking = false;
+        }
+    }
+    
     public void attacking(){
         
         setSpriteCounter(getSpriteCounter()+1);
@@ -375,4 +461,5 @@ public class Player extends Entity{
             }
         }
     }
+
 }

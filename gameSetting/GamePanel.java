@@ -13,6 +13,7 @@ import javax.swing.JPanel;
 import entity.Player;
 import java.util.ArrayList;
 import java.util.Collections;
+import object.OBJ_Kunai;
 import object.OriginObject;
 import object.StaticObject;
 import object.TileManager;
@@ -130,17 +131,30 @@ public class GamePanel extends JPanel implements Runnable{
                 }
             }
             
+            for(int i = 0;i < player.getPlayerKunai().length; i++){
+                if(player.getPlayerKunai()[i] != null){
+                    
+                    if(player.getPlayerKunai()[i].isExist() == true ||
+                       player.getPlayerKunai()[i].isDisappearing() == false){
+                        
+                        player.getPlayerKunai()[i].update();
+                    }    
+                    if(player.getPlayerKunai()[i].isExist() == false){
+                        player.getPlayerKunai()[i] = null;
+                    }
+                }
+            }
+            
             // MONSTER
             for(int i = 0;i < monster.length; i++){
                 if(monster[i] != null){
-                    if(monster[i].isAlive() == true && monster[i].isDying() == false){
+                    if(monster[i].isExist()== true && monster[i].isDying() == false){
                         monster[i].update();
                     }
-                    if(monster[i].isAlive() == false){
+                    if(monster[i].isExist() == false){
                         monster[i] = null;
                     }
                 }
-                
             }
         }
         if(gameState == pauseState){
@@ -187,6 +201,12 @@ public class GamePanel extends JPanel implements Runnable{
             for(int i=0; i < monster.length; i++){
                 if(monster[i] != null){
                     entityList.add(monster[i]);
+                }
+            }
+            
+            for(int i=0; i < player.getPlayerKunai().length; i++){
+                if(player.getPlayerKunai()[i] != null){
+                    entityList.add(player.getPlayerKunai()[i]);
                 }
             }
             

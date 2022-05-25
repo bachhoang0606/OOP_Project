@@ -5,6 +5,7 @@
 package object;
 
 import gameSetting.GamePanel;
+import java.awt.AlphaComposite;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
@@ -22,10 +23,15 @@ public abstract class OriginObject {
     
     // STATE
     private boolean collision = false;
+    private boolean collisionOn = false;
     private boolean drawSolidArea = false;
+    private boolean exist = true;
+    private boolean disappearing = false;
     
     // STATUS
     private String name;
+    private String direction = null;
+    private int speed = 0;
     private int worldX, worldY;
     private int type; // 0:Player, 1:StaticObject, 2:Monster, 3:NPC
     
@@ -33,6 +39,53 @@ public abstract class OriginObject {
     private Rectangle solidArea;
     private int solidAreaDefaultX, solidAreaDefaultY;
 
+    // COUNTER
+    private int disappearCounter = 0;
+
+    public int getSpeed() {
+        return speed;
+    }
+
+    public void setSpeed(int speed) {
+        this.speed = speed;
+    }
+
+    
+    
+    public boolean isCollisionOn() {
+        return collisionOn;
+    }
+
+    public void setCollisionOn(boolean collisionOn) {
+        this.collisionOn = collisionOn;
+    }
+
+    public String getDirection() {
+        return direction;
+    }
+
+    public void setDirection(String direction) {
+        this.direction = direction;
+    }
+
+    
+    
+    public boolean isDisappearing() {
+        return disappearing;
+    }
+
+    public void setDisappearing(boolean disappearing) {
+        this.disappearing = disappearing;
+    }
+
+    public boolean isExist() {
+        return exist;
+    }
+
+    public void setExist(boolean exist) {
+        this.exist = exist;
+    }
+    
     
     
     public BufferedImage getImage() {
@@ -149,4 +202,26 @@ public abstract class OriginObject {
 
     public void draw(Graphics2D g2){}
     
+    public void disappearAnimation(Graphics2D g2) {
+    
+        disappearCounter++;
+        
+        int i = 5; 
+        
+        if(disappearCounter <= i){ changeAlpha(g2, 0f); }
+        if(disappearCounter > i   && disappearCounter <= i*2){ changeAlpha(g2, 1f); }
+        if(disappearCounter > i*2 && disappearCounter <= i*3){ changeAlpha(g2, 0.8f); }
+        if(disappearCounter > i*3 && disappearCounter <= i*4){ changeAlpha(g2, 0.6f); }
+        if(disappearCounter > i*4 && disappearCounter <= i*5){ changeAlpha(g2, 0.4f); }
+        if(disappearCounter > i*5 && disappearCounter <= i*6){ changeAlpha(g2, 0.2f); }
+        if(disappearCounter > i*6){
+            
+            exist = false;
+        }
+    }
+    
+    public void changeAlpha(Graphics2D g2, float alphaValue){
+        g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alphaValue));
+    }
+
 }

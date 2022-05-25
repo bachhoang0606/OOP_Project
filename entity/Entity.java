@@ -4,7 +4,6 @@
  */
 package entity;
 
-import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
@@ -30,7 +29,6 @@ public class Entity extends OriginObject{
     private int spriteCounter = 0;
     private boolean invincible = false;
     private boolean attacking = false;
-    private boolean alive = true;
     private boolean dying = false;
     private boolean hpBarOn = false;
     
@@ -44,7 +42,6 @@ public class Entity extends OriginObject{
     private int hpBarCounter = 0;
     
     // CHARATER STATUS
-    private int speed; 
     private int maxLife;
     private int life;
     private String dialogues[] = new String[20];
@@ -241,14 +238,6 @@ public class Entity extends OriginObject{
         this.invincible = invincible;
     }
 
-    public boolean isAlive() {
-        return alive;
-    }
-
-    public void setAlive(boolean alive) {
-        this.alive = alive;
-    }
-
     public boolean isDying() {
         return dying;
     }
@@ -297,14 +286,6 @@ public class Entity extends OriginObject{
         this.hpBarCounter = hpBarCounter;
     }
 
-    public int getSpeed() {
-        return speed;
-    }
-
-    public void setSpeed(int speed) {
-        this.speed = speed;
-    }
-
     public int getMaxLife() {
         return maxLife;
     }
@@ -335,7 +316,7 @@ public class Entity extends OriginObject{
         setGp(gp);
         this.maxLife = maxLife;
         this.life = this.maxLife;
-        this.speed = speed;
+        setSpeed(speed);
         
         setName(name);
         setType(type);
@@ -377,10 +358,13 @@ public class Entity extends OriginObject{
         setAction();
         
         collisionOn = false;
+        
         getGp().cChecker.checkTile(this);
         getGp().cChecker.checkEntity(this, getGp().npc);
         getGp().cChecker.checkEntity(this, getGp().monster);
+
         getGp().cChecker.checkObject(this, false);
+        
         boolean contactPlayer = getGp().cChecker.checkPlayer(this);
         
         if(this.getType() == 2 && contactPlayer == true){
@@ -395,10 +379,10 @@ public class Entity extends OriginObject{
         // IF COLLISION IS FALSE, PLAYER CAN MOVE
         if(collisionOn == false){
             switch(direction){
-                case "up": setWorldY(getWorldY() - speed); break;
-                case "down": setWorldY(getWorldY() + speed); break;
-                case "left": setWorldX(getWorldX() - speed); break;
-                case "right": setWorldX(getWorldX() + speed); break; 
+                case "up": setWorldY(getWorldY() - getSpeed()); break;
+                case "down": setWorldY(getWorldY() + getSpeed()); break;
+                case "left": setWorldX(getWorldX() - getSpeed()); break;
+                case "right": setWorldX(getWorldX() + getSpeed()); break; 
             }
         }
 
@@ -509,12 +493,8 @@ public class Entity extends OriginObject{
         if(dyingCounter > i*7 && dyingCounter <= i*8){ changeAlpha(g2, 1f); }
         if(dyingCounter > i*8){
 //            dying = false;
-            alive = false;
+            setExist(false);
         }
-    }
-    
-    public void changeAlpha(Graphics2D g2, float alphaValue){
-        g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alphaValue));
     }
     
     public void getEntityImage(){}

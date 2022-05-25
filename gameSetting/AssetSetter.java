@@ -9,6 +9,7 @@ import entity.MON_GreenSlime;
 import object.OBJ_Boots;
 import object.OBJ_Door;
 import object.OBJ_Key;
+import object.OBJ_Kunai;
 /**
  *
  * @author HOANG XUAN BACH
@@ -42,12 +43,12 @@ public class AssetSetter {
         gp.obj[4].setWorldX(23 * gp.tileSize);
         gp.obj[4].setWorldY(22 * gp.tileSize);
         
-        gp.obj[5] = new OBJ_Boots(gp);
+        gp.obj[5] = new OBJ_Kunai(gp);
         gp.obj[5].setWorldX(23 * gp.tileSize);
         gp.obj[5].setWorldY(23 * gp.tileSize);
         
-
-    }
+        gp.obj[6] = new OBJ_Kunai(gp);
+        }
     
     public void setNPC(){
         

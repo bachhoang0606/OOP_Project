@@ -59,11 +59,17 @@ public abstract class StaticObject extends OriginObject{
 
         if(getWorldX() + getGp().tileSize> getGp().player.getWorldX() - getGp().player.getScreenX() &&
            getWorldX() - getGp().tileSize< getGp().player.getWorldX() + getGp().player.getScreenX() &&
-           getWorldX() + getGp().tileSize> getGp().player.getWorldY() - getGp().player.getScreenY() &&
-           getWorldX() - getGp().tileSize< getGp().player.getWorldY() + getGp().player.getScreenY()){
+           getWorldY() + getGp().tileSize> getGp().player.getWorldY() - getGp().player.getScreenY() &&
+           getWorldY() - getGp().tileSize< getGp().player.getWorldY() + getGp().player.getScreenY()){
             
-              
+            
+            if(isDisappearing() == true){
+                
+                disappearAnimation(g2);
+            }
+            
             g2.drawImage(image, screenX, screenY, getGp().tileSize, getGp().tileSize, null);
+            changeAlpha(g2, 1f);
             
             if(getGp().keyH.drawSolidArea == true){
                 g2.setColor(Color.red);

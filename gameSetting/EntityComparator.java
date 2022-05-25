@@ -4,7 +4,6 @@
  */
 package gameSetting;
 
-import entity.Entity;
 import java.util.Comparator;
 import object.OriginObject;
 

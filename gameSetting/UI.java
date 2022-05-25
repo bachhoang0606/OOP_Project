@@ -10,6 +10,7 @@ import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import object.OBJ_Heart;
+import object.OBJ_Kunai;
 import object.StaticObject;
 /**
  *
@@ -26,6 +27,8 @@ public class UI {
     public boolean gameFinished = false;
     public String currentDialogue = "";
     Color colorTitleBackGround;
+    Color colorStateBackGround;
+    Color colorBountStateBackGround;
     public int commandNum = 0;
     public int titleScreenState = 0; // 0: the first screen, 1: the next screen
     
@@ -37,6 +40,8 @@ public class UI {
         arial_40 = new Font("Arial", Font.PLAIN, 40);
         arial_80B = new Font("Arial", Font.BOLD, 80);
         colorTitleBackGround = new Color(70, 120, 80);
+        colorStateBackGround = new Color(255, 0, 0, 200);
+        colorBountStateBackGround = new Color(255, 0, 0);
         
         // CREATE HUB OBJECT
         StaticObject heart = new OBJ_Heart(gp);
@@ -67,19 +72,28 @@ public class UI {
         if(gp.gameState == gp.playeState){
             
             drawPlayerLife();
+            drawPlayerKunai();
+            if(gp.player.isKunaiAttacking() == true){
+                drawTimeKunaiAttack();
+            }
         }
         
         // PAUSTATE
         if(gp.gameState == gp.pauseState){
             
             drawPlayerLife();
+            drawPlayerKunai();
             drawPauseScreen();
+            if(gp.player.isKunaiAttacking() == true){
+                drawTimeKunaiAttack();
+            }
         }
         
         // DIALOGSTATE
         if(gp.gameState == gp.dialogueState){
             
             drawPlayerLife();
+            drawPlayerKunai();
             drawDialogueScreen();
         }
     }
@@ -115,6 +129,27 @@ public class UI {
         }
     }
     
+    public void drawPlayerKunai(){
+        
+        int kunaiImageX = gp.tileSize/2;
+        int y = gp.tileSize*3/2;
+
+        drawSubWindow(kunaiImageX-4, y-4,  gp.tileSize*3+8, gp.tileSize*2+8);
+        g2.drawImage(gp.obj[6].getImage(), kunaiImageX+gp.tileSize/4+10, y+gp.tileSize/4+15, null);
+        g2.setFont(g2.getFont().deriveFont(30f));
+        g2.drawString(" X "+gp.player.getHasKunai(), kunaiImageX+gp.tileSize, y+gp.tileSize);
+    }
+    
+    public void drawTimeKunaiAttack(){
+        
+        int x = gp.player.getScreenX();
+        int y = gp.player.getScreenY();
+        g2.setColor(Color.black);
+        g2.drawRect(x, y-gp.tileSize/2, gp.tileSize, 2);
+        g2.setColor(Color.white);
+        g2.drawRect(x, y-gp.tileSize/2, gp.tileSize*gp.player.getKunaiAttackCounter()/120, 2);
+    }
+
     public void drawTitleScreen(){
         
         if(titleScreenState == 0){
