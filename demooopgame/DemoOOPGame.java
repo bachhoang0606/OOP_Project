@@ -19,6 +19,8 @@ public class DemoOOPGame {
     public static void main(String[] args) {
         // TODO code application logic here
         
+        // test test
+
         JFrame window = new JFrame();
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.setResizable(false);
