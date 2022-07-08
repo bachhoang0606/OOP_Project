@@ -22,8 +22,7 @@ public class DrawPlayer extends DrawSinhVat implements DrawSpeak{
     private final int screenY;
 	private int standCounter;
     private int kunaiAttackCounter;
-    private int thoiGianHoiPhuc;
-    
+
     private KeyHandler keyH;
     
 	public DrawPlayer(GamePanel gp, Player player) {
@@ -52,7 +51,6 @@ public class DrawPlayer extends DrawSinhVat implements DrawSpeak{
         this.drawKunai = new DrawKunai[40];
         this.standCounter = 0;
         this.kunaiAttackCounter = 0;
-        this.thoiGianHoiPhuc = 0;
     }
 	
 	public void setDefaultValues(){
@@ -62,14 +60,6 @@ public class DrawPlayer extends DrawSinhVat implements DrawSpeak{
        
 		player.setLife(player.getMaxLife());
     }
-
-	public int getThoiGianHoiPhuc() {
-		return thoiGianHoiPhuc;
-	}
-
-	public void setThoiGianHoiPhuc(int thoiGianHoiPhuc) {
-		this.thoiGianHoiPhuc = thoiGianHoiPhuc;
-	}
 
 	public KeyHandler getKeyH() {
 		return keyH;
@@ -240,10 +230,16 @@ public class DrawPlayer extends DrawSinhVat implements DrawSpeak{
             }
         }   
         
-        if (this.thoiGianHoiPhuc >= 60) {
+        // thoi gian hoi phuc mot lan la 1 giay
+        if (this.getThoiGianHoiPhuc() >= 60) {
         	this.player.recuperateMP();
-        	this.thoiGianHoiPhuc = 0;
-        }else this.thoiGianHoiPhuc++;
+        	this.setThoiGianHoiPhuc(0);
+        }else this.setThoiGianHoiPhuc(this.getThoiGianHoiPhuc()+1);
+        
+        // nhan vat du exp nang cap
+        if (this.player.getExp() >= this.player.getMaxExp()) {
+        	this.player.upLevel();
+        }
     }
     public void draw(Graphics2D g2){
         
@@ -306,6 +302,7 @@ public class DrawPlayer extends DrawSinhVat implements DrawSpeak{
         getGp().ui.drawSubWindow(gp.tileSize/2 - 20, gp.tileSize/2 - 20,  gp.tileSize*5, gp.tileSize*4);
         drawPlayerLife(g2);
         drawMpBar(g2);
+        drawExpBar(g2);
         drawPlayerKunai(g2);
         drawPlayerKey(g2);
         
@@ -378,6 +375,23 @@ public class DrawPlayer extends DrawSinhVat implements DrawSpeak{
 
     }
     
+    public void drawExpBar(Graphics2D g2){
+        
+        int x = gp.tileSize*15;
+        int y = gp.tileSize*3;
+        
+        int width = 20;
+        int height = (int) gp.tileSize*7;
+        
+        double oneScale = (double) height/this.getPlayer().getMaxExp();
+        double barValue = oneScale*this.getPlayer().getExp();
+        g2.setColor(new Color(35, 35, 35));
+        g2.drawRect(x, y, width, height);
+        g2.setColor(new Color(0, 0, 255));
+        g2.fillRect(x+1, y+1, (int) width-2, (int)barValue-2);
+
+    }
+
     public void drawPlayerKunai(Graphics2D g2){
         
         int x = gp.tileSize/2;

@@ -43,8 +43,8 @@ public class AssetSetter {
         
         gp.dobj[3] = new DrawVatThe(gp, new Boots());
         gp.dobj[3].setImage(gp.uTool.setup("data/Object/"+gp.dobj[3].getVatThe().getName()+".png", gp.tileSize, gp.tileSize));
-        gp.dobj[3].setWorldX(23 * gp.tileSize);
-        gp.dobj[3].setWorldY(21 * gp.tileSize);
+        gp.dobj[3].setWorldX(34 * gp.tileSize);
+        gp.dobj[3].setWorldY(41 * gp.tileSize);
         
         gp.dobj[4] = new DrawVatThe(gp, new Key());
         gp.dobj[4].setImage(gp.uTool.setup("data/Object/"+gp.dobj[4].getVatThe().getName()+".png", gp.tileSize, gp.tileSize));

@@ -49,6 +49,7 @@ public class Player extends SinhVat implements NoiChuyen{
         attacking = false;
         dialogues = new String[20];
         
+        setDefense(5);
         setDialogue();
 	}
     
@@ -245,7 +246,11 @@ public class Player extends SinhVat implements NoiChuyen{
             if(Dplayer.isInvincible() == false){
             	// am thanh trung dich
             	Dplayer.gp.playSE(6);
-                this.setLife(getLife()-(monster.getSinhVat().getDamge() - this.getDefense()));
+            	
+            	// tru mau khi cham monster neu giap nhieu hon thi tru 1
+            	if(monster.getSinhVat().getDamge() - this.getDefense() > 0) {
+            		this.setLife(this.getLife()-(monster.getSinhVat().getDamge() - this.getDefense()));
+            	}else this.setLife(this.getLife()-1);
                 Dplayer.setInvincible(true);
             }
 
@@ -306,4 +311,23 @@ public class Player extends SinhVat implements NoiChuyen{
      
         return dialogues[dialogueIndex];
     }
+	
+	public void upLevel() {
+		setMaxLife(getMaxLife()+50);
+		setLife(getMaxLife());
+		
+		setMaxMp(getMaxMp()+50);
+		
+		setMaxExp(getMaxExp()+100);
+		setExp(0);
+		
+		if (getDefense()+3 < getMaxDefense()) {
+			setDefense(getDefense()+3);
+		}
+
+		setSpeed(getSpeed()+1);
+		
+		setDamge(getDamge()+10);
+
+	}
 }

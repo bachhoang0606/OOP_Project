@@ -102,14 +102,17 @@ public class DrawKunai extends DrawVatThe{
             if(sinhVatNhanDamge.isInvincible() == false){
             
                 getGp().playSE(6);
-                sinhVatNhanDamge.getSinhVat().setLife(sinhVatNhanDamge.getSinhVat().getLife()
-                								-(this.getKunai().getDamge() 
-                									-sinhVatNhanDamge.getSinhVat().getDefense()));
+                
+                // sat thuong dich nhan khi cham kunai
+                int satThuong = this.getKunai().getDamge() - sinhVatNhanDamge.getSinhVat().getDefense();
+                if (satThuong > 0) {
+                	sinhVatNhanDamge.getSinhVat().setLife(sinhVatNhanDamge.getSinhVat().getLife() - satThuong);
+                }else sinhVatNhanDamge.getSinhVat().setLife(sinhVatNhanDamge.getSinhVat().getLife() - 1);
+                
                 sinhVatNhanDamge.getSinhVat().damageReaction();
                 sinhVatNhanDamge.setInvincible(true);
 
                 if(sinhVatNhanDamge.getSinhVat().getLife() <= 0){
-
                 	sinhVatNhanDamge.setDying(true);
                 }
             }

@@ -9,11 +9,13 @@ public class Slime extends SinhVat{
     	// SinhVat(String name, int maxLife, int maxMp, int maxDefense, int maxExp, int speed, int type)
     	// maxlife = maxMP = 100
     	// maxDefecse = 50
-    	// maxExp = 100
+    	// maxExp = 40
     	// speed = 2
     	// type = 2
-		// damfe = 10
-        super("Green Slime", 100, 100, 50, 100, 2, 2, 10);
+		// damge = 10
+        super("Green Slime", 100, 100, 50, 40, 2, 2, 10);
+        // Exp nguoi choi nhan duoc khi tieu diet slime 
+        setExp(getMaxExp());
     }
 
     public void damageReaction(DrawSlime dMon){

@@ -16,22 +16,24 @@ public class DrawSinhVat extends DrawVatThe{
     private BufferedImage attackUp1, attackUp2, attackDown1, attackDown2, attackLeft1, attackLeft2, attackRight1, attackRight2;
     
     // RECTANGLE
-    private Rectangle attackArea = new Rectangle(0, 0, 0, 0);
+    private Rectangle attackArea;
     
     // COUNTER
-    private int invincibleCounter = 0;
-    private int actionLockCounter = 0;
-    private int dyingCounter = 0;
-    private int hpBarCounter = 0;
+    private int invincibleCounter;
+    private int actionLockCounter;
+    private int dyingCounter;
+    private int hpBarCounter;
+    private int thoiGianHoiPhuc;
     
     // STATE
     private String direction;
-    private int spriteNum = 1;
-    private boolean collisionOn = false;
-    private int spriteCounter = 0;
-    private boolean invincible = false;
-    private boolean dying = false;
-    private boolean hpBarOn = false;
+    private int spriteNum;
+    private boolean collisionOn;
+    private int spriteCounter;
+    private boolean invincible;
+    private boolean dying;
+    private boolean hpBarOn;
+    
     
     
     public DrawSinhVat(GamePanel gp, SinhVat sinhVat) {
@@ -41,16 +43,40 @@ public class DrawSinhVat extends DrawVatThe{
         setDirection("down");
         setSolidArea(new Rectangle(0, 0 , gp.tileSize, gp.tileSize));
         
+        attackArea = new Rectangle(0, 0, 0, 0);
+        
+        
         getSolidArea().x = 8;
         getSolidArea().y = 16;
         getSolidArea().height = gp.tileSize - 16;
         getSolidArea().width = gp.tileSize - 16;
         setSolidAreaDefaultX(getSolidArea().x);
         setSolidAreaDefaultY(getSolidArea().y);
+        
+        invincibleCounter = 0;
+        spriteNum = 1;
+        spriteCounter = 0;
+        actionLockCounter = 0;
+        dyingCounter = 0;
+        hpBarCounter = 0;
+        
+        collisionOn = false;
+        invincible = false;
+        dying = false;
+        hpBarOn = false;
     }
 
     
-    public SinhVat getSinhVat() {
+    
+    public int getThoiGianHoiPhuc() {
+		return thoiGianHoiPhuc;
+	}
+
+	public void setThoiGianHoiPhuc(int thoiGianHoiPhuc) {
+		this.thoiGianHoiPhuc = thoiGianHoiPhuc;
+	}
+
+	public SinhVat getSinhVat() {
 		return sinhVat;
 	}
 
@@ -336,6 +362,12 @@ public class DrawSinhVat extends DrawVatThe{
                 invincibleCounter = 0;
             }
         }
+        
+        // thoi gian hoi phuc mot lan la 1 giay
+        if (this.thoiGianHoiPhuc >= 60) {
+        	this.sinhVat.recuperateMP();
+        	this.thoiGianHoiPhuc = 0;
+        }else this.thoiGianHoiPhuc++;
     }
     
     public void draw(Graphics2D g2){
