@@ -1,5 +1,7 @@
 package Object;
 
+import Graphics.DrawSinhVat;
+import Graphics.DrawVatThe;
 import InterFace.NoiChuyen;
 
 public class OldMan extends SinhVat implements NoiChuyen{
@@ -15,6 +17,7 @@ public class OldMan extends SinhVat implements NoiChuyen{
     	// type = 0
 		// damfe = 0
         super("Oldman", 100, 100, 50, 100, 1, 0, 0);
+        this.setCollision(false);
 	    setDialogue();
 	}
 	
@@ -39,4 +42,18 @@ public class OldMan extends SinhVat implements NoiChuyen{
      
         return dialogues[dialogueIndex];
     }
+
+	@Override
+	public void damageReaction(DrawSinhVat DSinhVat, DrawVatThe vatGayDamge) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setAction(DrawSinhVat dSinhVat) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	
 }

@@ -6,9 +6,11 @@ package GameSetting;
 
 import Graphics.DrawSlime;
 import Graphics.DrawVatThe;
+import Graphics.DrawDragon;
 import Graphics.DrawOldMan;
 import Object.Boots;
 import Object.Door;
+import Object.Dragon;
 import Object.Slime;
 import Object.Key;
 import Object.Kunai;
@@ -93,5 +95,9 @@ public class AssetSetter {
         gp.drawM[2] = new DrawSlime(gp, new Slime());
         gp.drawM[2].setWorldX(23 * gp.tileSize);
         gp.drawM[2].setWorldY(35 * gp.tileSize);
+        
+        gp.drawM[3] = new DrawDragon(gp, new Dragon());
+        gp.drawM[3].setWorldX(34 * gp.tileSize);
+        gp.drawM[3].setWorldY(8 * gp.tileSize);
     }
 }

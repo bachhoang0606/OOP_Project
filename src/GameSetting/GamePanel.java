@@ -150,9 +150,8 @@ public class GamePanel extends JPanel implements Runnable{
                     }
                     if(drawM[i].isExist() == false){
                     	// quai chet cong exp cho nhan vat
-                    	if (drawP.getPlayer().getExp() + drawM[i].getSinhVat().getExp() > drawP.getPlayer().getMaxExp()) {
-                    		drawP.getPlayer().setExp(drawP.getPlayer().getMaxExp());
-                    	}else drawP.getPlayer().setExp(drawP.getPlayer().getExp() + drawM[i].getSinhVat().getExp());
+
+                    	drawP.getPlayer().setExp(drawP.getPlayer().getExp() + drawM[i].getSinhVat().getExp());
                     	 
                     	drawM[i] = null;
                     }

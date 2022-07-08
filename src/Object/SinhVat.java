@@ -4,11 +4,14 @@
  */
 package Object;
 
+import Graphics.DrawSinhVat;
+import Graphics.DrawVatThe;
+
 /**
  *
  * @author HOANG XUAN BACH
  */
-public class SinhVat extends VatThe{
+public abstract class SinhVat extends VatThe{
     
     
     // CHARATER STATUS
@@ -140,6 +143,6 @@ public class SinhVat extends VatThe{
     	
     }
     
-    public void damageReaction(){}
-
+    public abstract void damageReaction(DrawSinhVat DSinhVat, DrawVatThe vatGayDamge);
+    public abstract void setAction(DrawSinhVat dSinhVat);
 }

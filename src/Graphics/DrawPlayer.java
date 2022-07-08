@@ -44,7 +44,7 @@ public class DrawPlayer extends DrawSinhVat implements DrawSpeak{
         getAttackArea().height = 36;
         
         setDefaultValues();
-        getPlayerImage();
+        getEntityImage();
         getPlayerAttackImage();
         
         this.dialogueIndex = 0;
@@ -119,7 +119,7 @@ public class DrawPlayer extends DrawSinhVat implements DrawSpeak{
 		return screenY;
 	}
 
-	public void getPlayerImage(){
+	public void getEntityImage(){
 	       
         UtilityTool uTool = new UtilityTool();
         
@@ -410,4 +410,5 @@ public class DrawPlayer extends DrawSinhVat implements DrawSpeak{
         g2.setFont(g2.getFont().deriveFont(30f));
         g2.drawString(" X "+gp.drawP.getPlayer().getHasKey(), x+gp.tileSize, y+gp.tileSize);
     }
+	
 }

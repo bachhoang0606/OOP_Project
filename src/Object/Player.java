@@ -13,6 +13,7 @@ import Graphics.DrawKunai;
 import Graphics.DrawOldMan;
 import Graphics.DrawPlayer;
 import Graphics.DrawSinhVat;
+import Graphics.DrawVatThe;
 import InterFace.NoiChuyen;
 
 /**
@@ -290,7 +291,7 @@ public class Player extends SinhVat implements NoiChuyen{
             			-(this.getDamge() - sinhVatNhanDamge.getSinhVat().getDefense())
             			);
             	sinhVatNhanDamge.setInvincible(true);
-            	sinhVatNhanDamge.getSinhVat().damageReaction();
+            	sinhVatNhanDamge.getSinhVat().damageReaction(sinhVatNhanDamge, Dplayer);
                 
                 if(sinhVatNhanDamge.getSinhVat().getLife() <= 0){
                 	sinhVatNhanDamge.setDying(true);
@@ -318,9 +319,9 @@ public class Player extends SinhVat implements NoiChuyen{
 		
 		setMaxMp(getMaxMp()+50);
 		
+		setExp(getExp()-getMaxExp());
 		setMaxExp(getMaxExp()+100);
-		setExp(0);
-		
+
 		if (getDefense()+3 < getMaxDefense()) {
 			setDefense(getDefense()+3);
 		}
@@ -330,4 +331,17 @@ public class Player extends SinhVat implements NoiChuyen{
 		setDamge(getDamge()+10);
 
 	}
+
+	@Override
+	public void damageReaction(DrawSinhVat DSinhVat, DrawVatThe vatGayDamge) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setAction(DrawSinhVat dSinhVat) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

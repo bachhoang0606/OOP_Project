@@ -8,7 +8,7 @@ package Object;
  *
  * @author HOANG XUAN BACH
  */
-public class VatThe {
+public abstract class VatThe {
     
     // STATUS
     private String name;

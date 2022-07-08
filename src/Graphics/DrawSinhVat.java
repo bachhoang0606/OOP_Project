@@ -8,9 +8,10 @@ import java.awt.image.BufferedImage;
 import GameSetting.GamePanel;
 import Object.SinhVat;
 
-public class DrawSinhVat extends DrawVatThe{
+public abstract class DrawSinhVat extends DrawVatThe{
 	
 	private SinhVat sinhVat;
+	
 	// IMAGE
     private BufferedImage up1, up2, down1, down2, left1, left2, right1, right2;
     private BufferedImage attackUp1, attackUp2, attackDown1, attackDown2, attackLeft1, attackLeft2, attackRight1, attackRight2;
@@ -23,19 +24,18 @@ public class DrawSinhVat extends DrawVatThe{
     private int actionLockCounter;
     private int dyingCounter;
     private int hpBarCounter;
+    
+    // thoi gian hoi mp
     private int thoiGianHoiPhuc;
     
     // STATE
     private String direction;
     private int spriteNum;
-    private boolean collisionOn;
     private int spriteCounter;
     private boolean invincible;
     private boolean dying;
     private boolean hpBarOn;
-    
-    
-    
+
     public DrawSinhVat(GamePanel gp, SinhVat sinhVat) {
     	super(gp, sinhVat);
         this.sinhVat = sinhVat;
@@ -60,7 +60,6 @@ public class DrawSinhVat extends DrawVatThe{
         dyingCounter = 0;
         hpBarCounter = 0;
         
-        collisionOn = false;
         invincible = false;
         dying = false;
         hpBarOn = false;
@@ -268,14 +267,6 @@ public class DrawSinhVat extends DrawVatThe{
 		this.spriteNum = spriteNum;
 	}
 
-	public boolean isCollisionOn() {
-		return collisionOn;
-	}
-
-	public void setCollisionOn(boolean collisionOn) {
-		this.collisionOn = collisionOn;
-	}
-
 	public int getSpriteCounter() {
 		return spriteCounter;
 	}
@@ -310,9 +301,9 @@ public class DrawSinhVat extends DrawVatThe{
 	
     public void update(){
         
-    	setAction();
+    	this.sinhVat.setAction(this);;
         
-        collisionOn = false;
+        setCollisionOn(false);
         
         gp.cChecker.checkTile(this);
         gp.cChecker.checkEntity(this, gp.drawN);
@@ -321,21 +312,26 @@ public class DrawSinhVat extends DrawVatThe{
         gp.cChecker.checkObject(this, false);
         
         boolean contactPlayer = gp.cChecker.checkPlayer(this);
-        
-        // co che hoi phuc mp
-        this.sinhVat.recuperateMP();
-        
+ 
+        // neu cham vao quai khong trong tranng thai bi thuong thi chui sat thuong
         if(this.sinhVat.getType() == 2 && contactPlayer == true){
             if(gp.drawP.isInvincible() == false){
             	gp.playSE(6);
                 // we can give damage
-            	gp.drawP.getPlayer().setLife(gp.drawP.getPlayer().getLife() - 1);
+            	// sat thuong nhan bang sat thuong quai tru phong th
+            	int satThuongNhan = this.sinhVat.getDamge() - gp.drawP.getPlayer().getDefense();
+            	
+            	// dam bao sat thuong nhan luon lon hon 0
+            	if (satThuongNhan > 0) {
+            		gp.drawP.getPlayer().setLife(gp.drawP.getPlayer().getLife() - satThuongNhan);
+            	}else gp.drawP.getPlayer().setLife(gp.drawP.getPlayer().getLife() - 1);
+            	
             	gp.drawP.setInvincible(true);
             }
         }
         
         // IF COLLISION IS FALSE, PLAYER CAN MOVE
-        if(collisionOn == false){
+        if(this.isCollisionOn() == false){
             switch(direction){
                 case "up": this.setWorldY(this.getWorldY() - this.sinhVat.getSpeed()); break;
                 case "down": this.setWorldY(this.getWorldY() + this.sinhVat.getSpeed()); break;
@@ -365,6 +361,9 @@ public class DrawSinhVat extends DrawVatThe{
         
         // thoi gian hoi phuc mot lan la 1 giay
         if (this.thoiGianHoiPhuc >= 60) {
+//        	if (this.sinhVat instanceof Dragon) {         // debug mp sinh vat
+//        		System.out.println(this.sinhVat.getMp());
+//        	}
         	this.sinhVat.recuperateMP();
         	this.thoiGianHoiPhuc = 0;
         }else this.thoiGianHoiPhuc++;
@@ -455,11 +454,10 @@ public class DrawSinhVat extends DrawVatThe{
         if(dyingCounter > i*6 && dyingCounter <= i*7){ changeAlpha(g2, 0f); }
         if(dyingCounter > i*7 && dyingCounter <= i*8){ changeAlpha(g2, 1f); }
         if(dyingCounter > i*8){
-//            dying = false;
             setExist(false);
         }
     }
-    public void setAction(){};
-    public void getEntityImage(){}
+
+    public abstract void getEntityImage();
     
 }

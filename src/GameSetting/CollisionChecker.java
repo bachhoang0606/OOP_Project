@@ -137,7 +137,7 @@ public class CollisionChecker {
                 }
                 
                 if(DoObj.getSolidArea().intersects(target[i].getSolidArea())){
-                    if(target[i].getSinhVat() != DoObj.getVatThe()){
+                    if(target[i].getSinhVat() != DoObj.getVatThe() && target[i].getSinhVat().isCollision() == true){
                     	DoObj.setCollisionOn(true);
                         index = target[i];
                     }

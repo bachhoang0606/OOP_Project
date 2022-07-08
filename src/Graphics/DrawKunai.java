@@ -109,7 +109,7 @@ public class DrawKunai extends DrawVatThe{
                 	sinhVatNhanDamge.getSinhVat().setLife(sinhVatNhanDamge.getSinhVat().getLife() - satThuong);
                 }else sinhVatNhanDamge.getSinhVat().setLife(sinhVatNhanDamge.getSinhVat().getLife() - 1);
                 
-                sinhVatNhanDamge.getSinhVat().damageReaction();
+                sinhVatNhanDamge.getSinhVat().damageReaction(sinhVatNhanDamge, this);
                 sinhVatNhanDamge.setInvincible(true);
 
                 if(sinhVatNhanDamge.getSinhVat().getLife() <= 0){

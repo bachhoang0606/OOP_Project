@@ -1,6 +1,5 @@
 package Graphics;
 
-import java.util.Random;
 
 import GameSetting.GamePanel;
 import GameSetting.UtilityTool;
@@ -45,22 +44,5 @@ public class DrawSlime extends DrawSinhVat{
         setRight1(uTool.setup("data/Monster/greenslime_down_1.png", gp.tileSize, gp.tileSize));
         setRight2(uTool.setup("data/Monster/greenslime_down_2.png", gp.tileSize, gp.tileSize));
         
-    }
-	public void setAction(){
-        
-    	setActionLockCounter(getActionLockCounter()+1);
-        
-        if(getActionLockCounter() == 120){
-            
-            Random random = new Random();
-            int i = random.nextInt(100)+1;
-
-            if(i <= 25){ setDirection("up"); }
-            else if(i > 25 && i <= 50){ setDirection("down"); }
-            else if(i > 50 && i <= 75){ setDirection("left"); }
-            else if(i > 75 && i <= 100){ setDirection("right"); }
-            
-            setActionLockCounter(0);
-        }
     }
 }
