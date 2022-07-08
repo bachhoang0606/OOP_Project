@@ -34,12 +34,11 @@ public class DrawSinhVat extends DrawVatThe{
     private boolean hpBarOn = false;
     
     
-    public DrawSinhVat(GamePanel gp, SinhVat sinhVat, int maxLife, int speed) {
+    public DrawSinhVat(GamePanel gp, SinhVat sinhVat) {
     	super(gp, sinhVat);
         this.sinhVat = sinhVat;
         
         setDirection("down");
-        setVatThe(sinhVat);
         setSolidArea(new Rectangle(0, 0 , gp.tileSize, gp.tileSize));
         
         getSolidArea().x = 8;
@@ -75,79 +74,53 @@ public class DrawSinhVat extends DrawVatThe{
 		this.up2 = up2;
 	}
 
-
-
 	public BufferedImage getDown1() {
 		return down1;
 	}
-
-
 
 	public void setDown1(BufferedImage down1) {
 		this.down1 = down1;
 	}
 
-
-
 	public BufferedImage getDown2() {
 		return down2;
 	}
-
-
 
 	public void setDown2(BufferedImage down2) {
 		this.down2 = down2;
 	}
 
-
-
 	public BufferedImage getLeft1() {
 		return left1;
 	}
-
-
-
+	
 	public void setLeft1(BufferedImage left1) {
 		this.left1 = left1;
 	}
-
-
 
 	public BufferedImage getLeft2() {
 		return left2;
 	}
 
-
-
 	public void setLeft2(BufferedImage left2) {
 		this.left2 = left2;
 	}
-
-
 
 	public BufferedImage getRight1() {
 		return right1;
 	}
 
-
-
 	public void setRight1(BufferedImage right1) {
 		this.right1 = right1;
 	}
-
-
 
 	public BufferedImage getRight2() {
 		return right2;
 	}
 
-
-
 	public void setRight2(BufferedImage right2) {
 		this.right2 = right2;
 	}
-
-
 
 	public BufferedImage getAttackUp1() {
 		return attackUp1;
@@ -297,19 +270,13 @@ public class DrawSinhVat extends DrawVatThe{
 		return dying;
 	}
 
-
-
 	public void setDying(boolean dying) {
 		this.dying = dying;
 	}
 
-
-
 	public boolean isHpBarOn() {
 		return hpBarOn;
 	}
-
-
 
 	public void setHpBarOn(boolean hpBarOn) {
 		this.hpBarOn = hpBarOn;
@@ -328,6 +295,9 @@ public class DrawSinhVat extends DrawVatThe{
         gp.cChecker.checkObject(this, false);
         
         boolean contactPlayer = gp.cChecker.checkPlayer(this);
+        
+        // co che hoi phuc mp
+        this.sinhVat.recuperateMP();
         
         if(this.sinhVat.getType() == 2 && contactPlayer == true){
             if(gp.drawP.isInvincible() == false){
@@ -400,7 +370,6 @@ public class DrawSinhVat extends DrawVatThe{
             
             // Monster Hp bar
             if(this.sinhVat.getType() == 2 && hpBarOn == true){
-                
                 double oneScale = (double) gp.tileSize/this.sinhVat.getMaxLife();
                 double hpBarValue = oneScale*this.sinhVat.getLife();
                 

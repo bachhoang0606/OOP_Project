@@ -6,7 +6,6 @@ import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
-import Graphics.DrawObject;
 
 public class UI {
     GamePanel gp;
@@ -66,11 +65,6 @@ public class UI {
         // PLAY STATE
         if(gp.gameState == gp.playeState){
             
-            drawSubWindow(gp.tileSize/2 - 20, gp.tileSize/2 - 20,  gp.tileSize*5, gp.tileSize*4);
-            drawPlayerLife();
-            drawPlayerKunai();
-            drawPlayerKey();
-            
             if(gp.drawP.getPlayer().isKunaiAttacking() == true){
                 drawTimeKunaiAttack();
             }
@@ -79,10 +73,6 @@ public class UI {
         // PAUSTATE
         if(gp.gameState == gp.pauseState){
             
-            drawSubWindow(gp.tileSize/2 - 20, gp.tileSize/2 - 20,  gp.tileSize*5, gp.tileSize*4);
-            drawPlayerLife();
-            drawPlayerKunai();
-            drawPlayerKey();
             drawPauseScreen();
             if(gp.drawP.getPlayer().isKunaiAttacking() == true){
                 drawTimeKunaiAttack();
@@ -92,63 +82,10 @@ public class UI {
         // DIALOGSTATE
         if(gp.gameState == gp.dialogueState){
             
-            drawSubWindow(gp.tileSize/2 - 20, gp.tileSize/2 - 20,  gp.tileSize*5, gp.tileSize*4);
-            drawPlayerLife();
-            drawPlayerKunai();
-            drawPlayerKey();
             drawDialogueScreen();
         }
     }
-    
-    public void drawPlayerLife(){
-        
-        int x = gp.tileSize/2;
-        int y = gp.tileSize/2;
-        int i = 0;
-        
-        // DRAW MAXLIFE
-        while(i < gp.drawP.getPlayer().getMaxLife()/2){
-            
-            g2.drawImage(heart_blank, x, y, null);
-            i++;
-            x += gp.tileSize;
-        }
-        
-        // RESET
-        x = gp.tileSize/2;
-        y = gp.tileSize/2;
-        i = 0;
-        
-        // DRWA CURRENT LIFE
-        while(i < gp.drawP.getPlayer().getLife()){
-            g2.drawImage(heart_haft, x, y, null);
-            i++;
-            if(i < gp.drawP.getPlayer().getLife()) {
-                g2.drawImage(heart_full, x, y, null);
-            }
-            i++;
-            x += gp.tileSize;
-        }
-    }
-    
-    public void drawPlayerKunai(){
-        
-        int x = gp.tileSize/2;
-        int y = gp.tileSize*2;
 
-        g2.drawImage(gp.dobj[6].getImage(), x+gp.tileSize/4+10, y+gp.tileSize/4+15, null);
-        g2.setFont(g2.getFont().deriveFont(30f));
-        g2.drawString(" X "+gp.drawP.getPlayer().getHasKunai(), x+gp.tileSize, y+gp.tileSize);
-    }    
-    public void drawPlayerKey(){
-        
-        int x = gp.tileSize/2;
-        int y = gp.tileSize*1;
-//        if(gp.dobj[7] == null)
-        g2.drawImage(gp.dobj[7].getImage(), x+gp.tileSize/4+10, y+gp.tileSize/4+15, null);
-        g2.setFont(g2.getFont().deriveFont(30f));
-        g2.drawString(" X "+gp.drawP.getPlayer().getHasKey(), x+gp.tileSize, y+gp.tileSize);
-    }
     
     public void drawTimeKunaiAttack(){
         

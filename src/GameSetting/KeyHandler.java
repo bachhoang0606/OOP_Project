@@ -88,11 +88,7 @@ public class KeyHandler implements KeyListener{
             case KeyEvent.VK_S: downPressed = true; break;
             case KeyEvent.VK_A: leftPressed = true; break;
             case KeyEvent.VK_D: rightPressed = true; break;
-            case KeyEvent.VK_K: 
-                
-                kPressed = true;
-                System.out.println("k enter press!");
-                break;
+            case KeyEvent.VK_K: kPressed = true; break;
             case KeyEvent.VK_T:
 
                 // DEBUG
@@ -133,10 +129,7 @@ public class KeyHandler implements KeyListener{
             case KeyEvent.VK_A: leftPressed = false; break;
             case KeyEvent.VK_D: rightPressed = false; break;
             case KeyEvent.VK_ENTER: enterPressed = false; break;
-            case KeyEvent.VK_K: 
-                kPressed = false;
-                System.out.println("k enter release!");
-                break;
+            case KeyEvent.VK_K: kPressed = false; break;
             default: break;
         }
     }

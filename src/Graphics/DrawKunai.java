@@ -3,10 +3,13 @@ package Graphics;
 import GameSetting.GamePanel;
 import Object.Kunai;
 
-public class DrawKunai extends DrawObject{
+public class DrawKunai extends DrawVatThe{
 	
 	private Kunai kunai;
+	
 	private int distance;
+	
+	// toa do xuat hien kunai
     private int startAttackX;
     private int startAttackY;
 	
@@ -55,6 +58,7 @@ public class DrawKunai extends DrawObject{
         this.startAttackY = startAttackY;
     }
     
+    
     public void update(){
         
         int distanceX = Math.abs(startAttackX - this.getWorldX());
@@ -63,18 +67,21 @@ public class DrawKunai extends DrawObject{
             
             setCollisionOn(false);
             
+            // kiem tra va cham voi map
             getGp().cChecker.checkTile(this);
+            
+            // kiem tra va cham voi nhan vat
             getGp().cChecker.checkEntity(this, getGp().drawN);
             
-            int indexMonster =  getGp().cChecker.checkEntity(this, getGp().drawM);
+            // gay dame cho sinh vat cham vao
+            DrawSinhVat indexMonster =  getGp().cChecker.checkEntity(this, getGp().drawM);
             inflictDamage(indexMonster);
                         
+            // kiem tra va cham voi doi tuong
             getGp().cChecker.checkObject(this, false);
-            
-            System.out.println(isCollisionOn());
+
             
             if(isCollisionOn() == false){
-            	System.out.println("update kunai");  // false
                 switch(getDirection()){
                 case "up": this.setWorldY(this.getWorldY()-kunai.getSpeed()); break;
                 case "down": this.setWorldY(this.getWorldY()+kunai.getSpeed()); break;
@@ -88,19 +95,22 @@ public class DrawKunai extends DrawObject{
         }
     }
     
-    public void inflictDamage(int i){
+    // gay dame cho doi tuong cham vao no
+    public void inflictDamage(DrawSinhVat sinhVatNhanDamge){
         
-        if(i != 999){
-            if(getGp().drawM[i].isInvincible() == false){
+        if(sinhVatNhanDamge != null){
+            if(sinhVatNhanDamge.isInvincible() == false){
             
                 getGp().playSE(6);
-                getGp().drawM[i].getSinhVat().setLife(getGp().drawM[i].getSinhVat().getLife()-1);
-                getGp().drawM[i].getSinhVat().damageReaction();
-                getGp().drawM[i].setInvincible(true);
+                sinhVatNhanDamge.getSinhVat().setLife(sinhVatNhanDamge.getSinhVat().getLife()
+                								-(this.getKunai().getDamge() 
+                									-sinhVatNhanDamge.getSinhVat().getDefense()));
+                sinhVatNhanDamge.getSinhVat().damageReaction();
+                sinhVatNhanDamge.setInvincible(true);
 
-                if(getGp().drawM[i].getSinhVat().getLife() <= 0){
+                if(sinhVatNhanDamge.getSinhVat().getLife() <= 0){
 
-                    getGp().drawM[i].setDying(true);
+                	sinhVatNhanDamge.setDying(true);
                 }
             }
         }

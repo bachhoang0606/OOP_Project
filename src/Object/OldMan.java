@@ -7,8 +7,14 @@ public class OldMan extends SinhVat implements NoiChuyen{
 	private String dialogues[] = new String[20];
 	
 	public OldMan() {
-	    
-	    super("Oldman", 0, 1, 3);
+		// SinhVat(String name, int maxLife, int maxMp, int maxDefense, int maxExp, int speed, int type)
+    	// maxlife = maxMP = 100
+    	// maxDefecse = 50
+    	// maxExp = 100
+    	// speed = 1
+    	// type = 0
+		// damfe = 0
+        super("Oldman", 100, 100, 50, 100, 1, 0, 0);
 	    setDialogue();
 	}
 	

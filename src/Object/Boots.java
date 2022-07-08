@@ -10,6 +10,6 @@ package Object;
 public class Boots extends VatThe{
         
     public Boots() {
-        super("Boots", false, 0,1);
+        super("boots", false, 0,1);
     }
 }

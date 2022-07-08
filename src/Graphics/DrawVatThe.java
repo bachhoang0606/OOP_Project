@@ -1,6 +1,7 @@
 package Graphics;
 
 import java.awt.AlphaComposite;
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
@@ -12,8 +13,10 @@ import Object.VatThe;
 public class DrawVatThe {
 	
 	public GamePanel gp;
-	UtilityTool uTool;
+	public UtilityTool uTool;
+	
 	private VatThe vatThe;
+	
 	// toa do tren map
     private int worldX, worldY;
 
@@ -36,6 +39,7 @@ public class DrawVatThe {
     private boolean disappearing;
 
     public DrawVatThe(GamePanel gp, VatThe oObject) {
+    	
 		this.gp = gp;
 		this.vatThe = oObject;
 		this.direction = null;
@@ -45,6 +49,10 @@ public class DrawVatThe {
 		this.disappearing = false;
 		
 		this.disappearCounter = 0;
+		
+		this.uTool = new UtilityTool();
+		this.solidArea = new Rectangle(0, 0, gp.tileSize, gp.tileSize);
+
 	}
 
 	public int getWorldX() {
@@ -209,8 +217,36 @@ public class DrawVatThe {
             exist = false;
         }
     }
+	
     public void changeAlpha(Graphics2D g2, float alphaValue){
         g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alphaValue));
     }
-    public void draw(Graphics2D g2) {};
+    
+    public void draw(Graphics2D g2){
+
+        BufferedImage image = getImage();
+        
+        int screenX =  this.getWorldX() - gp.drawP.getWorldX()  + gp.drawP.getScreenX();
+        int screenY =  this.getWorldY() - gp.drawP.getWorldY()  + gp.drawP.getScreenY();
+
+        if(this.getWorldX() + gp.tileSize> gp.drawP.getWorldX() - gp.drawP.getScreenX() &&
+        		this.getWorldX() - gp.tileSize< gp.drawP.getWorldX() + gp.drawP.getScreenX() &&
+        		this.getWorldY() + gp.tileSize> gp.drawP.getWorldY() - gp.drawP.getScreenY() &&
+        		this.getWorldY() - gp.tileSize< gp.drawP.getWorldY() + gp.drawP.getScreenY()){
+            
+            
+            if(isDisappearing() == true){
+                
+                disappearAnimation(g2);
+            }
+            
+            g2.drawImage(image, screenX, screenY, gp.tileSize, gp.tileSize, null);
+            changeAlpha(g2, 1f);
+            
+            if(gp.keyH.drawSolidArea == true){
+                g2.setColor(Color.red);
+                g2.drawRect(screenX + getSolidArea().x, screenY + getSolidArea().y, getSolidArea().width, getSolidArea().height);
+            }
+        }
+    }
 }

@@ -10,12 +10,9 @@ import Graphics.DrawSinhVat;
 import Graphics.DrawVatThe;
 import Graphics.DrawOldMan;
 import Graphics.DrawPlayer;
-import Graphics.DrawTinhVat;
 
 import java.util.ArrayList;
-import java.util.Collections;
 
-import Object.OldMan;
 import Object.Player;
 import Object.TileManager;
 
@@ -52,7 +49,7 @@ public class GamePanel extends JPanel implements Runnable{
     public DrawPlayer drawP = new DrawPlayer(this, new Player(keyH));
     public DrawSinhVat[] drawM = new DrawSinhVat[20];
     public DrawOldMan[] drawN = new DrawOldMan[10];
-    public DrawTinhVat[] dobj = new DrawTinhVat[10];
+    public DrawVatThe[] dobj = new DrawVatThe[10];
     ArrayList<DrawVatThe> list = new ArrayList<DrawVatThe>();
     
     // GAME STATE

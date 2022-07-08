@@ -12,6 +12,6 @@ package Object;
 public class Door extends VatThe{
         
     public Door() {
-        super("Door", true, 0, 1);
+        super("door", true, 0, 1);
     } 
 }

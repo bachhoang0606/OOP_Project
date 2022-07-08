@@ -113,9 +113,9 @@ public class CollisionChecker {
     }
     
     // NPC OR MONSTER
-    public int checkEntity(DrawVatThe DoObj, DrawSinhVat[] target){
+    public DrawSinhVat checkEntity(DrawVatThe DoObj, DrawSinhVat[] target){
         
-        int index = 999;
+    	DrawSinhVat index = null;
         
         for(int i = 0; i < target.length; i++){
             
@@ -139,7 +139,7 @@ public class CollisionChecker {
                 if(DoObj.getSolidArea().intersects(target[i].getSolidArea())){
                     if(target[i].getSinhVat() != DoObj.getVatThe()){
                     	DoObj.setCollisionOn(true);
-                        index = i;
+                        index = target[i];
                     }
                 }
 

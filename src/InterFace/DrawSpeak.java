@@ -2,6 +2,6 @@ package InterFace;
 
 public interface DrawSpeak {
 
-	public void DrawSpeak();
+	public void DrawSpeakSV();
 	
 }

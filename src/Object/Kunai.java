@@ -11,9 +11,21 @@ package Object;
  */
 public class Kunai extends VatThe{
  
+	private int damge;
     
     public Kunai() {
-        super("Kunai", false, 0, 1);
+        super("kunai", false, 0, 1);
+        this.damge = 20;
     }
+
+	public int getDamge() {
+		return damge;
+	}
+
+	public void setDamge(int damge) {
+		this.damge = damge;
+	}
+    
+
 }    
     

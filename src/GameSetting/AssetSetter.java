@@ -5,11 +5,11 @@
 package GameSetting;
 
 import Graphics.DrawSlime;
+import Graphics.DrawVatThe;
 import Graphics.DrawOldMan;
-import Graphics.DrawObject;
 import Object.Boots;
 import Object.Door;
-import Object.GreenSlime;
+import Object.Slime;
 import Object.Key;
 import Object.Kunai;
 import Object.OldMan;
@@ -26,34 +26,42 @@ public class AssetSetter {
     
     public void setObject(){
     	
-    	gp.dobj[0] = new DrawObject(gp, new Door());
+    	gp.dobj[0] = new DrawVatThe(gp, new Door());
+    	gp.dobj[0].setImage(gp.uTool.setup("data/Object/"+gp.dobj[0].getVatThe().getName()+".png", gp.tileSize, gp.tileSize));
         gp.dobj[0].setWorldX(10 * gp.tileSize);
         gp.dobj[0].setWorldY(12 * gp.tileSize);
         
-        gp.dobj[1] = new DrawObject(gp, new Door());
+        gp.dobj[1] = new DrawVatThe(gp, new Door());
+        gp.dobj[1].setImage(gp.uTool.setup("data/Object/"+gp.dobj[1].getVatThe().getName()+".png", gp.tileSize, gp.tileSize));
         gp.dobj[1].setWorldX(23 * gp.tileSize);
         gp.dobj[1].setWorldY(24 * gp.tileSize);
         
-        gp.dobj[2] = new DrawObject(gp, new Key());
+        gp.dobj[2] = new DrawVatThe(gp, new Key());
+        gp.dobj[2].setImage(gp.uTool.setup("data/Object/"+gp.dobj[2].getVatThe().getName()+".png", gp.tileSize, gp.tileSize));
         gp.dobj[2].setWorldX(23 * gp.tileSize);
         gp.dobj[2].setWorldY(20 * gp.tileSize);
         
-        gp.dobj[3] = new DrawObject(gp, new Boots());
+        gp.dobj[3] = new DrawVatThe(gp, new Boots());
+        gp.dobj[3].setImage(gp.uTool.setup("data/Object/"+gp.dobj[3].getVatThe().getName()+".png", gp.tileSize, gp.tileSize));
         gp.dobj[3].setWorldX(23 * gp.tileSize);
         gp.dobj[3].setWorldY(21 * gp.tileSize);
         
-        gp.dobj[4] = new DrawObject(gp, new Key());
+        gp.dobj[4] = new DrawVatThe(gp, new Key());
+        gp.dobj[4].setImage(gp.uTool.setup("data/Object/"+gp.dobj[4].getVatThe().getName()+".png", gp.tileSize, gp.tileSize));
         gp.dobj[4].setWorldX(23 * gp.tileSize);
         gp.dobj[4].setWorldY(22 * gp.tileSize);
         
-        gp.dobj[5] = new DrawObject(gp, new Kunai());
+        gp.dobj[5] = new DrawVatThe(gp, new Kunai());
+        gp.dobj[5].setImage(gp.uTool.setup("data/Object/"+gp.dobj[5].getVatThe().getName()+".png", gp.tileSize, gp.tileSize));
         gp.dobj[5].setWorldX(23 * gp.tileSize);
         gp.dobj[5].setWorldY(23 * gp.tileSize);
         
-        gp.dobj[6] = new DrawObject(gp, new Kunai());
+        gp.dobj[6] = new DrawVatThe(gp, new Kunai());
+        gp.dobj[6].setImage(gp.uTool.setup("data/Object/"+gp.dobj[6].getVatThe().getName()+".png", gp.tileSize, gp.tileSize));
         gp.dobj[6].setImage(gp.uTool.scaleImage(gp.dobj[6].getImage(), gp.tileSize/2, gp.tileSize/2));
         
-        gp.dobj[7] = new DrawObject(gp, new Key());
+        gp.dobj[7] = new DrawVatThe(gp, new Key());
+        gp.dobj[7].setImage(gp.uTool.setup("data/Object/"+gp.dobj[7].getVatThe().getName()+".png", gp.tileSize, gp.tileSize));
         gp.dobj[7].setImage(gp.uTool.scaleImage(gp.dobj[7].getImage(), gp.tileSize/2, gp.tileSize/2));
         }
     
@@ -74,15 +82,15 @@ public class AssetSetter {
     
     public void setMonster(){
         
-    	gp.drawM[0] = new DrawSlime(gp, new GreenSlime());
+    	gp.drawM[0] = new DrawSlime(gp, new Slime());
         gp.drawM[0].setWorldX(23 * gp.tileSize);
         gp.drawM[0].setWorldY(36 * gp.tileSize);
         
-        gp.drawM[1] = new DrawSlime(gp, new GreenSlime());
+        gp.drawM[1] = new DrawSlime(gp, new Slime());
         gp.drawM[1].setWorldX(23 * gp.tileSize);
         gp.drawM[1].setWorldY(37 * gp.tileSize);
         
-        gp.drawM[2] = new DrawSlime(gp, new GreenSlime());
+        gp.drawM[2] = new DrawSlime(gp, new Slime());
         gp.drawM[2].setWorldX(23 * gp.tileSize);
         gp.drawM[2].setWorldY(35 * gp.tileSize);
     }

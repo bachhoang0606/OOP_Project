@@ -15,7 +15,7 @@ public class DrawOldMan extends DrawSinhVat implements DrawSpeak{
 	
 	public DrawOldMan(GamePanel gp, OldMan man) {
         
-        super(gp, man, 0, 1);
+        super(gp, man);
         
         this.oldMan = man;
         getEntityImage();
@@ -36,7 +36,7 @@ public class DrawOldMan extends DrawSinhVat implements DrawSpeak{
     }
     
     
-    public void DrawSpeak(){
+    public void DrawSpeakSV(){
         
     	if(oldMan.speak(dialogueIndex) == null) {
     		this.dialogueIndex = 0;

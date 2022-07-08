@@ -4,23 +4,15 @@ import java.util.Random;
 
 import GameSetting.GamePanel;
 import GameSetting.UtilityTool;
-import Object.GreenSlime;
+import Object.Slime;
 
 public class DrawSlime extends DrawSinhVat{
 	
-	private GreenSlime slime;
+	private Slime slime;
 
-	public GreenSlime getSlime() {
-		return slime;
-	}
+	public DrawSlime(GamePanel gp, Slime slime) {
 
-	public void setSlime(GreenSlime slime) {
-		this.slime = slime;
-	}
-
-	public DrawSlime(GamePanel gp, GreenSlime slime) {
-
-        super(gp, slime, 8, 1);
+        super(gp, slime);
         this.slime = slime;
         getSolidArea().x = 3;
         getSolidArea().y = 18;
@@ -31,6 +23,14 @@ public class DrawSlime extends DrawSinhVat{
         
         getEntityImage();
     }
+	
+	public Slime getSlime() {
+		return slime;
+	}
+
+	public void setSlime(Slime slime) {
+		this.slime = slime;
+	}
 	
 	public void getEntityImage(){
         

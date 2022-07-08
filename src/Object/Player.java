@@ -5,9 +5,14 @@
 package Object;
 
 
+
+
+
 import GameSetting.KeyHandler;
 import Graphics.DrawKunai;
+import Graphics.DrawOldMan;
 import Graphics.DrawPlayer;
+import Graphics.DrawSinhVat;
 import InterFace.NoiChuyen;
 
 /**
@@ -17,10 +22,6 @@ import InterFace.NoiChuyen;
 public class Player extends SinhVat implements NoiChuyen{
     
 	private Kunai[] playerKunai;
-	// sao lai con keyH
-	// nen bo cau lenh dong 255 nhu the nao
-	// nhan vat so huu kunai chu khong phai drawplayer so huu drawkunai
-	// Khong hieu y tuong cho DrawVatThe -
     
     
     private int hasKunai;
@@ -32,8 +33,14 @@ public class Player extends SinhVat implements NoiChuyen{
     private String[] dialogues;
 
     public Player(KeyHandler keyH) {
-        
-        super("Player", 6, 4, 0);
+    	// SinhVat(String name, int maxLife, int maxMp, int maxDefense, int maxExp, int speed, int type)
+    	// maxlife = maxMP = 100
+    	// maxDefecse = 50
+    	// maxExp = 100
+    	// speed = 4
+    	// type = 0
+    	// damge = 40
+        super("Player", 100, 100, 50, 100, 4, 0, 40);
         
         playerKunai = new Kunai[40];
         hasKunai = 10;
@@ -99,13 +106,19 @@ public class Player extends SinhVat implements NoiChuyen{
         
         if(Dplayer.getKunaiAttackCounter() == 0){
 
-            if(hasKunai > 0){
+            if(hasKunai > 0 && this.getMp() >= 10){
             
+            	this.setMp(this.getMp() - 10);
                 int startAttackX = Dplayer.getWorldX() + Dplayer.getSolidArea().x;
                 int startAttackY = Dplayer.getWorldY() + Dplayer.getSolidArea().y;
 
                 this.playerKunai[hasKunai-1] = new Kunai();
                 Dplayer.getDrawKunai()[hasKunai-1] = new DrawKunai(Dplayer.gp, this.playerKunai[hasKunai-1]);
+                Dplayer.getDrawKunai()[hasKunai-1].setImage(Dplayer.uTool.setup("data/Object/"+this.playerKunai[hasKunai-1].getName()+".png", 
+                																	Dplayer.getGp().tileSize, 
+                																	Dplayer.getGp().tileSize
+                																)
+                											);
 
                 switch(Dplayer.getDirection()){
                     case "up": startAttackY -= Dplayer.getDrawKunai()[hasKunai-1].getSolidArea().height; break;
@@ -159,7 +172,7 @@ public class Player extends SinhVat implements NoiChuyen{
             Dplayer.getSolidArea().height = Dplayer.getAttackArea().height;
             
             // Check monster collision with the updated worldX, worldY and solidArea
-            int monterIndex = Dplayer.gp.cChecker.checkEntity(Dplayer, Dplayer.gp.drawM);
+            DrawSinhVat monterIndex = Dplayer.gp.cChecker.checkEntity(Dplayer, Dplayer.gp.drawM);
             damageMonster(monterIndex, Dplayer);
             
             // After checking collision, restore the original data
@@ -183,13 +196,13 @@ public class Player extends SinhVat implements NoiChuyen{
             String objectName = Dplayer.gp.dobj[i].getVatThe().getName();
             
             switch(objectName){
-                case "Key":
+                case "key":
                 	Dplayer.gp.playSE(1);
                     hasKey++;
                     Dplayer.gp.dobj[i] = null;
                     Dplayer.gp.ui.showMessage("You got a key!");
                     break;
-                case "Door":
+                case "door":
                     if(hasKey > 0){
                     	Dplayer.gp.dobj[i] = null;
                         hasKey--;
@@ -200,18 +213,18 @@ public class Player extends SinhVat implements NoiChuyen{
                     	Dplayer.gp.ui.showMessage("You need the key!");
                     }
                     break;
-                case "Boots":
+                case "boots":
                 	Dplayer.gp.ui.showMessage("Speed up!");
                 	Dplayer.gp.playSE(2);
                     setSpeed(getSpeed()+2);
                     Dplayer.gp.dobj[i] = null;
                     break;
-                case "Chest":
+                case "chest":
                 	Dplayer.gp.ui.gameFinished = true;
                 	Dplayer.gp.stopMusic();
                 	Dplayer.gp.playSE(4);
                     break;
-                case "Kunai":
+                case "kunai":
                 	Dplayer.gp.dobj[i] = null;
                 	if (Dplayer.getPlayer().getHasKunai()+10 > 40)
                 	{
@@ -225,48 +238,57 @@ public class Player extends SinhVat implements NoiChuyen{
         }    
     }
     
-    public void interactNPC(int i, DrawPlayer Dplayer) {
+    public void contactMonster(DrawSinhVat monster, DrawPlayer Dplayer) {
         
-        if(Dplayer.gp.keyH.enterPressed == true){
-            if(i != 999){
-            	Dplayer.gp.gameState = Dplayer.gp.dialogueState;
-            	Dplayer.gp.drawN[i].DrawSpeak();
-            }
-            else {
-            	Dplayer.gp.playSE(7);
-                setAttacking(true);
-            }
-        }
-        
-    }
-
-    public void contactMonster(int i, DrawPlayer Dplayer) {
-        
-        if(i != 999){
+        if(monster != null && !(monster instanceof DrawOldMan)){
             
             if(Dplayer.isInvincible() == false){
+            	// am thanh trung dich
             	Dplayer.gp.playSE(6);
-                setLife(getLife()-1);
+                this.setLife(getLife()-(monster.getSinhVat().getDamge() - this.getDefense()));
                 Dplayer.setInvincible(true);
             }
 
         }
     }
     
-    public void damageMonster(int i, DrawPlayer Dplayer){
+    public void interactNPC(DrawOldMan npc, DrawPlayer Dplayer) {
         
-        if( i != 999){
+        if(Dplayer.gp.keyH.enterPressed == true){
+            if(npc != null){
+            	Dplayer.gp.gameState = Dplayer.gp.dialogueState;
+            	npc.DrawSpeakSV();
+            }
+            else {
+            	
+            	if(Dplayer.getPlayer().getMp() >= 20)
+            	{
+            		Dplayer.getPlayer().setMp(Dplayer.getPlayer().getMp() - 20);
+            		setAttacking(true);
+            		Dplayer.gp.playSE(7);
+            	}
+                
+            }
+        }
+        
+    }
+
+    public void damageMonster(DrawSinhVat sinhVatNhanDamge, DrawPlayer Dplayer){
+        
+        if( sinhVatNhanDamge != null){
             
-            if(Dplayer.gp.drawM[i].isInvincible() == false){
+            if(sinhVatNhanDamge.isInvincible() == false){
                 
             	Dplayer.gp.playSE(5);
-            	Dplayer.gp.drawM[i].getSinhVat().setLife(Dplayer.gp.drawM[i].getSinhVat().getLife()-1);
-//              System.out.println("Monster ["+i+"] attacked: "+getGp().monster[i].getLife());
-            	Dplayer.gp.drawM[i].setInvincible(true);
-            	Dplayer.gp.drawM[i].getSinhVat().damageReaction();
+            	sinhVatNhanDamge.getSinhVat().setLife(
+            			sinhVatNhanDamge.getSinhVat().getLife()
+            			-(this.getDamge() - sinhVatNhanDamge.getSinhVat().getDefense())
+            			);
+            	sinhVatNhanDamge.setInvincible(true);
+            	sinhVatNhanDamge.getSinhVat().damageReaction();
                 
-                if(Dplayer.gp.drawM[i].getSinhVat().getLife() <= 0){
-                	Dplayer.gp.drawM[i].setDying(true);
+                if(sinhVatNhanDamge.getSinhVat().getLife() <= 0){
+                	sinhVatNhanDamge.setDying(true);
                 }
             }
         }

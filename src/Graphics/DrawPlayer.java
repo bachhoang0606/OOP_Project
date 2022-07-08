@@ -15,18 +15,20 @@ public class DrawPlayer extends DrawSinhVat implements DrawSpeak{
 	
 	private Player player;
 	
-    private int dialogueIndex = 0;
+    private int dialogueIndex;
 	
-    private DrawKunai[] drawKunai = new DrawKunai[40];
+    private DrawKunai[] drawKunai;
 	private final int screenX;
     private final int screenY;
-	private int standCounter = 0;
-    private int kunaiAttackCounter = 0;
+	private int standCounter;
+    private int kunaiAttackCounter;
+    private int thoiGianHoiPhuc;
+    
     private KeyHandler keyH;
     
 	public DrawPlayer(GamePanel gp, Player player) {
         
-        super(gp, player, 6, 4);
+        super(gp, player);
         
         this.player = player;
         screenX = gp.screenWidth/2 - gp.tileSize/2;
@@ -45,6 +47,12 @@ public class DrawPlayer extends DrawSinhVat implements DrawSpeak{
         setDefaultValues();
         getPlayerImage();
         getPlayerAttackImage();
+        
+        this.dialogueIndex = 0;
+        this.drawKunai = new DrawKunai[40];
+        this.standCounter = 0;
+        this.kunaiAttackCounter = 0;
+        this.thoiGianHoiPhuc = 0;
     }
 	
 	public void setDefaultValues(){
@@ -54,9 +62,15 @@ public class DrawPlayer extends DrawSinhVat implements DrawSpeak{
        
 		player.setLife(player.getMaxLife());
     }
-    
-	
-	
+
+	public int getThoiGianHoiPhuc() {
+		return thoiGianHoiPhuc;
+	}
+
+	public void setThoiGianHoiPhuc(int thoiGianHoiPhuc) {
+		this.thoiGianHoiPhuc = thoiGianHoiPhuc;
+	}
+
 	public KeyHandler getKeyH() {
 		return keyH;
 	}
@@ -144,7 +158,7 @@ public class DrawPlayer extends DrawSinhVat implements DrawSpeak{
         
     }
     public void update(){
-
+    	
         // KUNAI ATTACK
         if(getGp().keyH.kPressed == true){
             player.setKunaiAttacking(true);
@@ -176,13 +190,13 @@ public class DrawPlayer extends DrawSinhVat implements DrawSpeak{
             player.pickUpObject(objIndex, this);
 
             // CHECK NPC COLLISION
-            int npcIndex = gp.cChecker.checkEntity(this, gp.drawN);
-            player.interactNPC(npcIndex, this);
+            DrawSinhVat npcIndex = gp.cChecker.checkEntity(this, gp.drawN);
+            player.interactNPC((DrawOldMan) npcIndex, this);
 
             // CHECK MONSTER COLLISION
-            int monsterIndex = gp.cChecker.checkEntity(this, gp.drawM);
+            DrawSinhVat monsterIndex = gp.cChecker.checkEntity(this, gp.drawM);
             player.contactMonster(monsterIndex, this);
-
+            
             // CHECK EVENT
             gp.eHandler.checkEvent();
 
@@ -225,6 +239,11 @@ public class DrawPlayer extends DrawSinhVat implements DrawSpeak{
                 setInvincibleCounter(0);
             }
         }   
+        
+        if (this.thoiGianHoiPhuc >= 60) {
+        	this.player.recuperateMP();
+        	this.thoiGianHoiPhuc = 0;
+        }else this.thoiGianHoiPhuc++;
     }
     public void draw(Graphics2D g2){
         
@@ -284,6 +303,12 @@ public class DrawPlayer extends DrawSinhVat implements DrawSpeak{
             break;
         }
         
+        getGp().ui.drawSubWindow(gp.tileSize/2 - 20, gp.tileSize/2 - 20,  gp.tileSize*5, gp.tileSize*4);
+        drawPlayerLife(g2);
+        drawMpBar(g2);
+        drawPlayerKunai(g2);
+        drawPlayerKey(g2);
+        
         if(isInvincible() == true){
             g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.4f));
         }
@@ -301,7 +326,7 @@ public class DrawPlayer extends DrawSinhVat implements DrawSpeak{
         }
     }
     
-    public void DrawSpeak(){
+    public void DrawSpeakSV(){
         
     	if(player.speak(dialogueIndex) == null) {
     		this.dialogueIndex = 0;
@@ -316,5 +341,59 @@ public class DrawPlayer extends DrawSinhVat implements DrawSpeak{
 	        case "left": this.setDirection("right"); break;
 	        case "right": this.setDirection("left"); break;
         }
+    }
+    
+    public void drawPlayerLife(Graphics2D g2){
+        
+        int x = gp.tileSize/2;
+        int y = gp.tileSize/2;
+        
+        int width = 3*gp.tileSize;
+        int height = 20;
+        
+        double oneScale = (double) width/this.getPlayer().getMaxLife();
+        double hpBarValue = oneScale*this.getPlayer().getLife();
+        
+        g2.setColor(new Color(35, 35, 35));
+        g2.drawRect(x, y, width+2, height);
+        g2.setColor(new Color(255, 0, 30));
+        g2.fillRect(x+1, y+1, (int) hpBarValue, height-2);
+
+    }
+    
+    public void drawMpBar(Graphics2D g2){
+        
+        int x = gp.tileSize/2;
+        int y = gp.tileSize;
+        
+        int width = (int)2.5*gp.tileSize;
+        int height = 15;
+        
+        double oneScale = (double) width/this.getPlayer().getMaxMp();
+        double mpBarValue = oneScale*this.getPlayer().getMp();
+        g2.setColor(new Color(35, 35, 35));
+        g2.drawRect(x, y, width+2, height);
+        g2.setColor(new Color(0, 0, 255));
+        g2.fillRect(x+1, y+1, (int) mpBarValue, height-2);
+
+    }
+    
+    public void drawPlayerKunai(Graphics2D g2){
+        
+        int x = gp.tileSize/2;
+        int y = gp.tileSize*2;
+
+        g2.drawImage(gp.dobj[6].getImage(), x+gp.tileSize/4+10, y+gp.tileSize/4+15, null);
+        g2.setFont(g2.getFont().deriveFont(30f));
+        g2.drawString(" X "+gp.drawP.getPlayer().getHasKunai(), x+gp.tileSize, y+gp.tileSize);
+    }    
+    public void drawPlayerKey(Graphics2D g2){
+        
+        int x = gp.tileSize/2;
+        int y = gp.tileSize*1;
+//        if(gp.dobj[7] == null)
+        g2.drawImage(gp.dobj[7].getImage(), x+gp.tileSize/4+10, y+gp.tileSize/4+15, null);
+        g2.setFont(g2.getFont().deriveFont(30f));
+        g2.drawString(" X "+gp.drawP.getPlayer().getHasKey(), x+gp.tileSize, y+gp.tileSize);
     }
 }

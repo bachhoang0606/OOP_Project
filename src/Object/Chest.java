@@ -12,6 +12,6 @@ package Object;
 public class Chest extends VatThe{
         
     public Chest() {
-        super("Chest", false, 0, 1);
+        super("chest", false, 0, 1);
     }
 }

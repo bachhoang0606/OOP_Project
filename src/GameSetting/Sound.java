@@ -27,6 +27,7 @@ public class Sound {
         soundPath[4] = "data/Sound/fanfare.wav";
         soundPath[5] = "data/Sound/hitmonster.wav";
         soundPath[6] = "data/Sound/receivedamage.wav";
+        // am thanh danh kiem
         soundPath[7] = "data/Sound/cuttree.wav";
     }
     
