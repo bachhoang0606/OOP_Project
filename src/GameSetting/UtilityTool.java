@@ -26,7 +26,7 @@ public class UtilityTool {
     }
     
     public BufferedImage setup(String imagePath, int width, int height){
-        
+    	
         BufferedImage image = null;
         
         try{

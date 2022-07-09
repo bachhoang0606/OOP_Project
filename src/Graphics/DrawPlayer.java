@@ -187,10 +187,13 @@ public class DrawPlayer extends DrawSinhVat implements DrawSpeak{
             DrawSinhVat monsterIndex = gp.cChecker.checkEntity(this, gp.drawM);
             player.contactMonster(monsterIndex, this);
             
+            
+            // kiem tra va cham voi quai trieu hoi
+            
+            
             // CHECK EVENT
             gp.eHandler.checkEvent();
 
-            
             if(isCollisionOn() == false && getGp().keyH.enterPressed == false){
                 switch(getDirection()){
                     case "up": setWorldY(getWorldY()-player.getSpeed()); break;

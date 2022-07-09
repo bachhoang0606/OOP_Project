@@ -15,6 +15,4 @@ public class Key extends VatThe{
     public Key() {
         super("key", false, 0, 1);
     }
-    
-    
 }

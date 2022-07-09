@@ -22,7 +22,7 @@ public class DrawDragon extends DrawSinhVat{
 		this.dragon = dragon;
 		this.getEntityImage();
 		this.truyDuoiCounter = 0;
-		banCauLuaCounter = 0;
+		this.banCauLuaCounter = 0;
 	}
 
 	
@@ -66,23 +66,28 @@ public class DrawDragon extends DrawSinhVat{
 		
 		UtilityTool uTool = new UtilityTool();
         
-        setUp1(uTool.setup("data/Rong/rong_up1.png", gp.tileSize, gp.tileSize));
-        setUp2(uTool.setup("data/Rong/rong_up2.png", gp.tileSize, gp.tileSize));
-        setDown1(uTool.setup("data/Rong/rong_down1.png", gp.tileSize, gp.tileSize));
-        setDown2(uTool.setup("data/Rong/rong_down2.png", gp.tileSize, gp.tileSize));
-        setLeft1(uTool.setup("data/Rong/rong_left1.png", gp.tileSize, gp.tileSize));
-        setLeft2(uTool.setup("data/Rong/rong_left2.png", gp.tileSize, gp.tileSize));
-        setRight1(uTool.setup("data/Rong/rong_right1.png", gp.tileSize, gp.tileSize));
-        setRight2(uTool.setup("data/Rong/rong_right2.png", gp.tileSize, gp.tileSize));
+        setUp1(uTool.setup("data/Rong/rong_up1_preview_rev_1.png", gp.tileSize, gp.tileSize));
+        setUp2(uTool.setup("data/Rong/rong_up2_preview_rev_1.png", gp.tileSize, gp.tileSize));
+        setDown1(uTool.setup("data/Rong/rong_down1_preview_rev_1.png", gp.tileSize, gp.tileSize));
+        setDown2(uTool.setup("data/Rong/rong_down2_preview_rev_1.png", gp.tileSize, gp.tileSize));
+        setLeft1(uTool.setup("data/Rong/rong_left1_preview_rev_1.png", gp.tileSize, gp.tileSize));
+        setLeft2(uTool.setup("data/Rong/rong_left2_preview_rev_1.png", gp.tileSize, gp.tileSize));
+        setRight1(uTool.setup("data/Rong/rong_right1_preview_rev_1.png", gp.tileSize, gp.tileSize));
+        setRight2(uTool.setup("data/Rong/rong_right2_preview_rev_1.png", gp.tileSize, gp.tileSize));
 	}
 
 	public void update() {
 		super.update();
 		
+		
+		// cap nhat qua cau lua sau khi duoc tao
 		if (this.dCauLua != null) {
 			this.dCauLua.update();
 		}
 
+		// kiem tra su quay ve cua rong
+		this.dragon.veTo(this);
+		
 		if (dragon.isAttack() == false) {
 			dragon.setAction(this);
 		}else {
@@ -91,15 +96,24 @@ public class DrawDragon extends DrawSinhVat{
 				this.truyDuoiCounter = 0;
 			}else this.truyDuoiCounter++;
 			
-			if (this.banCauLuaCounter >= 120) {
+			if (this.banCauLuaCounter >= 120 && this.dCauLua == null) {
 				dragon.banCauLua(this, this.gp.drawP.getWorldX(), this.gp.drawP.getWorldY());
 				this.banCauLuaCounter = 0;
 			}else this.banCauLuaCounter++;
 			
 		}
+		
+		if (dCauLua!= null && dCauLua.isExist() == false) {
+			dCauLua.getdLua().setLua(null);
+			dCauLua.setdLua(null);
+			dCauLua.setCaulua(null);
+			dCauLua = null;
+			
+		}
 	}
 	
 	public void draw(Graphics2D g2) {
+		
 		super.draw(g2);
 	
 		if (this.dCauLua != null) {

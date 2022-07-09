@@ -6,24 +6,22 @@ import Object.Kunai;
 public class DrawKunai extends DrawVatThe{
 	
 	private Kunai kunai;
-	
-	private int distance;
-	
+
 	// toa do xuat hien kunai
     private int startAttackX;
     private int startAttackY;
 	
 	public DrawKunai(GamePanel gp) {
-		super(gp, new Kunai());
+		
 		// TODO Auto-generated constructor stub
-		this.distance = gp.tileSize*5;
+		super(gp, new Kunai());
 	}
 	
 	public DrawKunai(GamePanel gp, Kunai kunai) {
-		super(gp, kunai);
+		
 		// TODO Auto-generated constructor stub
+		super(gp, kunai);
 		this.kunai = kunai;
-		this.distance = gp.tileSize*5;
 	}
 	
     public Kunai getKunai() {
@@ -32,14 +30,6 @@ public class DrawKunai extends DrawVatThe{
 
 	public void setKunai(Kunai kunai) {
 		this.kunai = kunai;
-	}
-
-	public int getDistance() {
-		return distance;
-	}
-
-	public void setDistance(int distance) {
-		this.distance = distance;
 	}
 
 	public int getStartAttackX() {
@@ -63,7 +53,7 @@ public class DrawKunai extends DrawVatThe{
         
         int distanceX = Math.abs(startAttackX - this.getWorldX());
         int distanceY = Math.abs(startAttackY - this.getWorldY());
-        if(Math.max(distanceX, distanceY) < distance){
+        if(Math.max(distanceX, distanceY) < this.kunai.getDistanceExists()){
             
             setCollisionOn(false);
             
@@ -81,7 +71,7 @@ public class DrawKunai extends DrawVatThe{
             getGp().cChecker.checkObject(this, false);
 
             
-            if(isCollisionOn() == false){
+            if(isCollisionOn() == false && isDisappearing() == false){
                 switch(getDirection()){
                 case "up": this.setWorldY(this.getWorldY()-kunai.getSpeed()); break;
                 case "down": this.setWorldY(this.getWorldY()+kunai.getSpeed()); break;
@@ -99,8 +89,10 @@ public class DrawKunai extends DrawVatThe{
     public void inflictDamage(DrawSinhVat sinhVatNhanDamge){
         
         if(sinhVatNhanDamge != null){
+        	// cham vao quai bien mat
+        	setDisappearing(true);
             if(sinhVatNhanDamge.isInvincible() == false){
-            
+
                 getGp().playSE(6);
                 
                 // sat thuong dich nhan khi cham kunai

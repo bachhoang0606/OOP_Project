@@ -36,6 +36,8 @@ public class DrawVatThe {
     private boolean collisionOn;
     private boolean drawSolidArea;
     private boolean exist;
+    
+    // dang bien mat
     private boolean disappearing;
 
     public DrawVatThe(GamePanel gp, VatThe oObject) {
@@ -214,7 +216,7 @@ public class DrawVatThe {
         if(disappearCounter > i*5 && disappearCounter <= i*6){ changeAlpha(g2, 0.2f); }
         if(disappearCounter > i*6){
             
-            exist = false;
+        exist = false;
         }
     }
 	
@@ -239,11 +241,13 @@ public class DrawVatThe {
                 
                 disappearAnimation(g2);
             }
-            
-            g2.drawImage(image, screenX, screenY, gp.tileSize, gp.tileSize, null);
+            // co ve hop ly hon
+            g2.drawImage(image, screenX, screenY, null);
+            //g2.drawImage(image, screenX, screenY, gp.tileSize, gp.tileSize, null);
             changeAlpha(g2, 1f);
             
             if(gp.keyH.drawSolidArea == true){
+
                 g2.setColor(Color.red);
                 g2.drawRect(screenX + getSolidArea().x, screenY + getSolidArea().y, getSolidArea().width, getSolidArea().height);
             }

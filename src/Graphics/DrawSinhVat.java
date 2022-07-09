@@ -311,6 +311,7 @@ public abstract class DrawSinhVat extends DrawVatThe{
 
         gp.cChecker.checkObject(this, false);
         
+        // kiem tra xem 
         boolean contactPlayer = gp.cChecker.checkPlayer(this);
  
         // neu cham vao quai khong trong tranng thai bi thuong thi chui sat thuong
@@ -401,13 +402,13 @@ public abstract class DrawSinhVat extends DrawVatThe{
             
             // Monster Hp bar
             if(this.sinhVat.getType() == 2 && hpBarOn == true){
-                double oneScale = (double) gp.tileSize/this.sinhVat.getMaxLife();
+                double oneScale = (double) this.getSolidArea().width/this.sinhVat.getMaxLife();
                 double hpBarValue = oneScale*this.sinhVat.getLife();
                 
                 g2.setColor(new Color(35, 35, 35));
-                g2.drawRect(screenX - 1, screenY - 16, gp.tileSize+2, 12);
+                g2.drawRect(screenX - 1 + this.getSolidArea().x , screenY - 16, this.getSolidArea().width+2, 12);
                 g2.setColor(new Color(255, 0, 30));
-                g2.fillRect(screenX, screenY - 15, (int) hpBarValue, 10);
+                g2.fillRect(screenX + this.getSolidArea().x, screenY - 15, (int) hpBarValue, 10);
              
                 hpBarCounter++;
                 if(hpBarCounter > 600){
@@ -426,7 +427,8 @@ public abstract class DrawSinhVat extends DrawVatThe{
                 dyingAnimation(g2);
             }
             
-            g2.drawImage(image, screenX, screenY, gp.tileSize,gp.tileSize, null);
+            //g2.drawImage(image, screenX, screenY, gp.tileSize,gp.tileSize, null);
+            g2.drawImage(image, screenX, screenY, null);
             changeAlpha(g2, 1f);
             
             // Reset alpha

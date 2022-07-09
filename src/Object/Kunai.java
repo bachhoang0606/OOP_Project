@@ -12,10 +12,12 @@ package Object;
 public class Kunai extends VatThe{
  
 	private int damge;
-    
+	private int distanceExists;
+	
     public Kunai() {
         super("kunai", false, 0, 1);
         this.damge = 20;
+        this.distanceExists = 48*5;
     }
 
 	public int getDamge() {
@@ -25,7 +27,15 @@ public class Kunai extends VatThe{
 	public void setDamge(int damge) {
 		this.damge = damge;
 	}
-    
+
+	public int getDistanceExists() {
+		return distanceExists;
+	}
+
+	public void setDistanceExists(int distanceExists) {
+		this.distanceExists = distanceExists;
+	}
+
 
 }    
     

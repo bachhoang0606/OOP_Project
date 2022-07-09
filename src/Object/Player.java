@@ -8,6 +8,7 @@ package Object;
 
 
 
+
 import GameSetting.KeyHandler;
 import Graphics.DrawKunai;
 import Graphics.DrawOldMan;
@@ -35,13 +36,13 @@ public class Player extends SinhVat implements NoiChuyen{
 
     public Player(KeyHandler keyH) {
     	// SinhVat(String name, int maxLife, int maxMp, int maxDefense, int maxExp, int speed, int type)
-    	// maxlife = maxMP = 100
+    	// maxlife = maxMP = 1000
     	// maxDefecse = 50
     	// maxExp = 100
     	// speed = 4
     	// type = 0
     	// damge = 40
-        super("Player", 100, 100, 50, 100, 4, 0, 40);
+        super("Player", 1000, 1000, 50, 100, 4, 0, 40);
         
         playerKunai = new Kunai[40];
         hasKunai = 10;
@@ -135,6 +136,7 @@ public class Player extends SinhVat implements NoiChuyen{
                 Dplayer.getDrawKunai()[hasKunai-1].setStartAttackX(startAttackX);
                 Dplayer.getDrawKunai()[hasKunai-1].setStartAttackY(startAttackY);
                 this.playerKunai[hasKunai-1].setSpeed(this.getSpeed()+3);
+                this.playerKunai[hasKunai-1].setDamge(this.getDamge()/2);
                 hasKunai--;
             }
         }
@@ -173,9 +175,10 @@ public class Player extends SinhVat implements NoiChuyen{
             Dplayer.getSolidArea().width = Dplayer.getAttackArea().width;
             Dplayer.getSolidArea().height = Dplayer.getAttackArea().height;
             
-            // Check monster collision with the updated worldX, worldY and solidArea
+            // Check monster collision with the updated worldX, worldY and solidArea           
             DrawSinhVat monterIndex = Dplayer.gp.cChecker.checkEntity(Dplayer, Dplayer.gp.drawM);
-            damageMonster(monterIndex, Dplayer);
+            this.damageMonster(monterIndex, Dplayer);
+            
             
             // After checking collision, restore the original data
             Dplayer.setWorldX(currentWorldX);
@@ -292,7 +295,7 @@ public class Player extends SinhVat implements NoiChuyen{
             			);
             	sinhVatNhanDamge.setInvincible(true);
             	sinhVatNhanDamge.getSinhVat().damageReaction(sinhVatNhanDamge, Dplayer);
-                
+
                 if(sinhVatNhanDamge.getSinhVat().getLife() <= 0){
                 	sinhVatNhanDamge.setDying(true);
                 }
@@ -318,6 +321,7 @@ public class Player extends SinhVat implements NoiChuyen{
 		setLife(getMaxLife());
 		
 		setMaxMp(getMaxMp()+50);
+		setMp(getMaxMp());
 		
 		setExp(getExp()-getMaxExp());
 		setMaxExp(getMaxExp()+100);

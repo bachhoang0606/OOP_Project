@@ -8,11 +8,13 @@ import java.awt.Graphics2D;
 import javax.swing.JPanel;
 import Graphics.DrawSinhVat;
 import Graphics.DrawVatThe;
+import Graphics.DrawBossDragon;
 import Graphics.DrawOldMan;
 import Graphics.DrawPlayer;
 
 import java.util.ArrayList;
 
+import Object.Key;
 import Object.Player;
 import Object.TileManager;
 
@@ -114,7 +116,7 @@ public class GamePanel extends JPanel implements Runnable{
     }
     
     public void update(){
-        
+
         if(gameState == playeState){
             // PLAYER
         	drawP.update();
@@ -152,7 +154,21 @@ public class GamePanel extends JPanel implements Runnable{
                     	// quai chet cong exp cho nhan vat
 
                     	drawP.getPlayer().setExp(drawP.getPlayer().getExp() + drawM[i].getSinhVat().getExp());
-                    	 
+                    	
+                    	
+                    	// boss roi ra chia khoa de mo cong
+                    	if(drawM[i] instanceof DrawBossDragon) {
+                    		for (int j = 0; j < dobj.length; j++) {
+                    			if (dobj[j] == null) {
+                    				dobj[j] = new DrawVatThe(this, new Key());
+                    		        dobj[j].setImage(uTool.setup("data/Object/"+dobj[j].getVatThe().getName()+".png", tileSize, tileSize));
+                    		        dobj[j].setWorldX(drawM[i].getWorldX());
+                    		        dobj[j].setWorldY(drawM[i].getWorldY());
+                    				break;
+                    			}
+                    		}
+                    	}
+                    	
                     	drawM[i] = null;
                     }
                 }

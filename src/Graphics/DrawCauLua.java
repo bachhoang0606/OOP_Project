@@ -1,6 +1,6 @@
 package Graphics;
 
-import java.awt.image.BufferedImage;
+import java.awt.Graphics2D;
 
 import GameSetting.GamePanel;
 import Object.CauLua;
@@ -8,19 +8,22 @@ import Object.CauLua;
 public class DrawCauLua extends DrawVatThe{
 	
 	private CauLua caulua;
+	private DrawLua dLua;
 
 	// toa do xuat hien cau lua
     private int startAttackX;
     private int startAttackY;
-	
-    // anh hieu ung chay khu vuc
-    private BufferedImage anhChay; 
-
+    private int targetX;
+    private int targetY;
+    
+    // thoi gian hieu ung chay duy tri
+    private int chayCounter;
+        
 	public DrawCauLua(GamePanel gp) {
 		
 		// TODO Auto-generated constructor stub
 		super(gp, new CauLua());
-		this.setAnh();
+		this.chayCounter = 0;
 	}
 	
 	public DrawCauLua(GamePanel gp, CauLua caulua) {
@@ -28,16 +31,39 @@ public class DrawCauLua extends DrawVatThe{
 		// TODO Auto-generated constructor stub
 		super(gp, caulua);
 		this.caulua = caulua;
-		this.setAnh();
-	}
-	
-	
-	public BufferedImage getAnhChay() {
-		return anhChay;
+		this.chayCounter = 0;
 	}
 
-	public void setAnhChay(BufferedImage anhChay) {
-		this.anhChay = anhChay;
+	public DrawLua getdLua() {
+		return dLua;
+	}
+
+	public void setdLua(DrawLua dLua) {
+		this.dLua = dLua;
+	}
+	
+	public int getChayCounter() {
+		return chayCounter;
+	}
+
+	public void setChayCounter(int chayCounter) {
+		this.chayCounter = chayCounter;
+	}
+
+	public int getTargetX() {
+		return targetX;
+	}
+
+	public void setTargetX(int targetX) {
+		this.targetX = targetX;
+	}
+
+	public int getTargetY() {
+		return targetY;
+	}
+
+	public void setTargetY(int targetY) {
+		this.targetY = targetY;
 	}
 
 	public CauLua getCaulua() {
@@ -63,21 +89,57 @@ public class DrawCauLua extends DrawVatThe{
     public void setStartAttackY(int startAttackY) {
         this.startAttackY = startAttackY;
     }
-    
+
+    public void draw(Graphics2D g2) {
+    	
+    	super.draw(g2);
+    	if (this.dLua != null) {
+    		this.dLua.draw(g2);
+    	}
+    }
     
     public void update(){
+
+    	// neu cau bay qua khoang cach thi tu no
+    	int distanceX = Math.abs(this.getStartAttackX() - this.getWorldX());
+        int distanceY = Math.abs(this.getStartAttackY() - this.getWorldY());
     	
-        if(isCollisionOn() == false){
-            switch(getDirection()){
-            case "up": this.setWorldY(this.getWorldY()-caulua.getSpeed()); break;
-            case "down": this.setWorldY(this.getWorldY()+caulua.getSpeed()); break;
-            case "left": this.setWorldX(this.getWorldX()-caulua.getSpeed()); break;
-            case "right": this.setWorldX(this.getWorldX()+caulua.getSpeed()); break;
-            }
-        }else setDisappearing(true);
+        if (this.dLua != null) {
+        	
+        	if (this.getGp().cChecker.checkPlayer(dLua) == true ) {
+    			
+        		this.dLua.getLua().thieuDot(this.dLua);
+        	}
+        	
+        	if (this.chayCounter >= 240) {
+        		this.setExist(false);
+        		this.chayCounter = 0;
+        	}else {
+        		
+        		this.chayCounter++;
+        	}
+        	
+        }else {
+        	if (// co hai cach set 1 la lay toa do nhan vat truc tiep hoac lay target cua nhan vat
+        			// 1 cai tu nhien hon nhung xau??
+        			// 1 cai khong tu nhien nhung hien thi tot hon??
+        			(this.getWorldX() - this.getGp().drawP.getWorldX() < 0) && this.getDirection().equals("left")||
+        			(this.getWorldX() - this.getGp().drawP.getWorldX() > 0) && this.getDirection().equals("right")||
+        			(this.getWorldY() - this.getGp().drawP.getWorldY() < 0) && this.getDirection().equals("up")||
+        			(this.getWorldY() - this.getGp().drawP.getWorldY() > 0) && this.getDirection().equals("down")||
+        			Math.max(distanceX, distanceY) >= this.caulua.getDistanceExists()
+        			) {
+        				this.caulua.gayChayKhuVuc(this);
+        		
+        	}else {
+                switch(getDirection()){
+	                case "up": this.setWorldY(this.getWorldY()-caulua.getSpeed()); break;
+	                case "down": this.setWorldY(this.getWorldY()+caulua.getSpeed()); break;
+	                case "left": this.setWorldX(this.getWorldX()-caulua.getSpeed()); break;
+	                case "right": this.setWorldX(this.getWorldX()+caulua.getSpeed()); break;
+                }
+        	}
+        }
     }
     
-    public void setAnh() {
-    	anhChay = uTool.setup("data/Rong/chay.png", gp.tileSize, gp.tileSize);
-    }
 }

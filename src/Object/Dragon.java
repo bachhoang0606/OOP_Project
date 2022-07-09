@@ -15,23 +15,41 @@ public class Dragon extends SinhVat{
 	private int startAttackY;
 	private CauLua caulua;
 	
+	
+	// toa do hang rong chua
+	private int toaDoToX;
+	private int toaDoToY;
+	
+	// pham vi lanh tho quanh hang rong
+	private int phamViLanhTho;
+	
 	// vao trang thai chien dau
 	private boolean attack;
-	public Dragon() {
+	private boolean quayVe;
+	
+	public Dragon(int toaDoToX, int toaDoToY) {
 		
 		// TODO Auto-generated constructor stub
 		// SinhVat(String name, int maxLife, int maxMp, int maxDefense, int maxExp, int speed, int type)
-    	// maxlife = maxMP = 100
+    	// maxlife = maxMP = 500
     	// maxDefecse = 50
-    	// maxExp = 100
+    	// maxExp = 200
     	// speed = 1
     	// type = 0
-		// damfe = 0
-		super("Dragon", 100, 100, 50, 40, 2, 2, 10);
+		// damfe = 10
+		super("Dragon", 500, 500, 50, 200, 2, 2, 30);
+		this.toaDoToX = toaDoToX;
+		this.toaDoToY = toaDoToY;
+		
+		this.setCollision(false);
 		
 		setExp(getMaxExp());
+		
 		this.attack = false;
+		this.quayVe = false;
+		
 		this.attackRange = 240;
+		this.phamViLanhTho = 15*48;
 	}
 
 	
@@ -75,6 +93,24 @@ public class Dragon extends SinhVat{
 		this.startAttackY = startAttackY;
 	}
 
+	public int getToaDoToX() {
+		return toaDoToX;
+	}
+
+
+	public void setToaDoToX(int toaDoToX) {
+		this.toaDoToX = toaDoToX;
+	}
+
+
+	public int getToaDoToY() {
+		return toaDoToY;
+	}
+
+
+	public void setToaDoToY(int toaDoToY) {
+		this.toaDoToY = toaDoToY;
+	}
 
 
 	@Override
@@ -94,11 +130,24 @@ public class Dragon extends SinhVat{
 		double y = Math.pow(dDragon.getWorldY() - playerY, 2);
 		double distance = Math.sqrt(x + y);
 		
+		// quay dung huong phayerr moi ban cau
+		int distanceX = playerX - dDragon.getWorldX();
+        int distanceY = playerY - dDragon.getWorldY();
+		
 		// neu nguoi choi trong pham vi thi tan cong
-		if (distance < attackRange) {
+        // de no quay ve huong nguoi choi ma ban
+        // neu cau lua dang ton tai thi khong tan cong nua
+		if (distance < attackRange &&
+				(	(distanceX > 0 && dDragon.getDirection().equals("right")) ||
+		            (distanceX < 0 && dDragon.getDirection().equals("left"))  ||
+		            (distanceY > 0 && dDragon.getDirection().equals("down"))  ||
+		            (distanceY < 0 && dDragon.getDirection().equals("up"))			) &&
+			dDragon.getdCauLua() == null
+			) {
 			this.caulua = new CauLua();
 			if (this.getMp() - this.caulua.getMp() >=0) {
-				this.setMp(this.getMp() - this.caulua.getMp());
+				
+				this.setMp(this.getMp());// - this.caulua.getMp());
 		        this.startAttackX = dDragon.getWorldX() + dDragon.getSolidArea().x;
 		        this.startAttackY = dDragon.getWorldY() + dDragon.getSolidArea().y;
 
@@ -122,6 +171,8 @@ public class Dragon extends SinhVat{
 		        dDragon.getdCauLua().setWorldY(startAttackY);
 		        dDragon.getdCauLua().setStartAttackX(startAttackX);
 		        dDragon.getdCauLua().setStartAttackY(startAttackY);
+		        dDragon.getdCauLua().setTargetX(playerX);
+		        dDragon.getdCauLua().setTargetY(playerY);
 		        this.caulua.setSpeed(this.getSpeed()+3);
 			}
 		}
@@ -167,6 +218,37 @@ public class Dragon extends SinhVat{
 	        	}
         	}
         }
+	}
+	
+	
+	// khi di qua lanh tho thi quay ve hang hang cua minh
+	public void veTo(DrawDragon dDragon) {
+		
+		int distanceX = Math.abs(this.toaDoToX - dDragon.getWorldX());
+        int distanceY = Math.abs(this.toaDoToY - dDragon.getWorldY());
+        if( Math.max(distanceX, distanceY) > this.phamViLanhTho) {
+        	
+        	this.quayVe = true;
+        	this.attack = false;
+        }
+
+        // di chuyen theo khoang cach ngan hon den nguoi choi
+        //System.out.println(dDragon.isCollisionOn());
+        if (this.quayVe == true) {
+        	if( Math.max(distanceX, distanceY) > this.phamViLanhTho/8){
+            	this.truyDuoi(dDragon, toaDoToX, toaDoToY);
+            	this.hoiPhuc();
+            }else {
+            	this.quayVe = false;
+            }
+        }
+        
+	}
+	
+	
+	public void hoiPhuc() {
+		this.setLife(this.getMaxLife());
+		this.setMp(this.getLife());
 	}
 	
 	

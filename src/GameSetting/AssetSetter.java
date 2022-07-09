@@ -6,9 +6,11 @@ package GameSetting;
 
 import Graphics.DrawSlime;
 import Graphics.DrawVatThe;
+import Graphics.DrawBossDragon;
 import Graphics.DrawDragon;
 import Graphics.DrawOldMan;
 import Object.Boots;
+import Object.BossDragon;
 import Object.Door;
 import Object.Dragon;
 import Object.Slime;
@@ -96,8 +98,29 @@ public class AssetSetter {
         gp.drawM[2].setWorldX(23 * gp.tileSize);
         gp.drawM[2].setWorldY(35 * gp.tileSize);
         
-        gp.drawM[3] = new DrawDragon(gp, new Dragon());
-        gp.drawM[3].setWorldX(34 * gp.tileSize);
+        gp.drawM[3] = new DrawDragon(gp, new Dragon(40*gp.tileSize, 9*gp.tileSize));
+        gp.drawM[3].setWorldX(38 * gp.tileSize);
         gp.drawM[3].setWorldY(8 * gp.tileSize);
+        
+        gp.drawM[4] = new DrawDragon(gp, new Dragon(40*gp.tileSize, 9*gp.tileSize));
+        gp.drawM[4].setWorldX(36 * gp.tileSize);
+        gp.drawM[4].setWorldY(8 * gp.tileSize);
+        
+        gp.drawM[5] = new DrawDragon(gp, new Dragon(40*gp.tileSize, 9*gp.tileSize));
+        gp.drawM[5].setWorldX(37 * gp.tileSize);
+        gp.drawM[5].setWorldY(8 * gp.tileSize);
+        
+        gp.drawM[6] = new DrawDragon(gp, new Dragon(40*gp.tileSize, 9*gp.tileSize));
+        gp.drawM[6].setWorldX(38 * gp.tileSize);
+        gp.drawM[6].setWorldY(9 * gp.tileSize);
+        
+        gp.drawM[7] = new DrawDragon(gp, new Dragon(40*gp.tileSize, 9*gp.tileSize));
+        gp.drawM[7].setWorldX(37 * gp.tileSize);
+        gp.drawM[7].setWorldY(9 * gp.tileSize);
+        
+        gp.drawM[8] = new DrawBossDragon(gp, new BossDragon(40*gp.tileSize, 9*gp.tileSize));
+        gp.drawM[8].setWorldX(40 * gp.tileSize);
+        gp.drawM[8].setWorldY(9 * gp.tileSize);
+        
     }
 }

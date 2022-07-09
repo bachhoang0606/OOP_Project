@@ -4,6 +4,8 @@
  */
 package GameSetting;
 
+import java.util.List;
+
 import Graphics.DrawSinhVat;
 import Graphics.DrawVatThe;
 
@@ -137,8 +139,11 @@ public class CollisionChecker {
                 }
                 
                 if(DoObj.getSolidArea().intersects(target[i].getSolidArea())){
-                    if(target[i].getSinhVat() != DoObj.getVatThe() && target[i].getSinhVat().isCollision() == true){
-                    	DoObj.setCollisionOn(true);
+                    if(target[i].getSinhVat() != DoObj.getVatThe()){
+                    	
+                    	if(target[i].getSinhVat().isCollision() == true){
+                    		DoObj.setCollisionOn(true);
+                    	}
                         index = target[i];
                     }
                 }
@@ -152,6 +157,51 @@ public class CollisionChecker {
         return index;
     } 
     
+    
+ // NPC OR MONSTER with list
+    public DrawSinhVat checkEntity(DrawVatThe DoObj, List<DrawSinhVat> list){
+        
+    	DrawSinhVat index = null;
+        
+        for(DrawSinhVat sinhVat : list){
+            
+            if(sinhVat != null){
+                
+                // Get entity's solid area position
+            	DoObj.getSolidArea().x = DoObj.getWorldX() + DoObj.getSolidArea().x;
+            	DoObj.getSolidArea().y = DoObj.getWorldY() + DoObj.getSolidArea().y;
+                
+                // Get the object's solid area position
+            	sinhVat.getSolidArea().x = sinhVat.getWorldX() + sinhVat.getSolidArea().x;
+            	sinhVat.getSolidArea().y = sinhVat.getWorldY() + sinhVat.getSolidArea().y;
+                
+                switch(DoObj.getDirection()) {
+                case "up": DoObj.getSolidArea().y -= DoObj.getVatThe().getSpeed(); break;
+                case "down": DoObj.getSolidArea().y += DoObj.getVatThe().getSpeed(); break;
+                case "left": DoObj.getSolidArea().x -= DoObj.getVatThe().getSpeed(); break;
+                case "right": DoObj.getSolidArea().x += DoObj.getVatThe().getSpeed(); break;
+                }
+                
+                if(DoObj.getSolidArea().intersects(sinhVat.getSolidArea())){
+                    if(sinhVat.getSinhVat() != DoObj.getVatThe()){
+                    	
+                    	if(sinhVat.getSinhVat().isCollision() == true){
+                    		DoObj.setCollisionOn(true);
+                    	}
+                        index = sinhVat;
+                    }
+                }
+
+                DoObj.getSolidArea().x = DoObj.getSolidAreaDefaultX();
+                DoObj.getSolidArea().y = DoObj.getSolidAreaDefaultY();
+                sinhVat.getSolidArea().x = sinhVat.getSolidAreaDefaultX();
+                sinhVat.getSolidArea().y = sinhVat.getSolidAreaDefaultY();
+            }
+        }
+        return index;
+    } 
+    
+    // kiem tra xem nguoi choi co va cham voi doi tuong khong
     public boolean checkPlayer(DrawVatThe doOBJ){
         
         boolean contactPlayer = false;
@@ -181,4 +231,5 @@ public class CollisionChecker {
         
         return contactPlayer;
     }
+    
 }
