@@ -114,8 +114,8 @@ public class Player extends SinhVat implements NoiChuyen{
             if(hasKunai > 0 && this.getMp() >= 10){
             
             	this.setMp(this.getMp() - 10);
-                int startAttackX = Dplayer.getWorldX() + Dplayer.getSolidArea().x;
-                int startAttackY = Dplayer.getWorldY() + Dplayer.getSolidArea().y;
+                int startAttackX = Dplayer.getVatThe().getWorldX() + this.getSolidArea().x;
+                int startAttackY = Dplayer.getVatThe().getWorldY() + this.getSolidArea().y;
 
                 this.playerKunai[hasKunai-1] = new Kunai();
                 Dplayer.getDrawKunai()[hasKunai-1] = new DrawKunai(Dplayer.gp, this.playerKunai[hasKunai-1]);
@@ -125,16 +125,16 @@ public class Player extends SinhVat implements NoiChuyen{
                 																)
                 											);
 
-                switch(Dplayer.getDirection()){
-                    case "up": startAttackY -= Dplayer.getDrawKunai()[hasKunai-1].getSolidArea().height; break;
-                    case "down": startAttackY += Dplayer.getSolidArea().height; break;
-                    case "left": startAttackX -= Dplayer.getDrawKunai()[hasKunai-1].getSolidArea().height; break;
-                    case "right": startAttackX += Dplayer.getSolidArea().height; break;
+                switch(Dplayer.getPlayer().getDirection()){
+                    case "up": startAttackY -= this.playerKunai[hasKunai-1].getSolidArea().height; break;
+                    case "down": startAttackY += this.getSolidArea().height; break;
+                    case "left": startAttackX -= this.playerKunai[hasKunai-1].getSolidArea().height; break;
+                    case "right": startAttackX += this.getSolidArea().height; break;
                 }
 
-                Dplayer.getDrawKunai()[hasKunai-1].setDirection(Dplayer.getDirection());
-                Dplayer.getDrawKunai()[hasKunai-1].setWorldX(startAttackX);
-                Dplayer.getDrawKunai()[hasKunai-1].setWorldY(startAttackY);
+                this.playerKunai[hasKunai-1].setDirection(Dplayer.getPlayer().getDirection());
+                this.playerKunai[hasKunai-1].setWorldX(startAttackX);
+                this.playerKunai[hasKunai-1].setWorldY(startAttackY);
                 Dplayer.getDrawKunai()[hasKunai-1].setStartAttackX(startAttackX);
                 Dplayer.getDrawKunai()[hasKunai-1].setStartAttackY(startAttackY);
                 this.playerKunai[hasKunai-1].setSpeed(this.getSpeed()+3);
@@ -161,21 +161,21 @@ public class Player extends SinhVat implements NoiChuyen{
         	Dplayer.setSpriteNum(2);
             
             // Save the current worldX, worldY, solidArea
-            int currentWorldX = Dplayer.getWorldX();
-            int currentWorldY = Dplayer.getWorldY();
-            int solidAreaWith = Dplayer.getSolidArea().width;
-            int solidAreaHeight = Dplayer.getSolidArea().height;
+            int currentWorldX = Dplayer.getVatThe().getWorldX();
+            int currentWorldY = Dplayer.getVatThe().getWorldY();
+            int solidAreaWith = this.getSolidArea().width;
+            int solidAreaHeight = this.getSolidArea().height;
             
             // Adjust player/s worldX/Y for the attackArea
-            switch(Dplayer.getDirection()){
-                case "up": Dplayer.setWorldY(Dplayer.getWorldY() - Dplayer.getAttackArea().height); break;
-                case "down": Dplayer.setWorldY(Dplayer.getWorldY() + Dplayer.getSolidArea().height); break;
-                case "left": Dplayer.setWorldX(Dplayer.getWorldX() - Dplayer.getAttackArea().width); break;
-                case "right": Dplayer.setWorldX(Dplayer.getWorldX() + Dplayer.getSolidArea().width); break;
+            switch(Dplayer.getPlayer().getDirection()){
+                case "up": Dplayer.getVatThe().setWorldY(Dplayer.getVatThe().getWorldY() - Dplayer.getAttackArea().height); break;
+                case "down": Dplayer.getVatThe().setWorldY(Dplayer.getVatThe().getWorldY() + this.getSolidArea().height); break;
+                case "left": Dplayer.getVatThe().setWorldX(Dplayer.getVatThe().getWorldX() - Dplayer.getAttackArea().width); break;
+                case "right": Dplayer.getVatThe().setWorldX(Dplayer.getVatThe().getWorldX() + this.getSolidArea().width); break;
             }
             
-            Dplayer.getSolidArea().width = Dplayer.getAttackArea().width;
-            Dplayer.getSolidArea().height = Dplayer.getAttackArea().height;
+            this.getSolidArea().width = Dplayer.getAttackArea().width;
+            this.getSolidArea().height = Dplayer.getAttackArea().height;
             
             // Check monster collision with the updated worldX, worldY and solidArea           
             DrawSinhVat monterIndex = Dplayer.gp.cChecker.checkEntity(Dplayer, Dplayer.gp.drawM);
@@ -183,10 +183,10 @@ public class Player extends SinhVat implements NoiChuyen{
             
             
             // After checking collision, restore the original data
-            Dplayer.setWorldX(currentWorldX);
-            Dplayer.setWorldY(currentWorldY);
-            Dplayer.getSolidArea().width = solidAreaWith;
-            Dplayer.getSolidArea().height = solidAreaHeight;
+            Dplayer.getVatThe().setWorldX(currentWorldX);
+            Dplayer.getVatThe().setWorldY(currentWorldY);
+            this.getSolidArea().width = solidAreaWith;
+            this.getSolidArea().height = solidAreaHeight;
             
         }
         if(Dplayer.getSpriteCounter() > 25){
@@ -249,7 +249,7 @@ public class Player extends SinhVat implements NoiChuyen{
         
         if(monster != null && !(monster instanceof DrawOldMan)){
             
-            if(Dplayer.isInvincible() == false){
+            if(Dplayer.getPlayer().isInvincible() == false){
             	// am thanh trung dich
             	Dplayer.gp.playSE(6);
             	
@@ -257,7 +257,7 @@ public class Player extends SinhVat implements NoiChuyen{
             	if(monster.getSinhVat().getDamge() - this.getDefense() > 0) {
             		this.setLife(this.getLife()-(monster.getSinhVat().getDamge() - this.getDefense()));
             	}else this.setLife(this.getLife()-1);
-                Dplayer.setInvincible(true);
+                Dplayer.getPlayer().setInvincible(true);
             }
 
         }
@@ -288,18 +288,18 @@ public class Player extends SinhVat implements NoiChuyen{
         
         if( sinhVatNhanDamge != null){
             
-            if(sinhVatNhanDamge.isInvincible() == false){
+            if(sinhVatNhanDamge.getSinhVat().isInvincible() == false){
                 
             	Dplayer.gp.playSE(5);
             	sinhVatNhanDamge.getSinhVat().setLife(
             			sinhVatNhanDamge.getSinhVat().getLife()
             			-(this.getDamge() - sinhVatNhanDamge.getSinhVat().getDefense())
             			);
-            	sinhVatNhanDamge.setInvincible(true);
+            	sinhVatNhanDamge.getSinhVat().setInvincible(true);
             	sinhVatNhanDamge.getSinhVat().damageReaction(sinhVatNhanDamge, Dplayer);
 
                 if(sinhVatNhanDamge.getSinhVat().getLife() <= 0){
-                	sinhVatNhanDamge.setDying(true);
+                	sinhVatNhanDamge.getSinhVat().setDying(true);
                 }
             }
         }

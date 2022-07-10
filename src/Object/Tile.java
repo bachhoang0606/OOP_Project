@@ -11,7 +11,6 @@ package Object;
 public class Tile extends VatThe{
 
     public Tile(String name, boolean collision) {
-        
         super(name, collision,0 , 1);
     }
     

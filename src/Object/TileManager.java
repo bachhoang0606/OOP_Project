@@ -4,6 +4,7 @@
  */
 package Object;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -135,14 +136,24 @@ public class TileManager {
             
             int worldX = worldCol * gp.tileSize;
             int worldY = worldRow * gp.tileSize;
-            int screenX =  worldX - gp.drawP.getWorldX()  + gp.drawP.getScreenX();
-            int screenY =  worldY - gp.drawP.getWorldY()  + gp.drawP.getScreenY();
+            int screenX =  worldX - gp.drawP.getVatThe().getWorldX()  + gp.drawP.getScreenX();
+            int screenY =  worldY - gp.drawP.getVatThe().getWorldY()  + gp.drawP.getScreenY();
 
-            if(worldX + gp.tileSize> gp.drawP.getWorldX() - gp.drawP.getScreenX() &&
-               worldX - gp.tileSize< gp.drawP.getWorldX() + gp.drawP.getScreenX() &&
-               worldY + gp.tileSize> gp.drawP.getWorldY() - gp.drawP.getScreenY() &&
-               worldY - gp.tileSize< gp.drawP.getWorldY() + gp.drawP.getScreenY()){
+            if(worldX + gp.tileSize> gp.drawP.getVatThe().getWorldX() - gp.drawP.getScreenX() &&
+               worldX - gp.tileSize< gp.drawP.getVatThe().getWorldX() + gp.drawP.getScreenX() &&
+               worldY + gp.tileSize> gp.drawP.getVatThe().getWorldY() - gp.drawP.getScreenY() &&
+               worldY - gp.tileSize< gp.drawP.getVatThe().getWorldY() + gp.drawP.getScreenY()){
                g2.drawImage(dtile[tileNum].getImage(), screenX, screenY, null);
+               
+               if(gp.keyH.drawSolidArea == true){
+
+                   g2.setColor(Color.red);
+                   g2.drawRect(
+                		   screenX + dtile[tileNum].getVatThe().getSolidArea().x, 
+                		   screenY + dtile[tileNum].getVatThe().getSolidArea().y, 
+                		   dtile[tileNum].getVatThe().getSolidArea().width, 
+                		   dtile[tileNum].getVatThe().getSolidArea().height);
+               }
             }
 
             worldCol++;
@@ -151,6 +162,8 @@ public class TileManager {
                 worldCol = 0;
                 worldRow++;
             }
+            
+            
         }
     }
         

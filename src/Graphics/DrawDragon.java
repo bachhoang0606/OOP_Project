@@ -92,18 +92,18 @@ public class DrawDragon extends DrawSinhVat{
 			dragon.setAction(this);
 		}else {
 			if (this.truyDuoiCounter >= 15) {
-				dragon.truyDuoi(this, this.gp.drawP.getWorldX(), this.gp.drawP.getWorldY());
+				dragon.truyDuoi(this, this.gp.drawP.getVatThe().getWorldX(), this.gp.drawP.getVatThe().getWorldY());
 				this.truyDuoiCounter = 0;
 			}else this.truyDuoiCounter++;
 			
 			if (this.banCauLuaCounter >= 120 && this.dCauLua == null) {
-				dragon.banCauLua(this, this.gp.drawP.getWorldX(), this.gp.drawP.getWorldY());
+				dragon.banCauLua(this, this.gp.drawP.getVatThe().getWorldX(), this.gp.drawP.getVatThe().getWorldY());
 				this.banCauLuaCounter = 0;
 			}else this.banCauLuaCounter++;
 			
 		}
 		
-		if (dCauLua!= null && dCauLua.isExist() == false) {
+		if (dCauLua!= null && dCauLua.getVatThe().isExist() == false) {
 			dCauLua.getdLua().setLua(null);
 			dCauLua.setdLua(null);
 			dCauLua.setCaulua(null);

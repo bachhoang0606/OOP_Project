@@ -101,8 +101,8 @@ public class DrawCauLua extends DrawVatThe{
     public void update(){
 
     	// neu cau bay qua khoang cach thi tu no
-    	int distanceX = Math.abs(this.getStartAttackX() - this.getWorldX());
-        int distanceY = Math.abs(this.getStartAttackY() - this.getWorldY());
+    	int distanceX = Math.abs(this.getStartAttackX() - this.getVatThe().getWorldX());
+        int distanceY = Math.abs(this.getStartAttackY() - this.getVatThe().getWorldY());
     	
         if (this.dLua != null) {
         	
@@ -112,7 +112,7 @@ public class DrawCauLua extends DrawVatThe{
         	}
         	
         	if (this.chayCounter >= 240) {
-        		this.setExist(false);
+        		this.getVatThe().setExist(false);
         		this.chayCounter = 0;
         	}else {
         		
@@ -123,20 +123,20 @@ public class DrawCauLua extends DrawVatThe{
         	if (// co hai cach set 1 la lay toa do nhan vat truc tiep hoac lay target cua nhan vat
         			// 1 cai tu nhien hon nhung xau??
         			// 1 cai khong tu nhien nhung hien thi tot hon??
-        			(this.getWorldX() - this.getGp().drawP.getWorldX() < 0) && this.getDirection().equals("left")||
-        			(this.getWorldX() - this.getGp().drawP.getWorldX() > 0) && this.getDirection().equals("right")||
-        			(this.getWorldY() - this.getGp().drawP.getWorldY() < 0) && this.getDirection().equals("up")||
-        			(this.getWorldY() - this.getGp().drawP.getWorldY() > 0) && this.getDirection().equals("down")||
+        			(this.getVatThe().getWorldX() - this.getGp().drawP.getVatThe().getWorldX() < 0) && this.getVatThe().getDirection().equals("left")||
+        			(this.getVatThe().getWorldX() - this.getGp().drawP.getVatThe().getWorldX() > 0) && this.getVatThe().getDirection().equals("right")||
+        			(this.getVatThe().getWorldY() - this.getGp().drawP.getVatThe().getWorldY() < 0) && this.getVatThe().getDirection().equals("up")||
+        			(this.getVatThe().getWorldY() - this.getGp().drawP.getVatThe().getWorldY() > 0) && this.getVatThe().getDirection().equals("down")||
         			Math.max(distanceX, distanceY) >= this.caulua.getDistanceExists()
         			) {
         				this.caulua.gayChayKhuVuc(this);
         		
         	}else {
-                switch(getDirection()){
-	                case "up": this.setWorldY(this.getWorldY()-caulua.getSpeed()); break;
-	                case "down": this.setWorldY(this.getWorldY()+caulua.getSpeed()); break;
-	                case "left": this.setWorldX(this.getWorldX()-caulua.getSpeed()); break;
-	                case "right": this.setWorldX(this.getWorldX()+caulua.getSpeed()); break;
+                switch(this.getVatThe().getDirection()){
+	                case "up": this.getVatThe().setWorldY(this.getVatThe().getWorldY()-caulua.getSpeed()); break;
+	                case "down": this.getVatThe().setWorldY(this.getVatThe().getWorldY()+caulua.getSpeed()); break;
+	                case "left": this.getVatThe().setWorldX(this.getVatThe().getWorldX()-caulua.getSpeed()); break;
+	                case "right": this.getVatThe().setWorldX(this.getVatThe().getWorldX()+caulua.getSpeed()); break;
                 }
         	}
         }

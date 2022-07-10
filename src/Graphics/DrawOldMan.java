@@ -17,10 +17,28 @@ public class DrawOldMan extends DrawSinhVat implements DrawSpeak{
         super(gp, man);
         
         this.oldMan = man;
-        this.setDirection("right");
+        this.oldMan.setDirection("right");
         getEntityImage();
     }
-	
+
+	public OldMan getOldMan() {
+		return oldMan;
+	}
+
+	public void setOldMan(OldMan oldMan) {
+		this.oldMan = oldMan;
+	}
+
+	public int getDialogueIndex() {
+		return dialogueIndex;
+	}
+
+	public void setDialogueIndex(int dialogueIndex) {
+		this.dialogueIndex = dialogueIndex;
+	}
+
+
+
 	public void getEntityImage(){
         
         UtilityTool uTool = new UtilityTool();
@@ -45,11 +63,11 @@ public class DrawOldMan extends DrawSinhVat implements DrawSpeak{
     	gp.ui.currentDialogue = oldMan.speak(dialogueIndex);
         dialogueIndex++;
 
-        switch(gp.drawP.getDirection()){
-	        case "up": this.setDirection("down"); break;
-	        case "down": this.setDirection("up"); break;
-	        case "left": this.setDirection("right"); break;
-	        case "right": this.setDirection("left"); break;
+        switch(gp.drawP.getPlayer().getDirection()){
+	        case "up": this.getOldMan().setDirection("down"); break;
+	        case "down": this.getOldMan().setDirection("up"); break;
+	        case "left": this.getOldMan().setDirection("right"); break;
+	        case "right": this.getOldMan().setDirection("left"); break;
         }
     }
     
@@ -58,11 +76,11 @@ public class DrawOldMan extends DrawSinhVat implements DrawSpeak{
     	setActionLockCounter(getActionLockCounter()+1);
         
         if(getActionLockCounter() == 60){
-        	switch (this.getDirection()) {
-			case "left": { setDirection("right"); break;}
-			case "right": { setDirection("left"); break;}
+        	switch (this.getOldMan().getDirection()) {
+			case "left": { this.getOldMan().setDirection("right"); break;}
+			case "right": { this.getOldMan().setDirection("left"); break;}
 	
-			default: { setDirection("right"); break;}
+			default: { this.getOldMan().setDirection("right"); break;}
 			}
         	
             setActionLockCounter(0);

@@ -39,8 +39,8 @@ public class BossDragon extends Dragon{
 					if (dBossDragon.getGp().drawM[i] == null) {
 						Dragon newDragon = new Dragon(40*dBossDragon.getGp().tileSize, 9*dBossDragon.getGp().tileSize);
 						DrawDragon newDrawDragon = new DrawDragon(dBossDragon.getGp(), newDragon);
-						newDrawDragon.setWorldX(dBossDragon.getWorldX());
-						newDrawDragon.setWorldY(dBossDragon.getWorldY());
+						newDrawDragon.getVatThe().setWorldX(dBossDragon.getVatThe().getWorldX());
+						newDrawDragon.getVatThe().setWorldY(dBossDragon.getVatThe().getWorldY());
 						newDragon.setAttack(true);
 						dBossDragon.getGp().drawM[i] = newDrawDragon;
 						break;

@@ -16,7 +16,7 @@ public class EntityComparator implements Comparator<DrawVatThe> {
     @Override
     public int compare(DrawVatThe sv1, DrawVatThe sv2) {
                 
-        int result = Integer.compare(sv1.getWorldY(), sv2.getWorldY());
+        int result = Integer.compare(sv1.getVatThe().getWorldY(), sv2.getVatThe().getWorldY());
         return result;
     }
     

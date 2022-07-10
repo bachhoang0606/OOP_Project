@@ -29,6 +29,9 @@ public abstract class SinhVat extends VatThe{
     private int maxDefense;
     private int maxExp;
     
+    // trang thai
+    private boolean invincible;
+    private boolean dying;
     
     public SinhVat(String name, int maxLife, int maxMp, int maxDefense, int maxExp, int speed, int type, int damge) {
     	super(name, true, speed, type);
@@ -37,6 +40,9 @@ public abstract class SinhVat extends VatThe{
     	this.mp = maxMp;
     	this.damge = damge;
 
+    	this.invincible = false;
+        this.dying = false;
+    	
     	this.defense = 0;
     	this.exp = 0;
     	this.healingAbility = 5;
@@ -49,9 +55,23 @@ public abstract class SinhVat extends VatThe{
     	this.maxExp = maxExp;
     }
 
-    
-    
-    public int getHealingAbility() {
+    public boolean isInvincible() {
+		return invincible;
+	}
+
+	public void setInvincible(boolean invincible) {
+		this.invincible = invincible;
+	}
+
+	public boolean isDying() {
+		return dying;
+	}
+
+	public void setDying(boolean dying) {
+		this.dying = dying;
+	}
+
+	public int getHealingAbility() {
 		return healingAbility;
 	}
 

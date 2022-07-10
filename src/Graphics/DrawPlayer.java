@@ -3,6 +3,7 @@ package Graphics;
 import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
 import GameSetting.GamePanel;
@@ -14,6 +15,9 @@ import Object.Player;
 public class DrawPlayer extends DrawSinhVat implements DrawSpeak{
 	
 	private Player player;
+	
+	// RECTANGLE
+    private Rectangle attackArea;
 	
     private int dialogueIndex;
 	
@@ -33,15 +37,16 @@ public class DrawPlayer extends DrawSinhVat implements DrawSpeak{
         screenX = gp.screenWidth/2 - gp.tileSize/2;
         screenY = gp.screenHeight/2 - gp.tileSize/2;
         
-        getSolidArea().x = 8;
-        getSolidArea().y = 16;
-        getSolidArea().width = getGp().tileSize - 16;
-        getSolidArea().height = getGp().tileSize - 16;
-        setSolidAreaDefaultX(getSolidArea().x);
-        setSolidAreaDefaultY(getSolidArea().y);
+        this.player.getSolidArea().x = 8;
+        this.player.getSolidArea().y = 16;
+        this.player.getSolidArea().width = getGp().tileSize - 16;
+        this.player.getSolidArea().height = getGp().tileSize - 16;
+        this.player.setSolidAreaDefaultX(this.player.getSolidArea().x);
+        this.player.setSolidAreaDefaultY(this.player.getSolidArea().y);
         
-        getAttackArea().width = 36;
-        getAttackArea().height = 36;
+        this.attackArea = new Rectangle(0, 0, 0, 0);
+        this.attackArea.width = 36;
+        this.attackArea.height = 36;
         
         setDefaultValues();
         getEntityImage();
@@ -51,15 +56,26 @@ public class DrawPlayer extends DrawSinhVat implements DrawSpeak{
         this.drawKunai = new DrawKunai[40];
         this.standCounter = 0;
         this.kunaiAttackCounter = 0;
+        
     }
 	
 	public void setDefaultValues(){
 
-		setWorldX(getGp().tileSize*23);
-		setWorldY(getGp().tileSize*21);
+		this.getVatThe().setWorldX(this.getGp().tileSize*23);
+		this.getVatThe().setWorldY(this.getGp().tileSize*21);
        
 		player.setLife(player.getMaxLife());
     }
+
+	
+	
+	public Rectangle getAttackArea() {
+		return attackArea;
+	}
+
+	public void setAttackArea(Rectangle attackArea) {
+		this.attackArea = attackArea;
+	}
 
 	public KeyHandler getKeyH() {
 		return keyH;
@@ -77,7 +93,6 @@ public class DrawPlayer extends DrawSinhVat implements DrawSpeak{
 		this.dialogueIndex = dialogueIndex;
 	}
 
-	
 	public DrawKunai[] getDrawKunai() {
 		return drawKunai;
 	}
@@ -109,7 +124,6 @@ public class DrawPlayer extends DrawSinhVat implements DrawSpeak{
 	public void setKunaiAttackCounter(int kunaiAttackCounter) {
 		this.kunaiAttackCounter = kunaiAttackCounter;
 	}
-	
 	
 	public int getScreenX() {
 		return screenX;
@@ -164,10 +178,10 @@ public class DrawPlayer extends DrawSinhVat implements DrawSpeak{
         		getGp().keyH.leftPressed == true || getGp().keyH.rightPressed == true || 
         				getGp().keyH.enterPressed == true){
 
-            if(getGp().keyH.upPressed == true){ setDirection("up");
-            }else if(getGp().keyH.downPressed == true){ setDirection("down");
-            }else if(getGp().keyH.leftPressed == true){ setDirection("left");
-            }else if(getGp().keyH.rightPressed == true){ setDirection("right"); }
+            if(getGp().keyH.upPressed == true){ this.getPlayer().setDirection("up");
+            }else if(getGp().keyH.downPressed == true){ this.getPlayer().setDirection("down");
+            }else if(getGp().keyH.leftPressed == true){ this.getPlayer().setDirection("left");
+            }else if(getGp().keyH.rightPressed == true){ this.getPlayer().setDirection("right"); }
 
             //moving = true;
 
@@ -195,11 +209,11 @@ public class DrawPlayer extends DrawSinhVat implements DrawSpeak{
             gp.eHandler.checkEvent();
 
             if(isCollisionOn() == false && getGp().keyH.enterPressed == false){
-                switch(getDirection()){
-                    case "up": setWorldY(getWorldY()-player.getSpeed()); break;
-                    case "down": setWorldY(getWorldY()+player.getSpeed()); break;
-                    case "left": setWorldX(getWorldX()-player.getSpeed()); break;
-                    case "right": setWorldX(getWorldX()+player.getSpeed()); break; 
+                switch(this.getPlayer().getDirection()){
+                    case "up": this.getVatThe().setWorldY(this.getVatThe().getWorldY()-player.getSpeed()); break;
+                    case "down": this.getVatThe().setWorldY(this.getVatThe().getWorldY()+player.getSpeed()); break;
+                    case "left": this.getVatThe().setWorldX(this.getVatThe().getWorldX()-player.getSpeed()); break;
+                    case "right": this.getVatThe().setWorldX(this.getVatThe().getWorldX()+player.getSpeed()); break; 
                 }
             }
                         
@@ -225,10 +239,10 @@ public class DrawPlayer extends DrawSinhVat implements DrawSpeak{
         }
         
         // This need to be outside of key if statement!
-        if(isInvincible() == true){
+        if(this.getPlayer().isInvincible() == true){
             setInvincibleCounter(getInvincibleCounter()+1);
             if(getInvincibleCounter() > 60){
-                setInvincible(false);
+                this.getPlayer().setInvincible(false);
                 setInvincibleCounter(0);
             }
         }   
@@ -253,7 +267,7 @@ public class DrawPlayer extends DrawSinhVat implements DrawSpeak{
         int attackWorldX = screenX;
         int attackWorldY = screenY;
         
-        switch (getDirection()) {
+        switch (this.getPlayer().getDirection()) {
         case "up":
             if(player.isAttacking() == false){
                 if(getSpriteNum() == 1){ image = getUp1(); }
@@ -264,7 +278,7 @@ public class DrawPlayer extends DrawSinhVat implements DrawSpeak{
                 if(getSpriteNum() == 1){ image = getAttackUp1(); }
                 if(getSpriteNum() == 2){ image = getAttackUp2(); }
             }
-            attackWorldY = attackWorldY - getAttackArea().height -4;
+            attackWorldY = attackWorldY - this.attackArea.height -4;
             break;
         case "down":
             if(player.isAttacking() == false){
@@ -275,7 +289,7 @@ public class DrawPlayer extends DrawSinhVat implements DrawSpeak{
                 if(getSpriteNum() == 1){ image = getAttackDown1(); }
                 if(getSpriteNum() == 2){ image = getAttackDown2(); }
             }
-            attackWorldY += getSolidArea().height;
+            attackWorldY += this.player.getSolidArea().height;
             break;
         case "left":
             if(player.isAttacking() == false){
@@ -287,7 +301,7 @@ public class DrawPlayer extends DrawSinhVat implements DrawSpeak{
                 if(getSpriteNum() == 1){ image = getAttackLeft1(); }
                 if(getSpriteNum() == 2){ image = getAttackLeft2(); }
             }
-            attackWorldX = attackWorldX - getAttackArea().width - 4;
+            attackWorldX = attackWorldX - this.attackArea.width - 4;
             break;
         case "right":
             if(player.isAttacking() == false){
@@ -298,7 +312,7 @@ public class DrawPlayer extends DrawSinhVat implements DrawSpeak{
                 if(getSpriteNum() == 1){ image = getAttackRight1(); }
                 if(getSpriteNum() == 2){ image = getAttackRight2(); }
             }
-            attackWorldX += getSolidArea().width;
+            attackWorldX += this.player.getSolidArea().width;
             break;
         }
         
@@ -309,7 +323,7 @@ public class DrawPlayer extends DrawSinhVat implements DrawSpeak{
         drawPlayerKunai(g2);
         drawPlayerKey(g2);
         
-        if(isInvincible() == true){
+        if(this.getPlayer().isInvincible() == true){
             g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.4f));
         }
         
@@ -321,27 +335,34 @@ public class DrawPlayer extends DrawSinhVat implements DrawSpeak{
         if(gp.keyH.drawSolidArea == true){
 //            g2.drawRect(screenX, screenY, gp.tileSize, gp.tileSize);
             g2.setColor(Color.red);
-            g2.drawRect(screenX + getSolidArea().x, screenY + getSolidArea().y, getSolidArea().width, getSolidArea().height);
-            g2.drawRect(attackWorldX + getSolidArea().x, attackWorldY + getSolidArea().y, getAttackArea().width+4, getAttackArea().height+4);
+            g2.drawRect(screenX + this.player.getSolidArea().x, 
+            		screenY + this.player.getSolidArea().y, 
+            		this.player.getSolidArea().width, 
+            		this.player.getSolidArea().height
+            		);
+            g2.drawRect(attackWorldX + this.player.getSolidArea().x, 
+            		attackWorldY + this.player.getSolidArea().y, 
+            		this.attackArea.width+4, 
+            		this.attackArea.height+4);
         }
     }
     
-    public void DrawSpeakSV(){
-        
-    	if(player.speak(dialogueIndex) == null) {
-    		this.dialogueIndex = 0;
-    	}
-    	
-    	gp.ui.currentDialogue = player.speak(dialogueIndex);
-        dialogueIndex++;
-
-        switch(gp.drawP.getDirection()){
-	        case "up": this.setDirection("down"); break;
-	        case "down": this.setDirection("up"); break;
-	        case "left": this.setDirection("right"); break;
-	        case "right": this.setDirection("left"); break;
-        }
-    }
+//    public void DrawSpeakSV(){
+//        
+//    	if(player.speak(dialogueIndex) == null) {
+//    		this.dialogueIndex = 0;
+//    	}
+//    	
+//    	gp.ui.currentDialogue = player.speak(dialogueIndex);
+//        dialogueIndex++;
+//
+//        switch(this.getPlayer().getDirection()){
+//	        case "up": this.setDirection("down"); break;
+//	        case "down": this.setDirection("up"); break;
+//	        case "left": this.setDirection("right"); break;
+//	        case "right": this.setDirection("left"); break;
+//        }
+//    }
     
     public void drawPlayerLife(Graphics2D g2){
         
@@ -423,5 +444,11 @@ public class DrawPlayer extends DrawSinhVat implements DrawSpeak{
         g2.setFont(g2.getFont().deriveFont(30f));
         g2.drawString(" X "+gp.drawP.getPlayer().getHasKey(), x+gp.tileSize, y+gp.tileSize);
     }
+
+	@Override
+	public void DrawSpeakSV() {
+		// TODO Auto-generated method stub
+		
+	}
 	
 }

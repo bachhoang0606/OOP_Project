@@ -19,7 +19,7 @@ public class Lua extends VatThe{
 	public void thieuDot(DrawLua dLua) {
 		
 		// nheu nhan vat bat tu thi bo qua
-		if (dLua.getGp().drawP.isInvincible() == false) {
+		if (dLua.getGp().drawP.getPlayer().isInvincible() == false) {
 			
 			// am thanh trung dich
 			dLua.getGp().playSE(6);
@@ -30,7 +30,7 @@ public class Lua extends VatThe{
 				dLua.getGp().drawP.getPlayer().setLife(dLua.getGp().drawP.getPlayer().getLife() - damgeNhan);
 			}else dLua.getGp().drawP.getPlayer().setLife(dLua.getGp().drawP.getPlayer().getLife() - 1);
 			
-			dLua.getGp().drawP.setInvincible(true);
+			dLua.getGp().drawP.getPlayer().setInvincible(true);
 		}
 	}
 }

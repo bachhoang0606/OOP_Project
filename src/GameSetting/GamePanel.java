@@ -20,12 +20,7 @@ import Object.Player;
 import Object.TileManager;
 
 public class GamePanel extends JPanel implements Runnable{
-    
-    /**
-	 * 
-	 */
-	private static final long serialVersionUID = -6268576987370564857L;
-	
+
 	// SCREEN SETTING
     public final int tileSize = 48; // 48X48 tile
     public final int maxScreenCol = 16;
@@ -146,12 +141,12 @@ public class GamePanel extends JPanel implements Runnable{
             // Draw kunai of player
             for(int i = 0;i < drawP.getPlayer().getHasKunai()+1 ; i++){
                 if(drawP.getPlayer().getPlayerKunai()[i] != null){
-                    if(drawP.getDrawKunai()[i].isExist() == true ||
-                    		drawP.getDrawKunai()[i].isDisappearing() == false){
+                    if(drawP.getDrawKunai()[i].getVatThe().isExist() == true ||
+                    		drawP.getDrawKunai()[i].getVatThe().isDisappearing() == false){
                     	
                     	drawP.getDrawKunai()[i].update();
                     }    
-                    if(drawP.getDrawKunai()[i].isExist() == false){
+                    if(drawP.getDrawKunai()[i].getVatThe().isExist() == false){
                     	drawP.getPlayer().getPlayerKunai()[i] = null;
                     	drawP.getDrawKunai()[i] = null;
                     }
@@ -161,10 +156,10 @@ public class GamePanel extends JPanel implements Runnable{
             // MONSTER
             for(int i = 0;i < drawM.length; i++){
                 if(drawM[i] != null){
-                    if(drawM[i].isExist()== true && drawM[i].isDying() == false){
+                    if(drawM[i].getVatThe().isExist()== true && drawM[i].getSinhVat().isDying() == false){
                     	drawM[i].update();
                     }
-                    if(drawM[i].isExist() == false){
+                    if(drawM[i].getVatThe().isExist() == false){
                     	// quai chet cong exp cho nhan vat
 
                     	drawP.getPlayer().setExp(drawP.getPlayer().getExp() + drawM[i].getSinhVat().getExp());
@@ -176,8 +171,8 @@ public class GamePanel extends JPanel implements Runnable{
                     			if (dobj[j] == null) {
                     				dobj[j] = new DrawVatThe(this, new Key());
                     		        dobj[j].setImage(uTool.setup("data/Object/"+dobj[j].getVatThe().getName()+".png", tileSize, tileSize));
-                    		        dobj[j].setWorldX(drawM[i].getWorldX());
-                    		        dobj[j].setWorldY(drawM[i].getWorldY());
+                    		        dobj[j].getVatThe().setWorldX(drawM[i].getVatThe().getWorldX());
+                    		        dobj[j].getVatThe().setWorldY(drawM[i].getVatThe().getWorldY());
                     				break;
                     			}
                     		}

@@ -13,12 +13,12 @@ public class DrawSlime extends DrawSinhVat{
 
         super(gp, slime);
         this.slime = slime;
-        getSolidArea().x = 3;
-        getSolidArea().y = 18;
-        getSolidArea().width = 42;
-        getSolidArea().height = 30;
-        setSolidAreaDefaultX(getSolidArea().x);
-        setSolidAreaDefaultY(getSolidArea().y);
+        this.slime.getSolidArea().x = 3;
+        this.slime.getSolidArea().y = 18;
+        this.slime.getSolidArea().width = 42;
+        this.slime.getSolidArea().height = 30;
+        this.slime.setSolidAreaDefaultX(this.slime.getSolidArea().x);
+        this.slime.setSolidAreaDefaultY(this.slime.getSolidArea().y);
         
         getEntityImage();
     }

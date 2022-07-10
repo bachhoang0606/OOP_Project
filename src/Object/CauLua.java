@@ -38,23 +38,27 @@ public class CauLua extends VatThe{
 
 	public void gayChayKhuVuc(DrawCauLua dCauLua) {
 
-		dCauLua.setdLua(new DrawLua(dCauLua.getGp(), new Lua()));
+		this.lua = new Lua();
+		
+		dCauLua.setdLua(new DrawLua(dCauLua.getGp(), this.lua));
 		
 		// toa do cua ngon lua
-		int x = dCauLua.getWorldX() - dCauLua.getGp().tileSize/2;
-		int y = dCauLua.getWorldY() - dCauLua.getGp().tileSize/2;
+		int x = dCauLua.getVatThe().getWorldX() - dCauLua.getGp().tileSize/2;
+		int y = dCauLua.getVatThe().getWorldY() - dCauLua.getGp().tileSize/2;
 		int doRong = dCauLua.getGp().tileSize*2;    
 
 		
 		// khu vuc gay chay
-		dCauLua.getdLua().setWorldX(x);
-		dCauLua.getdLua().setWorldY(y);
-		dCauLua.getdLua().setSolidAreaDefaultX(0);
-		dCauLua.getdLua().setSolidAreaDefaultY(0);
-		dCauLua.getdLua().getSolidArea().x = 0;
-		dCauLua.getdLua().getSolidArea().y = 0;
-		dCauLua.getdLua().getSolidArea().width = doRong;
-		dCauLua.getdLua().getSolidArea().height = doRong;	
-		dCauLua.getdLua().setDirection(dCauLua.getDirection());
+		
+		this.getLua().setSolidAreaDefaultX(0);
+		this.getLua().setSolidAreaDefaultY(0);
+		this.getLua().getSolidArea().x = 0;
+		this.getLua().getSolidArea().y = 0;
+		this.getLua().getSolidArea().width = doRong;
+		this.getLua().getSolidArea().height = doRong;	
+		
+		this.getLua().setWorldX(x);
+		this.getLua().setWorldY(y);
+		this.getLua().setDirection(this.getDirection());
 	}
 }

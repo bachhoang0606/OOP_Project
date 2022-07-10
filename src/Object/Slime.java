@@ -26,7 +26,7 @@ public class Slime extends SinhVat{
 	public void damageReaction(DrawSinhVat DSinhVat, DrawVatThe vatGayDamge) {
 		// TODO Auto-generated method stub
 		DSinhVat.setActionLockCounter(0);
-		DSinhVat.setDirection(vatGayDamge.getDirection());
+		DSinhVat.getSinhVat().setDirection(vatGayDamge.getVatThe().getDirection());
 	}
 
 	@Override
@@ -39,10 +39,10 @@ public class Slime extends SinhVat{
             Random random = new Random();
             int i = random.nextInt(100)+1;
 
-            if(i <= 25){ dSinhVat.setDirection("up"); }
-            else if(i > 25 && i <= 50){ dSinhVat.setDirection("down"); }
-            else if(i > 50 && i <= 75){ dSinhVat.setDirection("left"); }
-            else if(i > 75 && i <= 100){ dSinhVat.setDirection("right"); }
+            if(i <= 25){ dSinhVat.getSinhVat().setDirection("up"); }
+            else if(i > 25 && i <= 50){ dSinhVat.getSinhVat().setDirection("down"); }
+            else if(i > 50 && i <= 75){ dSinhVat.getSinhVat().setDirection("left"); }
+            else if(i > 75 && i <= 100){ dSinhVat.getSinhVat().setDirection("right"); }
             
             dSinhVat.setActionLockCounter(0);
         }

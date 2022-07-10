@@ -40,8 +40,8 @@ public class EventHandler {
     public void checkEvent(){
         
         // Check if the player character is more than 1 tile away from the last event
-        int xDistance = Math.abs(gp.drawP.getWorldX() - previousEventX);
-        int yDistance = Math.abs(gp.drawP.getWorldY() - previousEventY);
+        int xDistance = Math.abs(gp.drawP.getVatThe().getWorldX() - previousEventX);
+        int yDistance = Math.abs(gp.drawP.getVatThe().getWorldY() - previousEventY);
         int distance = Math.max(xDistance, yDistance);
         if(distance > gp.tileSize){
             canTouchEvent = true;
@@ -59,23 +59,23 @@ public class EventHandler {
         
         boolean hit = false;
         
-        gp.drawP.getSolidArea().x = gp.drawP.getWorldX() + gp.drawP.getSolidArea().x;
-        gp.drawP.getSolidArea().y = gp.drawP.getWorldY() + gp.drawP.getSolidArea().y;
+        gp.drawP.getVatThe().getSolidArea().x = gp.drawP.getVatThe().getWorldX() + gp.drawP.getVatThe().getSolidArea().x;
+        gp.drawP.getVatThe().getSolidArea().y = gp.drawP.getVatThe().getWorldY() + gp.drawP.getVatThe().getSolidArea().y;
         eventRect[eventCol][eventRow].x = eventCol*gp.tileSize + eventRect[eventCol][eventRow].x;
         eventRect[eventCol][eventRow].y = eventRow*gp.tileSize + eventRect[eventCol][eventRow].y;
         
-        if(gp.drawP.getSolidArea().intersects(eventRect[eventCol][eventRow]) && eventRect[eventCol][eventRow].eventDone == false){
-            if(gp.drawP.getDirection().contentEquals(reqDirection) || reqDirection.contentEquals("any")){
+        if(gp.drawP.getVatThe().getSolidArea().intersects(eventRect[eventCol][eventRow]) && eventRect[eventCol][eventRow].eventDone == false){
+            if(gp.drawP.getPlayer().getDirection().contentEquals(reqDirection) || reqDirection.contentEquals("any")){
                 
                 hit = true;
-                previousEventX = gp.drawP.getWorldX();
-                previousEventY = gp.drawP.getWorldY();
+                previousEventX = gp.drawP.getVatThe().getWorldX();
+                previousEventY = gp.drawP.getVatThe().getWorldY();
                 
             }
         }
         
-        gp.drawP.getSolidArea().x = gp.drawP.getSolidAreaDefaultX();
-        gp.drawP.getSolidArea().y = gp.drawP.getSolidAreaDefaultY();
+        gp.drawP.getVatThe().getSolidArea().x = gp.drawP.getVatThe().getSolidAreaDefaultX();
+        gp.drawP.getVatThe().getSolidArea().y = gp.drawP.getVatThe().getSolidAreaDefaultY();
         eventRect[eventCol][eventRow].x = eventRect[eventCol][eventRow].eventRectDeufaultX;
         eventRect[eventCol][eventRow].y = eventRect[eventCol][eventRow].eventRectDeufaultY;
         
@@ -86,8 +86,8 @@ public class EventHandler {
         
         gp.gameState = gameState;
         gp.ui.currentDialogue = "Teleport!";
-        gp.drawP.setWorldX(gp.tileSize * 37);
-        gp.drawP.setWorldX(gp.tileSize * 10);
+        gp.drawP.getVatThe().setWorldX(gp.tileSize * 37);
+        gp.drawP.getVatThe().setWorldX(gp.tileSize * 10);
                 
     }
     

@@ -20,12 +20,12 @@ public class DrawBossDragon extends DrawDragon{
 		
 		this.thoiGianTrieuHoi = 0;
 		
-		this.getSolidArea().x = (int) (this.getSolidArea().x*1.5);
-		this.getSolidArea().y = (int) (this.getSolidArea().y*1.5);
-		this.getSolidArea().width = (int) (this.getGp().tileSize*1.5 - 2*this.getSolidArea().x);
-		this.getSolidArea().height = (int) (this.getGp().tileSize*1.5 - this.getSolidArea().y);
-		this.setSolidAreaDefaultX(getSolidArea().x);
-        this.setSolidAreaDefaultY(getSolidArea().y);
+		this.getBossDragon().getSolidArea().x = (int) (this.getBossDragon().getSolidArea().x*1.5);
+		this.getBossDragon().getSolidArea().y = (int) (this.getBossDragon().getSolidArea().y*1.5);
+		this.getBossDragon().getSolidArea().width = (int) (this.getGp().tileSize*1.5 - 2*this.getBossDragon().getSolidArea().x);
+		this.getBossDragon().getSolidArea().height = (int) (this.getGp().tileSize*1.5 - this.getBossDragon().getSolidArea().y);
+		this.getBossDragon().setSolidAreaDefaultX(this.getBossDragon().getSolidArea().x);
+        this.getBossDragon().setSolidAreaDefaultY(this.getBossDragon().getSolidArea().y);
 
 	}
 	

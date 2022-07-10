@@ -24,10 +24,10 @@ public class CollisionChecker {
     
     public void checkTile(DrawVatThe DoObj){
         
-        int entityLeftWorldX = DoObj.getWorldX() + DoObj.getSolidArea().x;
-        int entityRightWorldX = DoObj.getWorldX() + DoObj.getSolidArea().x + DoObj.getSolidArea().width;
-        int entityTopWorldY = DoObj.getWorldY() + DoObj.getSolidArea().y;
-        int entityBottomWorldY = DoObj.getWorldY() + DoObj.getSolidArea().y + DoObj.getSolidArea().height;
+        int entityLeftWorldX = DoObj.getVatThe().getWorldX() + DoObj.getVatThe().getSolidArea().x;
+        int entityRightWorldX = DoObj.getVatThe().getWorldX() + DoObj.getVatThe().getSolidArea().x + DoObj.getVatThe().getSolidArea().width;
+        int entityTopWorldY = DoObj.getVatThe().getWorldY() + DoObj.getVatThe().getSolidArea().y;
+        int entityBottomWorldY = DoObj.getVatThe().getWorldY() + DoObj.getVatThe().getSolidArea().y + DoObj.getVatThe().getSolidArea().height;
     
         int entityLeftCol = entityLeftWorldX/gp.tileSize;
         int entityRightCol = entityRightWorldX/gp.tileSize;
@@ -36,7 +36,7 @@ public class CollisionChecker {
         
         int tileNum1, tileNum2;
         
-        switch(DoObj.getDirection()) {
+        switch(DoObj.getVatThe().getDirection()) {
             case "up":
                 entityTopRow = (entityTopWorldY - DoObj.getVatThe().getSpeed())/gp.tileSize;
                 tileNum1 = gp.tileM.mapTileNum[entityLeftCol][entityTopRow];
@@ -81,21 +81,21 @@ public class CollisionChecker {
             if(gp.dobj[i] != null){
                 
                 // Get entity's solid area position
-            	DoObj.getSolidArea().x = DoObj.getWorldX() + DoObj.getSolidArea().x;
-            	DoObj.getSolidArea().y = DoObj.getWorldY() + DoObj.getSolidArea().y;
+            	DoObj.getVatThe().getSolidArea().x = DoObj.getVatThe().getWorldX() + DoObj.getVatThe().getSolidArea().x;
+            	DoObj.getVatThe().getSolidArea().y = DoObj.getVatThe().getWorldY() + DoObj.getVatThe().getSolidArea().y;
                 
                 // Get the object's solid area position
-                gp.dobj[i].getSolidArea().x = gp.dobj[i].getWorldX() + gp.dobj[i].getSolidArea().x;
-                gp.dobj[i].getSolidArea().y = gp.dobj[i].getWorldY() + gp.dobj[i].getSolidArea().y;
+                gp.dobj[i].getVatThe().getSolidArea().x = gp.dobj[i].getVatThe().getWorldX() + gp.dobj[i].getVatThe().getSolidArea().x;
+                gp.dobj[i].getVatThe().getSolidArea().y = gp.dobj[i].getVatThe().getWorldY() + gp.dobj[i].getVatThe().getSolidArea().y;
                 
-                switch(DoObj.getDirection()) {
-                case "up":  DoObj.getSolidArea().y -= DoObj.getVatThe().getSpeed(); break;
-                case "down": DoObj.getSolidArea().y += DoObj.getVatThe().getSpeed(); break;
-                case "left": DoObj.getSolidArea().x -= DoObj.getVatThe().getSpeed(); break;
-                case "right": DoObj.getSolidArea().x += DoObj.getVatThe().getSpeed(); break;
+                switch(DoObj.getVatThe().getDirection()) {
+                case "up":  DoObj.getVatThe().getSolidArea().y -= DoObj.getVatThe().getSpeed(); break;
+                case "down": DoObj.getVatThe().getSolidArea().y += DoObj.getVatThe().getSpeed(); break;
+                case "left": DoObj.getVatThe().getSolidArea().x -= DoObj.getVatThe().getSpeed(); break;
+                case "right": DoObj.getVatThe().getSolidArea().x += DoObj.getVatThe().getSpeed(); break;
                 }
                 
-                if(DoObj.getSolidArea().intersects(gp.dobj[i].getSolidArea())){
+                if(DoObj.getVatThe().getSolidArea().intersects(gp.dobj[i].getVatThe().getSolidArea())){
                     if(gp.dobj[i].getVatThe().isCollision() == true){
                     	DoObj.setCollisionOn(true);
                     }
@@ -105,10 +105,10 @@ public class CollisionChecker {
                 }
                     
                 
-                DoObj.getSolidArea().x = DoObj.getSolidAreaDefaultX();
-                DoObj.getSolidArea().y = DoObj.getSolidAreaDefaultY();
-                gp.dobj[i].getSolidArea().x = gp.dobj[i].getSolidAreaDefaultX();
-                gp.dobj[i].getSolidArea().y = gp.dobj[i].getSolidAreaDefaultY();
+                DoObj.getVatThe().getSolidArea().x = DoObj.getVatThe().getSolidAreaDefaultX();
+                DoObj.getVatThe().getSolidArea().y = DoObj.getVatThe().getSolidAreaDefaultY();
+                gp.dobj[i].getVatThe().getSolidArea().x = gp.dobj[i].getVatThe().getSolidAreaDefaultX();
+                gp.dobj[i].getVatThe().getSolidArea().y = gp.dobj[i].getVatThe().getSolidAreaDefaultY();
             }
         }
         return index;
@@ -124,21 +124,21 @@ public class CollisionChecker {
             if(target[i] != null){
                 
                 // Get entity's solid area position
-            	DoObj.getSolidArea().x = DoObj.getWorldX() + DoObj.getSolidArea().x;
-            	DoObj.getSolidArea().y = DoObj.getWorldY() + DoObj.getSolidArea().y;
+            	DoObj.getVatThe().getSolidArea().x = DoObj.getVatThe().getWorldX() + DoObj.getVatThe().getSolidArea().x;
+            	DoObj.getVatThe().getSolidArea().y = DoObj.getVatThe().getWorldY() + DoObj.getVatThe().getSolidArea().y;
                 
                 // Get the object's solid area position
-                target[i].getSolidArea().x = target[i].getWorldX() + target[i].getSolidArea().x;
-                target[i].getSolidArea().y = target[i].getWorldY() + target[i].getSolidArea().y;
+                target[i].getVatThe().getSolidArea().x = target[i].getVatThe().getWorldX() + target[i].getVatThe().getSolidArea().x;
+                target[i].getVatThe().getSolidArea().y = target[i].getVatThe().getWorldY() + target[i].getVatThe().getSolidArea().y;
                 
-                switch(DoObj.getDirection()) {
-                case "up": DoObj.getSolidArea().y -= DoObj.getVatThe().getSpeed(); break;
-                case "down": DoObj.getSolidArea().y += DoObj.getVatThe().getSpeed(); break;
-                case "left": DoObj.getSolidArea().x -= DoObj.getVatThe().getSpeed(); break;
-                case "right": DoObj.getSolidArea().x += DoObj.getVatThe().getSpeed(); break;
+                switch(DoObj.getVatThe().getDirection()) {
+                case "up": DoObj.getVatThe().getSolidArea().y -= DoObj.getVatThe().getSpeed(); break;
+                case "down": DoObj.getVatThe().getSolidArea().y += DoObj.getVatThe().getSpeed(); break;
+                case "left": DoObj.getVatThe().getSolidArea().x -= DoObj.getVatThe().getSpeed(); break;
+                case "right": DoObj.getVatThe().getSolidArea().x += DoObj.getVatThe().getSpeed(); break;
                 }
                 
-                if(DoObj.getSolidArea().intersects(target[i].getSolidArea())){
+                if(DoObj.getVatThe().getSolidArea().intersects(target[i].getVatThe().getSolidArea())){
                     if(target[i].getSinhVat() != DoObj.getVatThe()){
                     	
                     	if(target[i].getSinhVat().isCollision() == true){
@@ -148,10 +148,10 @@ public class CollisionChecker {
                     }
                 }
 
-                DoObj.getSolidArea().x = DoObj.getSolidAreaDefaultX();
-                DoObj.getSolidArea().y = DoObj.getSolidAreaDefaultY();
-                target[i].getSolidArea().x = target[i].getSolidAreaDefaultX();
-                target[i].getSolidArea().y = target[i].getSolidAreaDefaultY();
+                DoObj.getVatThe().getSolidArea().x = DoObj.getVatThe().getSolidAreaDefaultX();
+                DoObj.getVatThe().getSolidArea().y = DoObj.getVatThe().getSolidAreaDefaultY();
+                target[i].getVatThe().getSolidArea().x = target[i].getVatThe().getSolidAreaDefaultX();
+                target[i].getVatThe().getSolidArea().y = target[i].getVatThe().getSolidAreaDefaultY();
             }
         }
         return index;
@@ -168,21 +168,21 @@ public class CollisionChecker {
             if(sinhVat != null){
                 
                 // Get entity's solid area position
-            	DoObj.getSolidArea().x = DoObj.getWorldX() + DoObj.getSolidArea().x;
-            	DoObj.getSolidArea().y = DoObj.getWorldY() + DoObj.getSolidArea().y;
+            	DoObj.getVatThe().getSolidArea().x = DoObj.getVatThe().getWorldX() + DoObj.getVatThe().getSolidArea().x;
+            	DoObj.getVatThe().getSolidArea().y = DoObj.getVatThe().getWorldY() + DoObj.getVatThe().getSolidArea().y;
                 
                 // Get the object's solid area position
-            	sinhVat.getSolidArea().x = sinhVat.getWorldX() + sinhVat.getSolidArea().x;
-            	sinhVat.getSolidArea().y = sinhVat.getWorldY() + sinhVat.getSolidArea().y;
+            	sinhVat.getVatThe().getSolidArea().x = sinhVat.getVatThe().getWorldX() + sinhVat.getVatThe().getSolidArea().x;
+            	sinhVat.getVatThe().getSolidArea().y = sinhVat.getVatThe().getWorldY() + sinhVat.getVatThe().getSolidArea().y;
                 
-                switch(DoObj.getDirection()) {
-                case "up": DoObj.getSolidArea().y -= DoObj.getVatThe().getSpeed(); break;
-                case "down": DoObj.getSolidArea().y += DoObj.getVatThe().getSpeed(); break;
-                case "left": DoObj.getSolidArea().x -= DoObj.getVatThe().getSpeed(); break;
-                case "right": DoObj.getSolidArea().x += DoObj.getVatThe().getSpeed(); break;
+                switch(DoObj.getVatThe().getDirection()) {
+                case "up": DoObj.getVatThe().getSolidArea().y -= DoObj.getVatThe().getSpeed(); break;
+                case "down": DoObj.getVatThe().getSolidArea().y += DoObj.getVatThe().getSpeed(); break;
+                case "left": DoObj.getVatThe().getSolidArea().x -= DoObj.getVatThe().getSpeed(); break;
+                case "right": DoObj.getVatThe().getSolidArea().x += DoObj.getVatThe().getSpeed(); break;
                 }
                 
-                if(DoObj.getSolidArea().intersects(sinhVat.getSolidArea())){
+                if(DoObj.getVatThe().getSolidArea().intersects(sinhVat.getVatThe().getSolidArea())){
                     if(sinhVat.getSinhVat() != DoObj.getVatThe()){
                     	
                     	if(sinhVat.getSinhVat().isCollision() == true){
@@ -192,10 +192,10 @@ public class CollisionChecker {
                     }
                 }
 
-                DoObj.getSolidArea().x = DoObj.getSolidAreaDefaultX();
-                DoObj.getSolidArea().y = DoObj.getSolidAreaDefaultY();
-                sinhVat.getSolidArea().x = sinhVat.getSolidAreaDefaultX();
-                sinhVat.getSolidArea().y = sinhVat.getSolidAreaDefaultY();
+                DoObj.getVatThe().getSolidArea().x = DoObj.getVatThe().getSolidAreaDefaultX();
+                DoObj.getVatThe().getSolidArea().y = DoObj.getVatThe().getSolidAreaDefaultY();
+                sinhVat.getVatThe().getSolidArea().x = sinhVat.getVatThe().getSolidAreaDefaultX();
+                sinhVat.getVatThe().getSolidArea().y = sinhVat.getVatThe().getSolidAreaDefaultY();
             }
         }
         return index;
@@ -206,28 +206,28 @@ public class CollisionChecker {
         
         boolean contactPlayer = false;
         // Get entity's solid area position
-        doOBJ.getSolidArea().x = doOBJ.getWorldX() + doOBJ.getSolidArea().x;
-        doOBJ.getSolidArea().y = doOBJ.getWorldY() + doOBJ.getSolidArea().y;
+        doOBJ.getVatThe().getSolidArea().x = doOBJ.getVatThe().getWorldX() + doOBJ.getVatThe().getSolidArea().x;
+        doOBJ.getVatThe().getSolidArea().y = doOBJ.getVatThe().getWorldY() + doOBJ.getVatThe().getSolidArea().y;
 
         // Get the object's solid area position
-        gp.drawP.getSolidArea().x = gp.drawP.getWorldX() + gp.drawP.getSolidArea().x;
-        gp.drawP.getSolidArea().y = gp.drawP.getWorldY() + gp.drawP.getSolidArea().y;
+        gp.drawP.getVatThe().getSolidArea().x = gp.drawP.getVatThe().getWorldX() + gp.drawP.getVatThe().getSolidArea().x;
+        gp.drawP.getVatThe().getSolidArea().y = gp.drawP.getVatThe().getWorldY() + gp.drawP.getVatThe().getSolidArea().y;
 
-        switch(doOBJ.getDirection()) {
-        case "up": doOBJ.getSolidArea().y -= doOBJ.getVatThe().getSpeed(); break;
-        case "down": doOBJ.getSolidArea().y += doOBJ.getVatThe().getSpeed(); break;
-        case "left": doOBJ.getSolidArea().x -= doOBJ.getVatThe().getSpeed(); break;
-        case "right": doOBJ.getSolidArea().x += doOBJ.getVatThe().getSpeed(); break;
+        switch(doOBJ.getVatThe().getDirection()) {
+        case "up": doOBJ.getVatThe().getSolidArea().y -= doOBJ.getVatThe().getSpeed(); break;
+        case "down": doOBJ.getVatThe().getSolidArea().y += doOBJ.getVatThe().getSpeed(); break;
+        case "left": doOBJ.getVatThe().getSolidArea().x -= doOBJ.getVatThe().getSpeed(); break;
+        case "right": doOBJ.getVatThe().getSolidArea().x += doOBJ.getVatThe().getSpeed(); break;
         }
         
-        if(doOBJ.getSolidArea().intersects(gp.drawP.getSolidArea())){
+        if(doOBJ.getVatThe().getSolidArea().intersects(gp.drawP.getVatThe().getSolidArea())){
         	doOBJ.setCollisionOn(true);
             contactPlayer = true;
         }   
-        doOBJ.getSolidArea().x = doOBJ.getSolidAreaDefaultX();
-        doOBJ.getSolidArea().y = doOBJ.getSolidAreaDefaultY();
-        gp.drawP.getSolidArea().x = gp.drawP.getSolidAreaDefaultX();
-        gp.drawP.getSolidArea().y = gp.drawP.getSolidAreaDefaultY();
+        doOBJ.getVatThe().getSolidArea().x = doOBJ.getVatThe().getSolidAreaDefaultX();
+        doOBJ.getVatThe().getSolidArea().y = doOBJ.getVatThe().getSolidAreaDefaultY();
+        gp.drawP.getVatThe().getSolidArea().x = gp.drawP.getVatThe().getSolidAreaDefaultX();
+        gp.drawP.getVatThe().getSolidArea().y = gp.drawP.getVatThe().getSolidAreaDefaultY();
         
         return contactPlayer;
     }

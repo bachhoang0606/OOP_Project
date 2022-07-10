@@ -2,7 +2,6 @@ package Graphics;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
 import GameSetting.GamePanel;
@@ -16,8 +15,7 @@ public abstract class DrawSinhVat extends DrawVatThe{
     private BufferedImage up1, up2, down1, down2, left1, left2, right1, right2;
     private BufferedImage attackUp1, attackUp2, attackDown1, attackDown2, attackLeft1, attackLeft2, attackRight1, attackRight2;
     
-    // RECTANGLE
-    private Rectangle attackArea;
+    
     
     // COUNTER
     private int invincibleCounter;
@@ -29,29 +27,27 @@ public abstract class DrawSinhVat extends DrawVatThe{
     private int thoiGianHoiPhuc;
     
     // STATE
-    private String direction;
     private int spriteNum;
     private int spriteCounter;
-    private boolean invincible;
-    private boolean dying;
+    
     private boolean hpBarOn;
 
     public DrawSinhVat(GamePanel gp, SinhVat sinhVat) {
     	super(gp, sinhVat);
         this.sinhVat = sinhVat;
         
-        setDirection("down");
-        setSolidArea(new Rectangle(0, 0 , gp.tileSize, gp.tileSize));
-        
-        attackArea = new Rectangle(0, 0, 0, 0);
+        this.getSinhVat().setDirection("down");
+        //setSolidArea(new Rectangle(0, 0 , gp.tileSize, gp.tileSize));
         
         
-        getSolidArea().x = 8;
-        getSolidArea().y = 16;
-        getSolidArea().height = gp.tileSize - 16;
-        getSolidArea().width = gp.tileSize - 16;
-        setSolidAreaDefaultX(getSolidArea().x);
-        setSolidAreaDefaultY(getSolidArea().y);
+        
+        
+        this.getSinhVat().getSolidArea().x = 8;
+        this.getSinhVat().getSolidArea().y = 16;
+        this.getSinhVat().getSolidArea().height = gp.tileSize - 16;
+        this.getSinhVat().getSolidArea().width = gp.tileSize - 16;
+        this.getSinhVat().setSolidAreaDefaultX(this.getSinhVat().getSolidArea().x);
+        this.getSinhVat().setSolidAreaDefaultY(this.getSinhVat().getSolidArea().y);
         
         invincibleCounter = 0;
         spriteNum = 1;
@@ -59,9 +55,7 @@ public abstract class DrawSinhVat extends DrawVatThe{
         actionLockCounter = 0;
         dyingCounter = 0;
         hpBarCounter = 0;
-        
-        invincible = false;
-        dying = false;
+
         hpBarOn = false;
     }
 
@@ -211,14 +205,6 @@ public abstract class DrawSinhVat extends DrawVatThe{
 		this.attackRight2 = attackRight2;
 	}
 
-	public Rectangle getAttackArea() {
-		return attackArea;
-	}
-
-	public void setAttackArea(Rectangle attackArea) {
-		this.attackArea = attackArea;
-	}
-
 	public int getInvincibleCounter() {
 		return invincibleCounter;
 	}
@@ -251,14 +237,6 @@ public abstract class DrawSinhVat extends DrawVatThe{
 		this.hpBarCounter = hpBarCounter;
 	}
 
-	public String getDirection() {
-		return direction;
-	}
-
-	public void setDirection(String direction) {
-		this.direction = direction;
-	}
-
 	public int getSpriteNum() {
 		return spriteNum;
 	}
@@ -273,22 +251,6 @@ public abstract class DrawSinhVat extends DrawVatThe{
 
 	public void setSpriteCounter(int spriteCounter) {
 		this.spriteCounter = spriteCounter;
-	}
-
-	public boolean isInvincible() {
-		return invincible;
-	}
-
-	public void setInvincible(boolean invincible) {
-		this.invincible = invincible;
-	}
-
-	public boolean isDying() {
-		return dying;
-	}
-
-	public void setDying(boolean dying) {
-		this.dying = dying;
 	}
 
 	public boolean isHpBarOn() {
@@ -316,7 +278,7 @@ public abstract class DrawSinhVat extends DrawVatThe{
  
         // neu cham vao quai khong trong tranng thai bi thuong thi chui sat thuong
         if(this.sinhVat.getType() == 2 && contactPlayer == true){
-            if(gp.drawP.isInvincible() == false){
+            if(gp.drawP.getPlayer().isInvincible() == false){
             	gp.playSE(6);
                 // we can give damage
             	// sat thuong nhan bang sat thuong quai tru phong th
@@ -327,17 +289,17 @@ public abstract class DrawSinhVat extends DrawVatThe{
             		gp.drawP.getPlayer().setLife(gp.drawP.getPlayer().getLife() - satThuongNhan);
             	}else gp.drawP.getPlayer().setLife(gp.drawP.getPlayer().getLife() - 1);
             	
-            	gp.drawP.setInvincible(true);
+            	gp.drawP.getPlayer().setInvincible(true);
             }
         }
         
         // IF COLLISION IS FALSE, PLAYER CAN MOVE
         if(this.isCollisionOn() == false){
-            switch(direction){
-                case "up": this.setWorldY(this.getWorldY() - this.sinhVat.getSpeed()); break;
-                case "down": this.setWorldY(this.getWorldY() + this.sinhVat.getSpeed()); break;
-                case "left": this.setWorldX(this.getWorldX() - this.sinhVat.getSpeed()); break;
-                case "right": this.setWorldX(this.getWorldX() + this.sinhVat.getSpeed()); break; 
+            switch(this.getSinhVat().getDirection()){
+                case "up": this.getVatThe().setWorldY(this.getVatThe().getWorldY() - this.sinhVat.getSpeed()); break;
+                case "down": this.getVatThe().setWorldY(this.getVatThe().getWorldY() + this.sinhVat.getSpeed()); break;
+                case "left": this.getVatThe().setWorldX(this.getVatThe().getWorldX() - this.sinhVat.getSpeed()); break;
+                case "right": this.getVatThe().setWorldX(this.getVatThe().getWorldX() + this.sinhVat.getSpeed()); break; 
             }
         }
 
@@ -352,10 +314,10 @@ public abstract class DrawSinhVat extends DrawVatThe{
             spriteCounter = 0;
         }
         
-        if(invincible == true){
+        if(this.getSinhVat().isInvincible() == true){
             invincibleCounter++;
             if(invincibleCounter > 60){
-                invincible = false;
+            	this.getSinhVat().setInvincible(false);
                 invincibleCounter = 0;
             }
         }
@@ -373,15 +335,15 @@ public abstract class DrawSinhVat extends DrawVatThe{
     public void draw(Graphics2D g2){
         
         BufferedImage image = null;
-        int screenX =  this.getWorldX() - gp.drawP.getWorldX()  + gp.drawP.getScreenX();
-        int screenY =  this.getWorldY() - gp.drawP.getWorldY()  + gp.drawP.getScreenY();
+        int screenX =  this.getVatThe().getWorldX() - gp.drawP.getVatThe().getWorldX()  + gp.drawP.getScreenX();
+        int screenY =  this.getVatThe().getWorldY() - gp.drawP.getVatThe().getWorldY()  + gp.drawP.getScreenY();
 
-        if(this.getWorldX() + gp.tileSize> gp.drawP.getWorldX() - gp.drawP.getScreenX() &&
-        		this.getWorldX() - gp.tileSize< gp.drawP.getWorldX() + gp.drawP.getScreenX() &&
-        		this.getWorldY() + gp.tileSize> gp.drawP.getWorldY() - gp.drawP.getScreenY() &&
-        		this.getWorldY() - gp.tileSize< gp.drawP.getWorldY() + gp.drawP.getScreenY()){
+        if(this.getVatThe().getWorldX() + gp.tileSize> gp.drawP.getVatThe().getWorldX() - gp.drawP.getScreenX() &&
+        		this.getVatThe().getWorldX() - gp.tileSize< gp.drawP.getVatThe().getWorldX() + gp.drawP.getScreenX() &&
+        		this.getVatThe().getWorldY() + gp.tileSize> gp.drawP.getVatThe().getWorldY() - gp.drawP.getScreenY() &&
+        		this.getVatThe().getWorldY() - gp.tileSize< gp.drawP.getVatThe().getWorldY() + gp.drawP.getScreenY()){
             
-            switch (direction) {
+            switch (this.getSinhVat().getDirection()) {
             case "up":
                 if(spriteNum == 1){ image = up1; }
                 if(spriteNum == 2){ image = up2; }
@@ -402,13 +364,17 @@ public abstract class DrawSinhVat extends DrawVatThe{
             
             // Monster Hp bar
             if(this.sinhVat.getType() == 2 && hpBarOn == true){
-                double oneScale = (double) this.getSolidArea().width/this.sinhVat.getMaxLife();
+                double oneScale = (double) this.getSinhVat().getSolidArea().width/this.sinhVat.getMaxLife();
                 double hpBarValue = oneScale*this.sinhVat.getLife();
                 
                 g2.setColor(new Color(35, 35, 35));
-                g2.drawRect(screenX - 1 + this.getSolidArea().x , screenY - 16, this.getSolidArea().width+2, 12);
+                g2.drawRect(screenX - 1 + this.getSinhVat().getSolidArea().x , 
+                		screenY - 16, 
+                		this.getSinhVat().getSolidArea().width+2, 
+                		12
+                		);
                 g2.setColor(new Color(255, 0, 30));
-                g2.fillRect(screenX + this.getSolidArea().x, screenY - 15, (int) hpBarValue, 10);
+                g2.fillRect(screenX + this.getSinhVat().getSolidArea().x, screenY - 15, (int) hpBarValue, 10);
              
                 hpBarCounter++;
                 if(hpBarCounter > 600){
@@ -417,13 +383,13 @@ public abstract class DrawSinhVat extends DrawVatThe{
                 }
             }
             
-            if(invincible == true){
+            if(this.getSinhVat().isInvincible() == true){
                 hpBarCounter = 0;
                 hpBarOn = true;
                 changeAlpha(g2, 0.4f);
             }
             
-            if(dying == true){
+            if(this.getSinhVat().isDying() == true){
                 dyingAnimation(g2);
             }
             
@@ -435,7 +401,10 @@ public abstract class DrawSinhVat extends DrawVatThe{
             
             if(gp.keyH.drawSolidArea == true){
                 g2.setColor(Color.red);
-                g2.drawRect(screenX + getSolidArea().x, screenY + getSolidArea().y, getSolidArea().width, getSolidArea().height);
+                g2.drawRect(screenX + this.getSinhVat().getSolidArea().x, 
+                		screenY + this.getSinhVat().getSolidArea().y, 
+                		this.getSinhVat().getSolidArea().width, 
+                		this.getSinhVat().getSolidArea().height);
             }
         }
         
@@ -456,7 +425,7 @@ public abstract class DrawSinhVat extends DrawVatThe{
         if(dyingCounter > i*6 && dyingCounter <= i*7){ changeAlpha(g2, 0f); }
         if(dyingCounter > i*7 && dyingCounter <= i*8){ changeAlpha(g2, 1f); }
         if(dyingCounter > i*8){
-            setExist(false);
+        this.getSinhVat().setExist(false);
         }
     }
 

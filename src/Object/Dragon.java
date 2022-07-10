@@ -117,30 +117,30 @@ public class Dragon extends SinhVat{
 	public void banCauLua(DrawDragon dDragon, int playerX, int playerY) {
 		
 		// kiem tra xem player co trong pham vi tan cong khong
-		double x = Math.pow(dDragon.getWorldX() - playerX, 2);
-		double y = Math.pow(dDragon.getWorldY() - playerY, 2);
+		double x = Math.pow(dDragon.getVatThe().getWorldX() - playerX, 2);
+		double y = Math.pow(dDragon.getVatThe().getWorldY() - playerY, 2);
 		double distance = Math.sqrt(x + y);
 		
 		// quay dung huong phayer moi ban cau
-		int distanceX = playerX - dDragon.getWorldX();
-        int distanceY = playerY - dDragon.getWorldY();
+		int distanceX = playerX - this.getWorldX();
+        int distanceY = playerY - this.getWorldY();
 		
 		// neu nguoi choi trong pham vi thi tan cong
         // de no quay ve huong nguoi choi ma ban
         // neu cau lua dang ton tai thi khong tan cong nua
 		if (distance < attackRange &&
-				(	(distanceX > 0 && dDragon.getDirection().equals("right")) ||
-		            (distanceX < 0 && dDragon.getDirection().equals("left"))  ||
-		            (distanceY > 0 && dDragon.getDirection().equals("down"))  ||
-		            (distanceY < 0 && dDragon.getDirection().equals("up"))			) &&
+				(	(distanceX > 0 && dDragon.getDragon().getDirection().equals("right")) ||
+		            (distanceX < 0 && dDragon.getDragon().getDirection().equals("left"))  ||
+		            (distanceY > 0 && dDragon.getDragon().getDirection().equals("down"))  ||
+		            (distanceY < 0 && dDragon.getDragon().getDirection().equals("up"))			) &&
 			dDragon.getdCauLua() == null
 			) {
 			this.caulua = new CauLua();
 			if (this.getMp() - this.caulua.getMp() >=0) {
 				
 				this.setMp(this.getMp() - this.caulua.getMp());
-		        int startAttackX = dDragon.getWorldX() + dDragon.getSolidArea().x;
-		        int startAttackY = dDragon.getWorldY() + dDragon.getSolidArea().y;
+		        int startAttackX = dDragon.getVatThe().getWorldX() + this.getSolidArea().x;
+		        int startAttackY = dDragon.getVatThe().getWorldY() + this.getSolidArea().y;
 
 		        
 		        dDragon.setdCauLua(new DrawCauLua(dDragon.getGp(), this.caulua));
@@ -150,21 +150,25 @@ public class Dragon extends SinhVat{
 		        	)
 		        );
 
-		        switch(dDragon.getDirection()){
-		            case "up": startAttackY -= dDragon.getSolidArea().height; break;
-		            case "down": startAttackY += dDragon.getSolidArea().height; break;
-		            case "left": startAttackX -= dDragon.getSolidArea().height; break;
-		            case "right": startAttackX += dDragon.getSolidArea().height; break;
+		        switch(dDragon.getDragon().getDirection()){
+		            case "up": startAttackY -= this.getSolidArea().height; break;
+		            case "down": startAttackY += this.getSolidArea().height; break;
+		            case "left": startAttackX -= this.getSolidArea().height; break;
+		            case "right": startAttackX += this.getSolidArea().height; break;
 		        }
 
-		        dDragon.getdCauLua().setDirection(dDragon.getDirection());
-		        dDragon.getdCauLua().setWorldX(startAttackX);
-		        dDragon.getdCauLua().setWorldY(startAttackY);
+		        
+		        
 		        dDragon.getdCauLua().setStartAttackX(startAttackX);
 		        dDragon.getdCauLua().setStartAttackY(startAttackY);
 		        dDragon.getdCauLua().setTargetX(playerX);
 		        dDragon.getdCauLua().setTargetY(playerY);
+		        
+		        this.caulua.setWorldX(startAttackX);
+		        this.caulua.setWorldY(startAttackY);
 		        this.caulua.setSpeed(this.getSpeed()+3);
+		        
+		        this.caulua.setDirection(dDragon.getDragon().getDirection());
 			}
 		}
 	}
@@ -174,8 +178,8 @@ public class Dragon extends SinhVat{
 	public void truyDuoi(DrawDragon dDragon, int playerX, int playerY) {
 
 		
-		int distanceX = playerX - dDragon.getWorldX();
-        int distanceY = playerY - dDragon.getWorldY();
+		int distanceX = playerX - dDragon.getVatThe().getWorldX();
+        int distanceY = playerY - dDragon.getVatThe().getWorldY();
         
         // di chuyen theo khoang cach ngan hon den nguoi choi
         //System.out.println(dDragon.isCollisionOn());
@@ -183,29 +187,29 @@ public class Dragon extends SinhVat{
         	// neu distanceX > 0 thi nguoi choi ben duoi rong
         	if(dDragon.isCollisionOn() == false) {
         		if (distanceX > 0) {
-	        		dDragon.setDirection("right");
+	        		dDragon.getDragon().setDirection("right");
 	        	}else {
-	        		dDragon.setDirection("left");
+	        		dDragon.getDragon().setDirection("left");
 	        	}
         	}else {
 	        	if (distanceY > 0) {
-	        		dDragon.setDirection("down");
+	        		dDragon.getDragon().setDirection("down");
 	        	}else {
-	        		dDragon.setDirection("up");
+	        		dDragon.getDragon().setDirection("up");
 	        	}
         	}
         }else {
         	if(dDragon.isCollisionOn() == false) {
         		if (distanceY > 0) {
-	        		dDragon.setDirection("down");
+	        		dDragon.getDragon().setDirection("down");
 	        	}else {
-	        		dDragon.setDirection("up");
+	        		dDragon.getDragon().setDirection("up");
 	        	}
         	}else {
         		if (distanceX > 0) {
-	        		dDragon.setDirection("right");
+	        		dDragon.getDragon().setDirection("right");
 	        	}else {
-	        		dDragon.setDirection("left");
+	        		dDragon.getDragon().setDirection("left");
 	        	}
         	}
         }
@@ -215,8 +219,8 @@ public class Dragon extends SinhVat{
 	// khi di qua lanh tho thi quay ve hang hang cua minh
 	public void veTo(DrawDragon dDragon) {
 		
-		int distanceX = Math.abs(this.toaDoToX - dDragon.getWorldX());
-        int distanceY = Math.abs(this.toaDoToY - dDragon.getWorldY());
+		int distanceX = Math.abs(this.toaDoToX - dDragon.getVatThe().getWorldX());
+        int distanceY = Math.abs(this.toaDoToY - dDragon.getVatThe().getWorldY());
         if( Math.max(distanceX, distanceY) > this.phamViLanhTho) {
         	
         	this.quayVe = true;
@@ -238,8 +242,8 @@ public class Dragon extends SinhVat{
 	
 	public void phatHienDich(DrawDragon dDragon) {
 		
-		int distanceX = (int) Math.pow(dDragon.getGp().drawP.getWorldX() - dDragon.getWorldX(), 2);
-        int distanceY = (int) Math.pow(dDragon.getGp().drawP.getWorldY() - dDragon.getWorldY(), 2);
+		int distanceX = (int) Math.pow(dDragon.getGp().drawP.getVatThe().getWorldX() - dDragon.getVatThe().getWorldX(), 2);
+        int distanceY = (int) Math.pow(dDragon.getGp().drawP.getVatThe().getWorldY() - dDragon.getVatThe().getWorldY(), 2);
         double khoangCach = Math.sqrt(distanceX + distanceY);
         if( khoangCach < this.tamNhin) {
 
@@ -264,10 +268,10 @@ public class Dragon extends SinhVat{
             Random random = new Random();
             int i = random.nextInt(100)+1;
 
-            if(i <= 25){ dSinhVat.setDirection("up"); }
-            else if(i > 25 && i <= 50){ dSinhVat.setDirection("down"); }
-            else if(i > 50 && i <= 75){ dSinhVat.setDirection("left"); }
-            else if(i > 75 && i <= 100){ dSinhVat.setDirection("right"); }
+            if(i <= 25){ dSinhVat.getSinhVat().setDirection("up"); }
+            else if(i > 25 && i <= 50){ dSinhVat.getSinhVat().setDirection("down"); }
+            else if(i > 50 && i <= 75){ dSinhVat.getSinhVat().setDirection("left"); }
+            else if(i > 75 && i <= 100){ dSinhVat.getSinhVat().setDirection("right"); }
             
             dSinhVat.setActionLockCounter(0);
         }

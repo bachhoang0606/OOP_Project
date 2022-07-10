@@ -16,73 +16,36 @@ public class DrawVatThe {
 	public UtilityTool uTool;
 	
 	private VatThe vatThe;
-	
-	// toa do tren map
-    private int worldX, worldY;
 
 	// Image
     private BufferedImage image, image2, image3, image4;
-    
-    // Rectangle
-    private Rectangle solidArea;
-    private int solidAreaDefaultX, solidAreaDefaultY;
 
     // COUNTER
     private int disappearCounter;
-    
-    // STATE
-    private String direction;
-    
+
     private boolean collisionOn;
     private boolean drawSolidArea;
-    private boolean exist;
-    
-    // dang bien mat
-    private boolean disappearing;
 
-    public DrawVatThe(GamePanel gp, VatThe oObject) {
+    public DrawVatThe(GamePanel gp, VatThe vatThe) {
     	
 		this.gp = gp;
-		this.vatThe = oObject;
-		this.direction = null;
+		this.vatThe = vatThe;
+		
 		this.collisionOn = false;
 		this.drawSolidArea = false;
-		this.exist = true;
-		this.disappearing = false;
+		
 		
 		this.disappearCounter = 0;
 		
 		this.uTool = new UtilityTool();
-		this.solidArea = new Rectangle(0, 0, gp.tileSize, gp.tileSize);
+		
+		
+		this.vatThe.setSolidArea(new Rectangle(0, 0, gp.tileSize, gp.tileSize));
 
-	}
-
-	public int getWorldX() {
-		return worldX;
-	}
-
-	public void setWorldX(int worldX) {
-		this.worldX = worldX;
-	}
-
-	public int getWorldY() {
-		return worldY;
-	}
-
-	public void setWorldY(int worldY) {
-		this.worldY = worldY;
 	}
 
 	public GamePanel getGp() {
 		return gp;
-	}
-
-	public String getDirection() {
-		return direction;
-	}
-
-	public void setDirection(String direction) {
-		this.direction = direction;
 	}
 
 	public void setGp(GamePanel gp) {
@@ -138,30 +101,6 @@ public class DrawVatThe {
 		this.image4 = image4;
 	}
 
-	public Rectangle getSolidArea() {
-		return solidArea;
-	}
-
-	public void setSolidArea(Rectangle solidArea) {
-		this.solidArea = solidArea;
-	}
-
-	public int getSolidAreaDefaultX() {
-		return solidAreaDefaultX;
-	}
-
-	public void setSolidAreaDefaultX(int solidAreaDefaultX) {
-		this.solidAreaDefaultX = solidAreaDefaultX;
-	}
-
-	public int getSolidAreaDefaultY() {
-		return solidAreaDefaultY;
-	}
-
-	public void setSolidAreaDefaultY(int solidAreaDefaultY) {
-		this.solidAreaDefaultY = solidAreaDefaultY;
-	}
-
 	public int getDisappearCounter() {
 		return disappearCounter;
 	}
@@ -186,22 +125,7 @@ public class DrawVatThe {
 		this.drawSolidArea = drawSolidArea;
 	}
 
-	public boolean isExist() {
-		return exist;
-	}
-
-	public void setExist(boolean exist) {
-		this.exist = exist;
-	}
-
-	public boolean isDisappearing() {
-		return disappearing;
-	}
-
-	public void setDisappearing(boolean disappearing) {
-		this.disappearing = disappearing;
-	}
-
+	
 	public void disappearAnimation(Graphics2D g2) {
         
         disappearCounter++;
@@ -216,7 +140,7 @@ public class DrawVatThe {
         if(disappearCounter > i*5 && disappearCounter <= i*6){ changeAlpha(g2, 0.2f); }
         if(disappearCounter > i*6){
             
-        exist = false;
+        this.getVatThe().setExist(false);
         }
     }
 	
@@ -228,16 +152,16 @@ public class DrawVatThe {
 
         BufferedImage image = getImage();
         
-        int screenX =  this.getWorldX() - gp.drawP.getWorldX()  + gp.drawP.getScreenX();
-        int screenY =  this.getWorldY() - gp.drawP.getWorldY()  + gp.drawP.getScreenY();
+        int screenX =  this.vatThe.getWorldX() - gp.drawP.getVatThe().getWorldX()  + gp.drawP.getScreenX();
+        int screenY =  this.vatThe.getWorldY() - gp.drawP.getVatThe().getWorldY()  + gp.drawP.getScreenY();
 
-        if(this.getWorldX() + gp.tileSize> gp.drawP.getWorldX() - gp.drawP.getScreenX() &&
-        		this.getWorldX() - gp.tileSize< gp.drawP.getWorldX() + gp.drawP.getScreenX() &&
-        		this.getWorldY() + gp.tileSize> gp.drawP.getWorldY() - gp.drawP.getScreenY() &&
-        		this.getWorldY() - gp.tileSize< gp.drawP.getWorldY() + gp.drawP.getScreenY()){
+        if(this.vatThe.getWorldX() + gp.tileSize> gp.drawP.getVatThe().getWorldX() - gp.drawP.getScreenX() &&
+        		this.vatThe.getWorldX() - gp.tileSize< gp.drawP.getVatThe().getWorldX() + gp.drawP.getScreenX() &&
+        		this.vatThe.getWorldY() + gp.tileSize> gp.drawP.getVatThe().getWorldY() - gp.drawP.getScreenY() &&
+        		this.vatThe.getWorldY() - gp.tileSize< gp.drawP.getVatThe().getWorldY() + gp.drawP.getScreenY()){
             
             
-            if(isDisappearing() == true){
+            if(this.getVatThe().isDisappearing() == true){
                 
                 disappearAnimation(g2);
             }
@@ -249,7 +173,12 @@ public class DrawVatThe {
             if(gp.keyH.drawSolidArea == true){
 
                 g2.setColor(Color.red);
-                g2.drawRect(screenX + getSolidArea().x, screenY + getSolidArea().y, getSolidArea().width, getSolidArea().height);
+                g2.drawRect(
+                		screenX + this.getVatThe().getSolidArea().x, 
+                		screenY + this.getVatThe().getSolidArea().y, 
+                		this.getVatThe().getSolidArea().width, 
+                		this.getVatThe().getSolidArea().height
+                		);
             }
         }
     }

@@ -51,8 +51,8 @@ public class DrawKunai extends DrawVatThe{
     
     public void update(){
         
-        int distanceX = Math.abs(startAttackX - this.getWorldX());
-        int distanceY = Math.abs(startAttackY - this.getWorldY());
+        int distanceX = Math.abs(startAttackX - this.getVatThe().getWorldX());
+        int distanceY = Math.abs(startAttackY - this.getVatThe().getWorldY());
         if(Math.max(distanceX, distanceY) < this.kunai.getDistanceExists()){
             
             setCollisionOn(false);
@@ -71,17 +71,17 @@ public class DrawKunai extends DrawVatThe{
             getGp().cChecker.checkObject(this, false);
 
             
-            if(isCollisionOn() == false && isDisappearing() == false){
-                switch(getDirection()){
-                case "up": this.setWorldY(this.getWorldY()-kunai.getSpeed()); break;
-                case "down": this.setWorldY(this.getWorldY()+kunai.getSpeed()); break;
-                case "left": this.setWorldX(this.getWorldX()-kunai.getSpeed()); break;
-                case "right": this.setWorldX(this.getWorldX()+kunai.getSpeed()); break;
+            if(isCollisionOn() == false && this.getVatThe().isDisappearing() == false){
+                switch(this.getVatThe().getDirection()){
+                case "up": this.getVatThe().setWorldY(this.getVatThe().getWorldY()-kunai.getSpeed()); break;
+                case "down": this.getVatThe().setWorldY(this.getVatThe().getWorldY()+kunai.getSpeed()); break;
+                case "left": this.getVatThe().setWorldX(this.getVatThe().getWorldX()-kunai.getSpeed()); break;
+                case "right": this.getVatThe().setWorldX(this.getVatThe().getWorldX()+kunai.getSpeed()); break;
                 }
-            }else setDisappearing(true);
+            }else this.getVatThe().setDisappearing(true);
         }
         else {
-            setDisappearing(true);
+        	this.getVatThe().setDisappearing(true);
         }
     }
     
@@ -90,8 +90,8 @@ public class DrawKunai extends DrawVatThe{
         
         if(sinhVatNhanDamge != null){
         	// cham vao quai bien mat
-        	setDisappearing(true);
-            if(sinhVatNhanDamge.isInvincible() == false){
+        	this.getVatThe().setDisappearing(true);
+            if(sinhVatNhanDamge.getSinhVat().isInvincible() == false){
 
                 getGp().playSE(6);
                 
@@ -102,10 +102,10 @@ public class DrawKunai extends DrawVatThe{
                 }else sinhVatNhanDamge.getSinhVat().setLife(sinhVatNhanDamge.getSinhVat().getLife() - 1);
                 
                 sinhVatNhanDamge.getSinhVat().damageReaction(sinhVatNhanDamge, this);
-                sinhVatNhanDamge.setInvincible(true);
+                sinhVatNhanDamge.getSinhVat().setInvincible(true);
 
                 if(sinhVatNhanDamge.getSinhVat().getLife() <= 0){
-                	sinhVatNhanDamge.setDying(true);
+                	sinhVatNhanDamge.getSinhVat().setDying(true);
                 }
             }
         }
