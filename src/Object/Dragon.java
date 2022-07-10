@@ -11,8 +11,6 @@ public class Dragon extends SinhVat{
 	
 	// pham vi tan cong
 	private int attackRange;
-	private int startAttackX;
-	private int startAttackY;
 	private CauLua caulua;
 	
 	
@@ -22,6 +20,7 @@ public class Dragon extends SinhVat{
 	
 	// pham vi lanh tho quanh hang rong
 	private int phamViLanhTho;
+	private int tamNhin;
 	
 	// vao trang thai chien dau
 	private boolean attack;
@@ -50,9 +49,19 @@ public class Dragon extends SinhVat{
 		
 		this.attackRange = 240;
 		this.phamViLanhTho = 15*48;
+		this.tamNhin = 2*48;
 	}
 
 	
+	
+	public int getPhamViLanhTho() {
+		return phamViLanhTho;
+	}
+
+	public void setPhamViLanhTho(int phamViLanhTho) {
+		this.phamViLanhTho = phamViLanhTho;
+	}
+
 	public boolean isAttack() {
 		return attack;
 	}
@@ -77,32 +86,14 @@ public class Dragon extends SinhVat{
 		this.caulua = caulua;
 	}
 
-	public int getStartAttackX() {
-		return startAttackX;
-	}
-
-	public void setStartAttackX(int startAttackX) {
-		this.startAttackX = startAttackX;
-	}
-
-	public int getStartAttackY() {
-		return startAttackY;
-	}
-
-	public void setStartAttackY(int startAttackY) {
-		this.startAttackY = startAttackY;
-	}
-
 	public int getToaDoToX() {
 		return toaDoToX;
 	}
 
-
 	public void setToaDoToX(int toaDoToX) {
 		this.toaDoToX = toaDoToX;
 	}
-
-
+	
 	public int getToaDoToY() {
 		return toaDoToY;
 	}
@@ -130,7 +121,7 @@ public class Dragon extends SinhVat{
 		double y = Math.pow(dDragon.getWorldY() - playerY, 2);
 		double distance = Math.sqrt(x + y);
 		
-		// quay dung huong phayerr moi ban cau
+		// quay dung huong phayer moi ban cau
 		int distanceX = playerX - dDragon.getWorldX();
         int distanceY = playerY - dDragon.getWorldY();
 		
@@ -147,9 +138,9 @@ public class Dragon extends SinhVat{
 			this.caulua = new CauLua();
 			if (this.getMp() - this.caulua.getMp() >=0) {
 				
-				this.setMp(this.getMp());// - this.caulua.getMp());
-		        this.startAttackX = dDragon.getWorldX() + dDragon.getSolidArea().x;
-		        this.startAttackY = dDragon.getWorldY() + dDragon.getSolidArea().y;
+				this.setMp(this.getMp() - this.caulua.getMp());
+		        int startAttackX = dDragon.getWorldX() + dDragon.getSolidArea().x;
+		        int startAttackY = dDragon.getWorldY() + dDragon.getSolidArea().y;
 
 		        
 		        dDragon.setdCauLua(new DrawCauLua(dDragon.getGp(), this.caulua));
@@ -160,10 +151,10 @@ public class Dragon extends SinhVat{
 		        );
 
 		        switch(dDragon.getDirection()){
-		            case "up": this.startAttackY -= dDragon.getSolidArea().height; break;
-		            case "down": this.startAttackY += dDragon.getSolidArea().height; break;
-		            case "left": this.startAttackX -= dDragon.getSolidArea().height; break;
-		            case "right": this.startAttackX += dDragon.getSolidArea().height; break;
+		            case "up": startAttackY -= dDragon.getSolidArea().height; break;
+		            case "down": startAttackY += dDragon.getSolidArea().height; break;
+		            case "left": startAttackX -= dDragon.getSolidArea().height; break;
+		            case "right": startAttackX += dDragon.getSolidArea().height; break;
 		        }
 
 		        dDragon.getdCauLua().setDirection(dDragon.getDirection());
@@ -245,6 +236,17 @@ public class Dragon extends SinhVat{
         
 	}
 	
+	public void phatHienDich(DrawDragon dDragon) {
+		
+		int distanceX = (int) Math.pow(dDragon.getGp().drawP.getWorldX() - dDragon.getWorldX(), 2);
+        int distanceY = (int) Math.pow(dDragon.getGp().drawP.getWorldY() - dDragon.getWorldY(), 2);
+        double khoangCach = Math.sqrt(distanceX + distanceY);
+        if( khoangCach < this.tamNhin) {
+
+        	this.attack = true;
+        }
+		
+	}
 	
 	public void hoiPhuc() {
 		this.setLife(this.getMaxLife());

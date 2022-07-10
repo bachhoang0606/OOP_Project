@@ -13,6 +13,7 @@ import Graphics.DrawOldMan;
 import Graphics.DrawPlayer;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import Object.Key;
 import Object.Player;
@@ -20,7 +21,12 @@ import Object.TileManager;
 
 public class GamePanel extends JPanel implements Runnable{
     
-    // SCREEN SETTING
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -6268576987370564857L;
+	
+	// SCREEN SETTING
     public final int tileSize = 48; // 48X48 tile
     public final int maxScreenCol = 16;
     public final int maxScreenRow = 12;
@@ -59,8 +65,11 @@ public class GamePanel extends JPanel implements Runnable{
     public final int titleState = 0;
     public final int playeState = 1;
     public final int pauseState = 2;
-    public final int dialogueState = 3;
+    public final int winState = 3;
+    public final int lostState = 4;
+    public final int dialogueState = 5;
     
+      
     public GamePanel() {
          
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
@@ -74,7 +83,6 @@ public class GamePanel extends JPanel implements Runnable{
         aSetter.setObject();
         aSetter.setNPC();
         aSetter.setMonster();
-//        playMusic(0);
         gameState = titleState;
     }
     
@@ -121,6 +129,12 @@ public class GamePanel extends JPanel implements Runnable{
             // PLAYER
         	drawP.update();
             
+        	if(drawP.getPlayer().getLife() <= 0) {
+        		this.gameState = lostState;
+        		this.stopMusic();
+        		this.playSE(4);
+        	}
+        	
             // NPC
             for(int i = 0;i < drawN.length; i++){
                 if(drawN[i] != null){
@@ -177,6 +191,12 @@ public class GamePanel extends JPanel implements Runnable{
         if(gameState == pauseState){
             // notthing
         }
+        if (gameState == winState) {
+        	// nothing
+        }
+        if (gameState == lostState) {
+        	// nothing
+        }
     }
     
     @Override
@@ -225,13 +245,13 @@ public class GamePanel extends JPanel implements Runnable{
             
             // them nhan vat vao trong list ve
             for(int i=0; i < drawP.getPlayer().getPlayerKunai().length; i++){
-                if(drawP.getDrawKunai() != null){
+                if(drawP.getDrawKunai()[i] != null){
                 	list.add(drawP.getDrawKunai()[i]);
                 }
             }
             
             // SORT 
-            //Collections.sort(list, new EntityComparator());
+            Collections.sort(list, new EntityComparator());
             
             // DRAW ENTITY
             for(int i = 0;i < list.size();i++){

@@ -33,16 +33,7 @@ public class UI {
         colorTitleBackGround = new Color(70, 120, 80);
         colorStateBackGround = new Color(255, 0, 0, 200);
         colorBountStateBackGround = new Color(255, 0, 0);
-        
-        // CREATE HUB OBJECT
-//        DrawObject heartFull = new DrawObject(gp, "heart_full");
-//        heart_full = heartFull.getImage();
-//        DrawObject heartHaft = new DrawObject(gp, "heart_half");
-//        heart_haft = heartHaft.getImage();
-//        DrawObject heartBlank = new DrawObject(gp, "heart_blank");
-//        heart_blank = heartBlank.getImage();
 
-        
     }
     
     public void showMessage(String text){
@@ -83,6 +74,15 @@ public class UI {
         if(gp.gameState == gp.dialogueState){
             
             drawDialogueScreen();
+        }
+        
+        if(gp.gameState == gp.winState) {
+        	winScreen();
+        	 
+        }
+        
+        if(gp.gameState == gp.lostState) {
+        	lostScreen();
         }
     }
 
@@ -152,6 +152,7 @@ public class UI {
         }
         else if(titleScreenState == 1){
             
+        	
             // CLASS SELECTION SCREEN
             g2.setColor(Color.white);
             g2.setFont(g2.getFont().deriveFont(42F));
@@ -192,6 +193,7 @@ public class UI {
             if(commandNum == 3){
                 g2.drawString(">", x-gp.tileSize, y);
             }
+
         }
         
     }
@@ -203,6 +205,30 @@ public class UI {
         int y = gp.screenHeight/2;
         
         g2.drawString(text, x, y);
+    }
+    
+    public void winScreen(){
+        
+        String text = "Win Game";
+        int x = getXforCenteredText(text);
+        int y = gp.screenHeight/2;
+        
+        Color old = g2.getColor();
+        g2.setColor(new Color(204, 51, 0));
+        g2.drawString(text, x, y);
+        g2.setColor(old);
+    }
+    
+    public void lostScreen(){
+        
+        String text = "Lost Game";
+        int x = getXforCenteredText(text);
+        int y = gp.screenHeight/2;
+        
+        Color old = g2.getColor();
+        g2.setColor(new Color(204, 51, 0));
+        g2.drawString(text, x, y);
+        g2.setColor(old);
     }
     
     private void drawDialogueScreen() {

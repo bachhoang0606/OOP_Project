@@ -1,6 +1,5 @@
 package Graphics;
 
-import java.util.Random;
 
 import GameSetting.GamePanel;
 import GameSetting.UtilityTool;
@@ -18,6 +17,7 @@ public class DrawOldMan extends DrawSinhVat implements DrawSpeak{
         super(gp, man);
         
         this.oldMan = man;
+        this.setDirection("right");
         getEntityImage();
     }
 	
@@ -57,17 +57,20 @@ public class DrawOldMan extends DrawSinhVat implements DrawSpeak{
         
     	setActionLockCounter(getActionLockCounter()+1);
         
-        if(getActionLockCounter() == 120){
-            
-            Random random = new Random();
-            int i = random.nextInt(100)+1;
-
-            if(i <= 25){ setDirection("up"); }
-            else if(i > 25 && i <= 50){ setDirection("down"); }
-            else if(i > 50 && i <= 75){ setDirection("left"); }
-            else if(i > 75 && i <= 100){ setDirection("right"); }
-            
+        if(getActionLockCounter() == 60){
+        	switch (this.getDirection()) {
+			case "left": { setDirection("right"); break;}
+			case "right": { setDirection("left"); break;}
+	
+			default: { setDirection("right"); break;}
+			}
+        	
             setActionLockCounter(0);
         }
+    }
+    
+    public void update() {
+    	super.update();
+    	this.setAction();
     }
 }

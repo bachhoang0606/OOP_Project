@@ -55,6 +55,8 @@ public class Player extends SinhVat implements NoiChuyen{
         setDialogue();
 	}
     
+    
+    
     public Kunai[] getPlayerKunai() {
 		return playerKunai;
 	}
@@ -225,7 +227,7 @@ public class Player extends SinhVat implements NoiChuyen{
                     Dplayer.gp.dobj[i] = null;
                     break;
                 case "chest":
-                	Dplayer.gp.ui.gameFinished = true;
+                	Dplayer.gp.gameState = Dplayer.gp.winState;
                 	Dplayer.gp.stopMusic();
                 	Dplayer.gp.playSE(4);
                     break;
@@ -316,7 +318,8 @@ public class Player extends SinhVat implements NoiChuyen{
         return dialogues[dialogueIndex];
     }
 	
-	public void upLevel() {
+	public void upLevel(DrawPlayer dPlayer) {
+		dPlayer.gp.playSE(2);
 		setMaxLife(getMaxLife()+50);
 		setLife(getMaxLife());
 		

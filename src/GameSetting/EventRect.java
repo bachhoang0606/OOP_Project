@@ -12,7 +12,13 @@ import java.awt.Rectangle;
  */
 public class EventRect extends Rectangle{
     
-    int eventRectDeufaultX, eventRectDeufaultY;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -1268981586957030979L;
+	
+	
+	int eventRectDeufaultX, eventRectDeufaultY;
     boolean eventDone = false;
 
     public EventRect(int x, int y, int width, int height) {

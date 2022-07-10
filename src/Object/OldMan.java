@@ -33,9 +33,10 @@ public class OldMan extends SinhVat implements NoiChuyen{
 	public void setDialogue() {
 		
 		dialogues[0] = "Hello, Bach.";
-		dialogues[1] = "I used to a happy.";
-		dialogues[2] ="But now monster every\nwhere.";
-		dialogues[3] = "I am so scare.";
+		dialogues[1] = "Kill the boss dragon \n"
+				+ "to get key";
+		dialogues[2] = "Mission : find the chest";
+		dialogues[3] = "Note: kill slime to get \nstronger";
     }
 	
 	public String speak(int dialogueIndex){

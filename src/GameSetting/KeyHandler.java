@@ -7,6 +7,9 @@ package GameSetting;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
+import Graphics.DrawPlayer;
+import Object.Player;
+
 /**
  *
  * @author HOANG XUAN BACH
@@ -100,7 +103,7 @@ public class KeyHandler implements KeyListener{
                 else if(drawSolidArea == true){ drawSolidArea = false; }
                 break;
             case KeyEvent.VK_P: gp.gameState = gp.pauseState; break;
-            case KeyEvent.VK_ENTER: enterPressed = true; break;
+            case KeyEvent.VK_ENTER: { enterPressed = true; break;}
             default: break;
             } 
         }
@@ -114,6 +117,14 @@ public class KeyHandler implements KeyListener{
             if(code == KeyEvent.VK_ENTER){
                 gp.gameState = gp.playeState;
                 gp.keyH.enterPressed = false;
+            }
+        }else if(gp.gameState == gp.winState || gp.gameState == gp.lostState){
+        	if(code == KeyEvent.VK_ENTER){
+        		gp.stopMusic();
+        		gp.setupGame();
+        		gp.drawP = new DrawPlayer(gp, new Player(gp.keyH));
+        		gp.ui.gameFinished = false;
+        		gp.ui.titleScreenState = 0;
             }
         }
     }

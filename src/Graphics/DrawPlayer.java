@@ -241,7 +241,7 @@ public class DrawPlayer extends DrawSinhVat implements DrawSpeak{
         
         // nhan vat du exp nang cap
         if (this.player.getExp() >= this.player.getMaxExp()) {
-        	this.player.upLevel();
+        	this.player.upLevel(this);
         }
     }
     public void draw(Graphics2D g2){
@@ -351,6 +351,8 @@ public class DrawPlayer extends DrawSinhVat implements DrawSpeak{
         int width = 3*gp.tileSize;
         int height = 20;
         
+        Color old = g2.getColor();
+        
         double oneScale = (double) width/this.getPlayer().getMaxLife();
         double hpBarValue = oneScale*this.getPlayer().getLife();
         
@@ -358,6 +360,7 @@ public class DrawPlayer extends DrawSinhVat implements DrawSpeak{
         g2.drawRect(x, y, width+2, height);
         g2.setColor(new Color(255, 0, 30));
         g2.fillRect(x+1, y+1, (int) hpBarValue, height-2);
+        g2.setColor(old);
 
     }
     
@@ -369,12 +372,15 @@ public class DrawPlayer extends DrawSinhVat implements DrawSpeak{
         int width = (int)2.5*gp.tileSize;
         int height = 15;
         
+        Color old = g2.getColor();
+        
         double oneScale = (double) width/this.getPlayer().getMaxMp();
         double mpBarValue = oneScale*this.getPlayer().getMp();
         g2.setColor(new Color(35, 35, 35));
         g2.drawRect(x, y, width+2, height);
         g2.setColor(new Color(0, 0, 255));
         g2.fillRect(x+1, y+1, (int) mpBarValue, height-2);
+        g2.setColor(old);
 
     }
     
@@ -386,12 +392,16 @@ public class DrawPlayer extends DrawSinhVat implements DrawSpeak{
         int width = 20;
         int height = (int) gp.tileSize*7;
         
+        Color old = g2.getColor();
+        
         double oneScale = (double) height/this.getPlayer().getMaxExp();
         double barValue = oneScale*this.getPlayer().getExp();
         g2.setColor(new Color(35, 35, 35));
         g2.drawRect(x, y, width, height);
-        g2.setColor(new Color(0, 0, 255));
-        g2.fillRect(x+1, y+1, (int) width-2, (int)barValue-2);
+        g2.setColor(new Color(255, 0, 255));
+        g2.fillRect(x+1, (int) (y+1 + height -(barValue-2)), (int) width-2, (int)barValue-2);
+        
+        g2.setColor(old);
 
     }
 

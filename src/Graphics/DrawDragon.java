@@ -110,6 +110,8 @@ public class DrawDragon extends DrawSinhVat{
 			dCauLua = null;
 			
 		}
+		
+		this.dragon.phatHienDich(this);
 	}
 	
 	public void draw(Graphics2D g2) {
